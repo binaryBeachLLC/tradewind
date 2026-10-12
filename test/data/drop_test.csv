@@ -1,0 +1,4 @@
+# Assembled box with cell, no roof/panel/shield (shipped separately).
+unit,drops,height_m,surface,result,notes
+TW1B-007,26,1.0,concrete,pass,"26 drops, all faces/edges/corners (MIL-STD-810 transit-drop pattern)"
+TW1B-007,0,0,,note,"drop 19 (lid corner): 2 mm cosmetic chip at the lid hinge-side corner; seal intact, dunk retest passed"

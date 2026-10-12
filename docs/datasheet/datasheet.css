@@ -1,0 +1,126 @@
+/* Binary Beach — hardware product datasheet format (v1, Oct 2026)
+   A product datasheet, not a letter: part number and document number on every page header, numbered sections,
+   MIN/TYP/MAX/UNIT specification tables, numbered figures, copyright + product link + page number in the footer.
+   Brand: teal #1d3f47 / #26545a, sunset orange #f08a3c (ink #c4621b), gold #fbbf4a. Inter for text, Orbitron for the mark.
+   One .ds-page = one US Letter sheet. Print with margins "None" and background graphics on.
+   Reusable: copy this file + Datasheet_TEMPLATE.html for any hardware product. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root {
+  --teal: #1d3f47; --teal2: #26545a; --orange: #f08a3c; --orange-ink: #c4621b; --gold: #fbbf4a;
+  --ink: #16191d; --mute: #5d6670; --faint: #8d969e; --line: #c9cfd4; --rule: #e3e7ea;
+  --head: #e9eef0; --sect: #f4f6f7; --page: #fff; --desk: #dcdcd8;
+  --good: #1d7349; --bad: #b0322a;
+}
+* { box-sizing: border-box; }
+html { background: var(--desk); }
+body { margin: 0; padding: 24px 16px; background: var(--desk); color: var(--ink);
+  font: 8.6pt/1.42 Inter, "Segoe UI", Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+
+/* ---------- sheet ---------- */
+.ds-page { width: 8.5in; height: 11in; margin: 0 auto 24px; background: var(--page); position: relative;
+  box-shadow: 0 2px 14px rgba(0,0,0,.14); display: flex; flex-direction: column; overflow: hidden; }
+.ds-hd { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px;
+  padding: .42in .6in .1in; border-bottom: 2px solid var(--teal); }
+.ds-hd .brand { display: flex; align-items: center; gap: 8px; }
+.ds-hd .brand img { width: 30px; height: 30px; }
+.ds-hd .brand .wm { font: 700 10.5pt/1 Orbitron, sans-serif; letter-spacing: .05em; color: var(--teal); }
+.ds-hd .brand .wm span { color: var(--orange); }
+.ds-hd .pn { text-align: right; }
+.ds-hd .pn b { display: block; font: 800 13pt/1.05 Inter, sans-serif; letter-spacing: .01em; color: var(--ink); }
+.ds-hd .pn small { display: block; font-size: 7pt; color: var(--mute); letter-spacing: .02em; margin-top: 2px; }
+.ds-bar { height: 3px; background: linear-gradient(90deg, var(--orange) 0 18%, var(--gold) 18% 24%, transparent 24%); }
+.ds-body { flex: 1; padding: .16in .6in .1in; overflow: hidden; }
+.ds-ft { padding: .08in .6in .32in; font-size: 6.8pt; color: var(--mute); border-top: 1px solid var(--line);
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; }
+.ds-ft .c { text-align: center; } .ds-ft .r { text-align: right; }
+.ds-ft .r b { color: var(--ink); font-size: 8pt; margin-left: 6px; }
+.ds-ft .links { grid-column: 1 / -1; text-align: center; color: var(--faint); font-size: 6.5pt; }
+
+/* ---------- front page ---------- */
+.ds-title { font: 800 17pt/1.15 Inter, sans-serif; color: var(--ink); margin: .06in 0 .1in; letter-spacing: -.005em; }
+.ds-title em { font-style: normal; color: var(--teal2); }
+.ds-cols { display: grid; grid-template-columns: 1fr 1fr; gap: .28in; }
+.ds-cols.one-two { grid-template-columns: 1fr 1.15fr; }
+.ds-front-fig { margin-top: .12in; }
+
+/* ---------- headings ---------- */
+h2.ds { font: 700 11pt/1.2 Inter, sans-serif; color: var(--teal); margin: .14in 0 .06in; padding-bottom: 3px;
+  border-bottom: 1px solid var(--line); display: flex; gap: 8px; }
+h2.ds .n { color: var(--orange-ink); min-width: 1.3em; }
+h3.ds { font: 700 9.2pt/1.25 Inter, sans-serif; color: var(--ink); margin: .11in 0 .04in; display: flex; gap: 8px; }
+h3.ds .n { color: var(--teal2); min-width: 2.2em; }
+h4.ds { font: 600 8.6pt/1.25 Inter, sans-serif; margin: .08in 0 .03in; color: var(--teal2); }
+p { margin: 0 0 .06in; }
+ul.ds, ol.ds { margin: .02in 0 .08in; padding-left: 14px; }
+ul.ds li, ol.ds li { margin: 1.5px 0; }
+ul.ds li::marker { color: var(--teal2); }
+ul.ds ul { padding-left: 14px; margin: 1px 0; list-style: "– "; }
+.mono { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 7.8pt; }
+.mute { color: var(--mute); }
+.small { font-size: 7.4pt; }
+
+/* ---------- tables ---------- */
+table.ds { width: 100%; border-collapse: collapse; margin: .04in 0 .03in; font-size: 7.6pt; line-height: 1.3; }
+table.ds caption { caption-side: top; text-align: center; font: 700 7.8pt/1.3 Inter, sans-serif; color: var(--ink);
+  padding: 2px 0 4px; }
+table.ds th { background: var(--head); color: var(--ink); font-weight: 700; font-size: 6.9pt; text-transform: uppercase;
+  letter-spacing: .03em; padding: 3.5px 5px; border: 1px solid var(--line); text-align: center; vertical-align: bottom; }
+table.ds td { padding: 2.6px 5px; border: 1px solid var(--line); vertical-align: top; }
+table.ds td.num, table.ds th.num { text-align: center; white-space: nowrap; }
+table.ds td.u { text-align: center; white-space: nowrap; color: var(--mute); }
+table.ds tr.sect td { background: var(--sect); font-weight: 700; color: var(--teal); font-size: 7.2pt;
+  text-transform: uppercase; letter-spacing: .04em; }
+table.ds td.p { font-weight: 600; }
+table.ds td.sym { white-space: nowrap; }
+table.ds.compact td { padding: 2px 5px; }
+table.ds.left td { text-align: left; }
+.tnotes { font-size: 6.6pt; color: var(--mute); margin: 1px 0 .08in; line-height: 1.35; }
+.tnotes p { margin: 0; }
+
+/* ---------- figures ---------- */
+figure.ds { margin: .06in 0 .08in; text-align: center; break-inside: avoid; }
+figure.ds img, figure.ds svg { max-width: 100%; display: block; margin: 0 auto; }
+figure.ds figcaption { font: 700 7.6pt/1.3 Inter, sans-serif; margin-top: 3px; color: var(--ink); }
+figure.ds figcaption .fn { color: var(--teal2); }
+.figgrid { display: grid; grid-template-columns: 1fr 1fr; gap: .08in .22in; }
+.figgrid figure.ds { margin: 0; }
+.figgrid figure.ds img { height: 1.86in; width: 100%; object-fit: contain; }
+.figgrid figure.ds figcaption { font-size: 7pt; }
+.fig-cond { font-size: 6.8pt; color: var(--mute); text-align: center; margin: -2px 0 .06in; }
+
+/* ---------- boxes ---------- */
+.ds-note { border-left: 3px solid var(--teal2); background: var(--sect); padding: 5px 8px; margin: .05in 0 .08in; font-size: 7.8pt; }
+.ds-note b { color: var(--teal); }
+.ds-caution { border-left: 3px solid var(--orange-ink); background: #fdf4ec; padding: 5px 8px; margin: .05in 0 .08in; font-size: 7.8pt; }
+.ds-info { border: 1px solid var(--line); padding: 0; margin: .06in 0; }
+.ds-info table.ds { margin: 0; }
+.toc { columns: 2; column-gap: .3in; font-size: 7.8pt; }
+.toc a { display: flex; justify-content: space-between; color: var(--ink); text-decoration: none; border-bottom: 1px dotted var(--line); padding: 1px 0; }
+.toc a .pg { color: var(--mute); }
+.toc a.l2 { padding-left: 14px; color: var(--mute); }
+.pin-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--teal2); margin-right: 4px; }
+.sample-note { font-size: 6.6pt; color: var(--faint); }
+
+/* ---------- screen bar + print ---------- */
+.ds-bar-screen { position: sticky; top: 0; z-index: 5; display: flex; gap: 12px; align-items: center; justify-content: space-between;
+  max-width: 8.5in; margin: 0 auto 14px; background: var(--teal); color: #fff; border-radius: 8px; padding: 8px 14px; font: 600 9pt Inter, sans-serif; }
+.ds-bar-screen a { color: #fff; }
+.ds-bar-screen button { font: 600 9pt Inter, sans-serif; background: var(--orange); color: #1c1c1c; border: 0; border-radius: 6px; padding: 6px 12px; cursor: pointer; }
+html.embed body { padding: 0; background: #fff; }
+html.embed .ds-page { box-shadow: none; margin: 0 auto; }
+html.embed .ds-bar-screen { display: none; }
+@media screen and (max-width: 860px) {
+  body { padding: 8px; }
+  .ds-page { width: 100%; height: auto; min-height: 0; }
+  .ds-cols, .ds-cols.one-two, .figgrid { grid-template-columns: 1fr; }
+  .ds-hd, .ds-body, .ds-ft { padding-left: 16px; padding-right: 16px; }
+  table.ds { display: block; overflow-x: auto; }
+}
+@page { size: letter; margin: 0; }
+@media print {
+  html, body { background: #fff; padding: 0; }
+  .ds-page { box-shadow: none; margin: 0; break-after: page; width: 8.5in; height: 11in; }
+  .ds-bar-screen { display: none; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

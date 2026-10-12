@@ -1,0 +1,5 @@
+1 × 22 µF {'droop_mV': 45.0, 'overshoot_mV': 45.8, 'within_3pct': True}
+2 × 22 µF {'droop_mV': 35.0, 'overshoot_mV': 35.6, 'within_3pct': True}
+2 × 22 µF + 10 µF at module (rev B) {'droop_mV': 32.6, 'overshoot_mV': 33.0, 'within_3pct': True}
+cell_dip_mV 12.3
+cell_current_mA_during_tx 87.1

@@ -1,0 +1,11 @@
+ERC report (2026-10-11T23:57:09-1000, Encoding UTF8)
+
+***** Sheet /
+
+***** Sheet /Power/
+
+***** Sheet /Radio_MCU/
+
+***** Sheet /Sensors_IO/
+
+ ** ERC messages: 0  Errors 0  Warnings 0

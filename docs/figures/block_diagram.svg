@@ -1,0 +1,183 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Inter, 'Segoe UI', Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#26545a"/>
+    </marker>
+    <marker id="ap" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c4621b"/>
+    </marker>
+    <style>
+      .blk{fill:#fff;stroke:#26545a;stroke-width:1.4;rx:6}
+      .ic{fill:#fdf6e3;stroke:#1d3f47;stroke-width:1.6}
+      .ext{fill:#f4f6f7;stroke:#8d969e;stroke-width:1.2;stroke-dasharray:5 3}
+      .t{font-size:13px;font-weight:700;fill:#1d3f47}
+      .s{font-size:11px;fill:#5d6670}
+      .n{font-size:10.5px;font-weight:600;fill:#c4621b}
+      .w{stroke:#26545a;stroke-width:1.6;fill:none}
+      .p{stroke:#c4621b;stroke-width:2.6;fill:none}
+      .sig{stroke:#26545a;stroke-width:1.3;fill:none}
+      .bus{stroke:#26545a;stroke-width:1.3;fill:none;stroke-dasharray:6 3}
+      .zone{fill:none;stroke:#d9dee2;stroke-width:1.2;rx:10}
+      .zt{font-size:10px;font-weight:700;letter-spacing:.12em;fill:#8d969e}
+    </style>
+  </defs>
+  <rect width="960" height="540" fill="#fff"/>
+
+  <!-- zones -->
+  <rect class="zone" x="10" y="14" width="452" height="330"/>
+  <text class="zt" x="24" y="32">POWER</text>
+  <rect class="zone" x="474" y="14" width="476" height="330"/>
+  <text class="zt" x="488" y="32">RADIO + MCU</text>
+  <rect class="zone" x="10" y="356" width="940" height="172"/>
+  <text class="zt" x="24" y="374">SENSORS + FIELD I/O</text>
+
+  <!-- external: panel -->
+  <rect class="ext" x="24" y="48" width="118" height="62" rx="6"/>
+  <text class="t" x="34" y="72">Solar panel</text>
+  <text class="s" x="34" y="89">5 V · 2 W · Voc 6.0 V</text>
+  <text class="s" x="34" y="103">J1, PG7 gland</text>
+
+  <!-- protection -->
+  <rect class="blk" x="160" y="48" width="114" height="62" rx="6"/>
+  <text class="t" x="170" y="72">Protection</text>
+  <text class="s" x="170" y="89">D1 TVS SMAJ12CA</text>
+  <text class="s" x="170" y="103">Q1 reverse P-FET</text>
+
+  <!-- charger -->
+  <rect class="ic" x="296" y="48" width="158" height="100" rx="6"/>
+  <text class="t" x="306" y="72">BQ24074</text>
+  <text class="s" x="306" y="89">Linear charger + power path</text>
+  <text class="s" x="306" y="104">VIN-DPM 4.5 V (USB500)</text>
+  <text class="s" x="306" y="119">ICHG ≤ 475 mA · 0–50 °C</text>
+  <text class="s" x="306" y="134">~CHG, ~PGOOD → MCU</text>
+
+  <!-- battery -->
+  <rect class="ext" x="296" y="186" width="158" height="62" rx="6"/>
+  <text class="t" x="306" y="210">18650 Li-ion</text>
+  <text class="s" x="306" y="227">Protected · 3 350 mAh</text>
+  <text class="s" x="306" y="241">RT1 NTC on the cell</text>
+
+  <!-- buck-boost -->
+  <rect class="ic" x="160" y="186" width="122" height="78" rx="6"/>
+  <text class="t" x="170" y="210">TPS63900</text>
+  <text class="s" x="170" y="227">Buck-boost → 3.3 V</text>
+  <text class="s" x="170" y="242">Iq 75 nA</text>
+  <text class="s" x="170" y="257">L1 2.2 µH · 2×22 µF</text>
+
+  <!-- battery sense -->
+  <rect class="blk" x="24" y="186" width="118" height="78" rx="6"/>
+  <text class="t" x="34" y="210">Battery sense</text>
+  <text class="s" x="34" y="227">VBAT → ADC (PB3)</text>
+  <text class="s" x="34" y="242">High-side switch</text>
+  <text class="s" x="34" y="257">3 nA when off</text>
+
+  <!-- power wires -->
+  <path class="p" d="M142 79 H158" marker-end="url(#ap)"/>
+  <path class="p" d="M274 79 H294" marker-end="url(#ap)"/>
+  
+  <path class="p" d="M392 148 V184" marker-start="url(#ap)" marker-end="url(#ap)"/>
+  <text class="n" x="404" y="171">VBAT</text>
+  <path class="p" d="M330 148 V166 H221 V184" marker-end="url(#ap)"/>
+  <text class="n" x="228" y="160">VSYS 3.0–4.4 V</text>
+  
+  
+  <path class="p" d="M221 264 V300 H470 V170 H490" marker-end="url(#ap)"/>
+  <text class="n" x="320" y="294">+3V3</text>
+  
+
+  <!-- RAK3172 -->
+  <rect class="ic" x="494" y="96" width="214" height="128" rx="6"/>
+  <text class="t" x="512" y="120">RAK3172 module</text>
+  <text class="s" x="512" y="138">STM32WLE5CC · Cortex-M4 48 MHz</text>
+  <text class="s" x="512" y="153">256 KB flash · 64 KB RAM</text>
+  <text class="s" x="512" y="168">Sub-GHz radio, +22 dBm max</text>
+  <text class="s" x="512" y="183">LoRaWAN 1.0.3 · US915</text>
+  <text class="s" x="512" y="198">Stop2 sleep 1.69 µA</text>
+  <text class="s" x="512" y="213">12-bit ADC · I2C · EXTI</text>
+
+  <!-- RF chain -->
+  <rect class="blk" x="726" y="114" width="96" height="48" rx="6"/>
+  <text class="t" x="736" y="135">π-match</text>
+  <text class="s" x="736" y="151">1.8 pF · 7.5 nH</text>
+  <rect class="blk" x="726" y="182" width="96" height="48" rx="6"/>
+  <text class="t" x="736" y="203">U.FL → SMA</text>
+  <text class="s" x="736" y="219">50 Ω CPWG</text>
+  <rect class="ext" x="846" y="114" width="92" height="116" rx="6"/>
+  <text class="t" x="856" y="138">Antenna</text>
+  <text class="s" x="856" y="155">915 MHz whip</text>
+  <text class="s" x="856" y="170">2 dBi</text>
+  <text class="s" x="856" y="185">points down</text>
+  <path class="w" d="M708 138 H724" marker-end="url(#a)"/>
+  <path class="w" d="M774 162 V180" marker-end="url(#a)"/>
+  <path class="w" d="M822 206 H844" marker-end="url(#a)"/>
+
+  <!-- debug / UI -->
+  <rect class="blk" x="494" y="248" width="112" height="72" rx="6"/>
+  <text class="t" x="504" y="270">Debug</text>
+  <text class="s" x="504" y="287">SWD Tag-Connect</text>
+  <text class="s" x="504" y="302">UART2 pads</text>
+  <text class="s" x="504" y="315">SW1 reset</text>
+  <rect class="blk" x="618" y="248" width="118" height="72" rx="6"/>
+  <text class="t" x="628" y="270">Magnet wake</text>
+  <text class="s" x="628" y="287">DRV5032FB hall</text>
+  <text class="s" x="628" y="302">0.54 µA · PA1</text>
+  <rect class="blk" x="748" y="248" width="96" height="72" rx="6"/>
+  <text class="t" x="758" y="270">Status LED</text>
+  <text class="s" x="758" y="287">D3 green</text>
+  <text class="s" x="758" y="302">light pipe</text>
+  <path class="sig" d="M590 224 V246" marker-start="url(#a)"/>
+  <path class="sig" d="M670 224 V246" marker-start="url(#a)"/>
+  <path class="sig" d="M700 224 V236 H796 V246" marker-end="url(#a)"/>
+
+  <!-- MCU to power status -->
+  <path class="sig" d="M454 110 H492" marker-end="url(#a)"/>
+  <text class="s" x="456" y="104">status</text>
+  <path class="sig" d="M83 264 V322 H482 V205 H492" marker-end="url(#a)"/>
+  <text class="s" x="380" y="316">VBAT_ADC</text>
+
+  <!-- sensors row -->
+  <path class="bus" d="M612 224 V382 M108 382 H852"/>
+  <text class="s" x="622" y="366">I2C · ADC · EXTI · SENSOR_EN</text>
+
+  <rect class="ic" x="24" y="398" width="168" height="108" rx="6"/>
+  <text class="t" x="34" y="420">SHT40 (internal)</text>
+  <text class="s" x="34" y="437">T/RH inside the box, 0x45</text>
+  <text class="s" x="34" y="452">Leak and condensation watch</text>
+  <text class="s" x="34" y="467">Slotted thermal island</text>
+
+  <rect class="blk" x="210" y="398" width="168" height="108" rx="6"/>
+  <text class="t" x="220" y="420">J4 air probe</text>
+  <text class="s" x="220" y="437">SHT45, 0x44, ±0.1 °C</text>
+  <text class="s" x="220" y="452">In the radiation shield</text>
+  <text class="s" x="220" y="467">F1 PTC · 100 Ω series</text>
+  <text class="s" x="220" y="482">Always on (80 nA idle)</text>
+
+  <rect class="blk" x="396" y="398" width="168" height="108" rx="6"/>
+  <text class="t" x="406" y="420">J3 soil probe</text>
+  <text class="s" x="406" y="437">Capacitive, 0–3 V out</text>
+  <text class="s" x="406" y="452">TPS22917 load switch</text>
+  <text class="s" x="406" y="467">On 100 ms per sample</text>
+  <text class="s" x="406" y="482">1 kΩ / 100 nF → ADC</text>
+
+  <rect class="blk" x="582" y="398" width="168" height="108" rx="6"/>
+  <text class="t" x="592" y="420">J2 rain gauge</text>
+  <text class="s" x="592" y="437">Tipping bucket, 0.2 mm</text>
+  <text class="s" x="592" y="452">1 MΩ pull-up</text>
+  <text class="s" x="592" y="467">10 kΩ / 22 nF debounce</text>
+  <text class="s" x="592" y="482">Counts while asleep</text>
+
+  <rect class="blk" x="768" y="398" width="170" height="108" rx="6"/>
+  <text class="t" x="778" y="420">ESD · TPD4E02B04</text>
+  <text class="s" x="778" y="437">SDA, SCL, SOIL, RAIN</text>
+  <text class="s" x="778" y="452">±12 kV contact rated</text>
+  <text class="s" x="778" y="467">0.25 pF per line</text>
+  <path class="sig" d="M108 382 V396" marker-end="url(#a)"/>
+  <path class="sig" d="M294 382 V396" marker-end="url(#a)"/>
+  <path class="sig" d="M480 382 V396" marker-end="url(#a)"/>
+  <path class="sig" d="M666 382 V396" marker-end="url(#a)"/>
+  <path class="sig" d="M852 382 V396" marker-end="url(#a)"/>
+
+  <!-- legend -->
+  <path class="p" d="M760 30 H790"/><text class="s" x="796" y="34">power</text>
+  <path class="sig" d="M846 30 H876"/><text class="s" x="882" y="34">signal</text>
+</svg>

@@ -1,0 +1,35 @@
+* rain_debounce — tipping-bucket reed switch into PA0, rev A (no capacitor) vs rev B (10 k + 22 nF)
+* Reed switch: voltage-controlled switch (Ron 0.1 ohm, Roff 1e12) driven by a bounce pattern.
+* Cable: 5 m twisted pair ≈ 100 pF. ESD array TPD4E02B04: 0.25 pF (ignored).
+.include {SPICE_DIR}/models.lib
+VDD vdd 0 3.3
+* reed drive: 1 = closed. Closure at 10 ms with three opening bounces (250, 100, 300 us),
+* release at 60 ms with two re-closing bounces (100 us each).
+VREED ctl 0 PWL(0 0  10m 0 10.001m 1  10.10m 1 10.101m 0  10.35m 0 10.351m 1
++ 10.50m 1 10.501m 0  10.60m 0 10.601m 1  10.80m 1 10.801m 0  11.10m 0 11.101m 1
++ 60m 1 60.001m 0  60.40m 0 60.401m 1  60.50m 1 60.501m 0  60.90m 0 60.901m 1  61.0m 1 61.001m 0  100m 0)
+.model REED SW (VT=0.5 VH=0.1 RON=0.1 ROFF=1e12)
+
+* ---- rev B: R23 1M pull-up on RAIN_EXT, R24 10k series, C22 22n at the pin
+SB extB 0 ctl 0 REED
+CcabB extB 0 100p
+R23B vdd extB 1Meg
+R24B extB inB 10k
+C22B inB 0 22n
+CpinB inB 0 5p
+
+* ---- rev A: same pull-up and series resistor, no capacitor
+SA extA 0 ctl 0 REED
+CcabA extA 0 100p
+R23A vdd extA 1Meg
+R24A extA inA 10k
+CpinA inA 0 5p
+
+.control
+set wr_singlescale
+set wr_vecnames
+tran 1u 100m 0 2u
+wrdata rain_debounce.dat v(ctl) v(extB) v(inB) v(inA)
+quit
+.endc
+.end

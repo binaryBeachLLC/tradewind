@@ -1,0 +1,306 @@
+{
+  "energy_year": {
+    "charge_inhibit_hours_year": {
+      "lid_glued": 161,
+      "roof": 0
+    },
+    "dark_autonomy_days_to_20pct": {
+      "1-min rapid": 230,
+      "5-min": 551
+    },
+    "dark_autonomy_days_to_empty": {
+      "1-min rapid": 287,
+      "5-min": 688
+    },
+    "days_to_full_from_30pct": {
+      "1-min rapid": 1.4,
+      "5-min": 1.4
+    },
+    "energy_positive_every_month": true,
+    "median_daily_harvest_mAh": 2324.0,
+    "min_daily_harvest_mAh": 158.0,
+    "min_soc_pct_after_first_2_weeks": {
+      "1-min rapid": 99.7,
+      "5-min": 99.8
+    },
+    "min_soc_pct_lid_glued_1min_after_2wk": 99.7,
+    "panel_oversize_vs_1min_worst_day": 13.5,
+    "worst_month_ratio_in_out_1min": 125.3,
+    "worst_month_ratio_in_out_5min": 300.7
+  },
+  "link_budget": {
+    "airtime_ms": {
+      "SF10": 370.7,
+      "SF7": 61.7,
+      "SF8": 113.2,
+      "SF9": 205.8
+    },
+    "max_path_loss_dB_SF10_with_margin": 147.5,
+    "path_loss_1km_dB": 109.6,
+    "range_km_10dB_margin": {
+      "SF10": 9.7,
+      "SF7": 5.7,
+      "SF8": 6.8,
+      "SF9": 8.1
+    },
+    "range_km_no_margin": {
+      "SF10": 17.7,
+      "SF7": 10.3,
+      "SF8": 12.4,
+      "SF9": 14.8
+    }
+  },
+  "power_budget": {
+    "avg_current_uA": {
+      "1-min rapid SF10": 599.2,
+      "1-min rapid SF7": 155.2,
+      "1-min rapid SF9": 362.3,
+      "5-min SF10": 125.4,
+      "5-min SF7": 36.6,
+      "5-min SF9": 78.0
+    },
+    "dark_autonomy_days_incl_self_discharge": {
+      "1-min rapid SF10": 154,
+      "1-min rapid SF7": 399,
+      "1-min rapid SF9": 229,
+      "5-min SF10": 446,
+      "5-min SF7": 691,
+      "5-min SF9": 550
+    },
+    "mAh_per_day": {
+      "1-min rapid SF10": 14.38,
+      "1-min rapid SF7": 3.72,
+      "1-min rapid SF9": 8.69,
+      "5-min SF10": 3.01,
+      "5-min SF7": 0.88,
+      "5-min SF9": 1.87
+    },
+    "per_uplink_mC_3v3": {
+      "SF10": 35.86,
+      "SF7": 8.98,
+      "SF9": 21.52
+    },
+    "sleep_uA": 6.9
+  },
+  "rain_debounce": {
+    "counts_revA_one_tip": 5,
+    "counts_revB_one_tip": 1,
+    "fall_tau_ms": 0.22,
+    "max_tip_rate_per_s_with_50ms_closure": 13.0,
+    "pullup_current_uA_when_reed_stuck_closed": 3.27,
+    "real_gauge_max_tips_per_s": 2.0,
+    "rise_tau_ms": 22.2,
+    "time_back_above_VIH_ms": 26.8
+  },
+  "rf_match": {
+    "antenna_Z_at_915": [
+      37.5,
+      -21.4
+    ],
+    "cpwg_Z0_at_0p35mm_thick_ohm": 47.8,
+    "cpwg_Z0_at_0p35mm_thin_ohm": 52.1,
+    "cpwg_eeff": 3.14,
+    "cpwg_width_for_50ohm_mm": {
+      "thick_model": 0.32,
+      "thin_model": 0.376
+    },
+    "match_C_pF": 1.8,
+    "match_C_ref": "C14",
+    "match_L2_nH": 7.5,
+    "match_topology": "shunt C at module side (C14) + series L2, C15 DNP",
+    "mismatch_loss_after_dB": 0.0,
+    "mismatch_loss_before_dB": 0.41,
+    "s11_after_dB_at_915": -42.7,
+    "s11_after_worst_in_band_dB": -21.0,
+    "s11_before_dB_at_915": -10.4,
+    "s11_before_worst_in_band_dB": -8.9,
+    "s11_of_6mm_45ohm_section_dB": -40.6,
+    "spec_draft_values_match_a_load_of_ohm": "\u2248 57 + j1",
+    "spec_draft_values_s11_at_915_dB": -10.1,
+    "spec_draft_values_worst_in_band_dB": -8.8
+  },
+  "solar_iv": {
+    "cells_series": 10,
+    "charge_current_hot_mA": 387.0,
+    "charge_current_stc_mA": 425.0,
+    "fit": {
+      "i0": 9.575e-08,
+      "iph": 0.44,
+      "n": 1.524,
+      "rs": 1.063e-15,
+      "rsh": 800.0
+    },
+    "mpp_capture_hot_pct": 99.3,
+    "mpp_capture_hot_range_pct": [
+      100.0,
+      97.2
+    ],
+    "mpp_capture_stc_pct": 95.6,
+    "table": [
+      {
+        "G": 1000,
+        "I_dpm": 0.425,
+        "P_dpm": 1.912,
+        "Pmp": 2.001,
+        "Tcell": 25,
+        "Vmp": 4.97,
+        "capture": 95.572,
+        "capture_hi": 97.441,
+        "capture_lo": 93.077
+      },
+      {
+        "G": 600,
+        "I_dpm": 0.249,
+        "P_dpm": 1.12,
+        "Pmp": 1.142,
+        "Tcell": 25,
+        "Vmp": 4.78,
+        "capture": 98.142,
+        "capture_hi": 99.413,
+        "capture_lo": 96.08
+      },
+      {
+        "G": 300,
+        "I_dpm": 0.117,
+        "P_dpm": 0.526,
+        "Pmp": 0.526,
+        "Tcell": 25,
+        "Vmp": 4.51,
+        "capture": 99.996,
+        "capture_hi": 99.494,
+        "capture_lo": 99.285
+      },
+      {
+        "G": 100,
+        "I_dpm": 0.029,
+        "P_dpm": 0.13,
+        "Pmp": 0.146,
+        "Tcell": 25,
+        "Vmp": 4.05,
+        "capture": 89.574,
+        "capture_hi": 79.902,
+        "capture_lo": 96.064
+      },
+      {
+        "G": 1000,
+        "I_dpm": 0.387,
+        "P_dpm": 1.743,
+        "Pmp": 1.754,
+        "Tcell": 55,
+        "Vmp": 4.365,
+        "capture": 99.342,
+        "capture_hi": 97.175,
+        "capture_lo": 99.994
+      },
+      {
+        "G": 600,
+        "I_dpm": 0.23,
+        "P_dpm": 1.034,
+        "Pmp": 1.042,
+        "Tcell": 45,
+        "Vmp": 4.36,
+        "capture": 99.305,
+        "capture_hi": 97.049,
+        "capture_lo": 99.996
+      },
+      {
+        "G": 300,
+        "I_dpm": 0.11,
+        "P_dpm": 0.493,
+        "Pmp": 0.502,
+        "Tcell": 35,
+        "Vmp": 4.295,
+        "capture": 98.33,
+        "capture_hi": 94.927,
+        "capture_lo": 99.895
+      },
+      {
+        "G": 100,
+        "I_dpm": 0.027,
+        "P_dpm": 0.122,
+        "Pmp": 0.143,
+        "Tcell": 28,
+        "Vmp": 3.985,
+        "capture": 84.994,
+        "capture_hi": 72.676,
+        "capture_lo": 93.588
+      }
+    ],
+    "vmp_hot_V": 4.36
+  },
+  "thermal_enclosure": {
+    "design_day_kona_calm": {
+      "Grey box, panel elsewhere": {
+        "charge_inhibit_hours": 2.83,
+        "hours_above_45C": 7.34,
+        "max_battery_C": 51.0,
+        "max_shell_C": 51.0
+      },
+      "White box under ventilated solar roof": {
+        "charge_inhibit_hours": 0.0,
+        "hours_above_45C": 0.0,
+        "max_battery_C": 35.3,
+        "max_shell_C": 35.2
+      },
+      "White box, panel elsewhere": {
+        "charge_inhibit_hours": 0.0,
+        "hours_above_45C": 0.0,
+        "max_battery_C": 38.6,
+        "max_shell_C": 38.6
+      },
+      "White box, panel glued to lid": {
+        "charge_inhibit_hours": 5.42,
+        "hours_above_45C": 7.32,
+        "max_battery_C": 55.2,
+        "max_shell_C": 55.2
+      }
+    },
+    "trade_wind_day": {
+      "Grey box, panel elsewhere": {
+        "charge_inhibit_hours": 0.0,
+        "max_battery_C": 45.0
+      },
+      "White box under ventilated solar roof": {
+        "charge_inhibit_hours": 0.0,
+        "max_battery_C": 33.4
+      },
+      "White box, panel elsewhere": {
+        "charge_inhibit_hours": 0.0,
+        "max_battery_C": 35.8
+      },
+      "White box, panel glued to lid": {
+        "charge_inhibit_hours": 0.0,
+        "max_battery_C": 48.4
+      }
+    }
+  },
+  "tx_droop": {
+    "1 \u00d7 22 \u00b5F": {
+      "droop_mV": 45.0,
+      "overshoot_mV": 45.8,
+      "within_3pct": true
+    },
+    "2 \u00d7 22 \u00b5F": {
+      "droop_mV": 35.0,
+      "overshoot_mV": 35.6,
+      "within_3pct": true
+    },
+    "2 \u00d7 22 \u00b5F + 10 \u00b5F at module (rev B)": {
+      "droop_mV": 32.6,
+      "overshoot_mV": 33.0,
+      "within_3pct": true
+    },
+    "cell_current_mA_during_tx": 87.1,
+    "cell_dip_mV": 12.3
+  },
+  "vbat_sense": {
+    "adc_reading_V_at_4V2": 2.1,
+    "adc_sample_delay_ms_chosen": 5.0,
+    "leakage_revA_uA_at_3V7": 1.3,
+    "leakage_revA_uA_at_4V05": 26.8,
+    "leakage_revA_uA_at_4V1": 31.3,
+    "leakage_revA_uA_at_4V2": 40.4,
+    "leakage_revB_nA_at_4V2": 2.9,
+    "settle_time_ms_half_lsb": 4.29
+  }
+}

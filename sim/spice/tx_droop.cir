@@ -1,0 +1,44 @@
+* tx_droop — +3V3 during a LoRa TX burst (5 mA -> 87 mA for 206 ms, SF9)
+* Averaged (cycle-free) model of the power chain:
+*   18650 cell (OCV {vocv} V, 0.12 ohm) + holder contacts 0.03 ohm -> VBAT (C5 4.7 uF)
+*   BQ24074 battery-to-OUT FET ~0.05 ohm -> VSYS (C4 4.7 uF)
+*   TPS63900 modeled as a controlled current source into VOUT:
+*     error = 3.3 V - VOUT ; command = Kp*error + integral(Ki*error), then a 1st-order lag (8 us,
+*     ~20 kHz) standing in for on-time/inductor slew; clamped 0..1.2 A (1.45 A peak switch limit).
+*     Input current = VOUT*Iout/(0.92*VSYS)  (92 % efficiency at this load)
+*   COUT effective {cout} (DC-bias derated) with 3 mohm ESR, plus {cmod} at the module.
+*   Load: 5 mA idle, 87 mA during TX (10 us edges).
+VOCV ocv 0 {vocv}
+RINT ocv bat_i 0.12
+RHOLD bat_i vbat 0.03
+C5 vbat 0 4.7u
+RFET vbat vsys 0.05
+C4 vsys 0 4.7u
+
+* --- controller
+BERR err 0 V = 3.3 - v(vout)
+* integrator with anti-windup: stop integrating downward while the command is clamped at 0 (the stage cannot sink)
+BINT 0 integ I = v(err) * (1 - 1/(1+exp(400*v(cmdraw))) * 1/(1+exp(400*v(err))))
+CINT integ 0 {cint}
+RINTL integ 0 1e9
+BCMD cmdraw 0 V = {kp}*v(err) + v(integ)
+RLAG cmdraw cmd 8
+CLAG cmd 0 1u
+* --- power stage
+BOUT 0 vout I = max(0, min(1.2, v(cmd)))
+BIN vsys 0 I = v(vout)*max(0, min(1.2, v(cmd)))/(0.92*max(v(vsys),1))
+CO vout co_esr {cout}
+RESR co_esr 0 0.003
+CMOD vout 0 {cmod}
+* --- load: RAK3172 TX burst
+ILOAD vout 0 PWL(0 5m 1m 5m 1.01m 87m 207m 87m 207.01m 5m 230m 5m)
+
+* DC operating point is solved first (no UIC): integrator settles so VOUT = 3.3 V at the 5 mA idle load
+.control
+set wr_singlescale
+set wr_vecnames
+tran 0.5u 220m 0 1u
+wrdata {tag}.dat v(vout) v(vbat) v(vsys) i(VOCV)
+quit
+.endc
+.end

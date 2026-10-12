@@ -1,0 +1,5 @@
+trades {'Grey box, panel elsewhere': {'max_battery_C': 45.0, 'charge_inhibit_hours': 0.0}, 'White box, panel elsewhere': {'max_battery_C': 35.8, 'charge_inhibit_hours': 0.0}, 'White box, panel glued to lid': {'max_battery_C': 48.4, 'charge_inhibit_hours': 0.0}, 'White box under ventilated solar roof': {'max_battery_C': 33.4, 'charge_inhibit_hours': 0.0}}
+Grey box, panel elsewhere {'max_battery_C': 51.0, 'hours_above_45C': 7.34, 'charge_inhibit_hours': 2.83, 'max_shell_C': 51.0}
+White box, panel elsewhere {'max_battery_C': 38.6, 'hours_above_45C': 0.0, 'charge_inhibit_hours': 0.0, 'max_shell_C': 38.6}
+White box, panel glued to lid {'max_battery_C': 55.2, 'hours_above_45C': 7.32, 'charge_inhibit_hours': 5.42, 'max_shell_C': 55.2}
+White box under ventilated solar roof {'max_battery_C': 35.3, 'hours_above_45C': 0.0, 'charge_inhibit_hours': 0.0, 'max_shell_C': 35.2}

@@ -1,0 +1,23 @@
+# Saturated-salt chambers at 25.0 +/- 0.3 C (sealed jars, 24 h equilibration). Reference RH per Greenspan (1977).
+# Probes inserted through a grommet; internal sensor tested with the lid off in the same jar.
+serial,salt,ref_RH_pct,ext_sht45_RH,int_sht40_RH
+TW1B-001,LiCl,11.3,12.0,10.8
+TW1B-001,MgCl2,32.8,32.8,33.1
+TW1B-001,NaCl,75.3,75.6,75.4
+TW1B-001,K2SO4,97.3,98.4,98.5
+TW1B-002,LiCl,11.3,12.2,12.2
+TW1B-002,MgCl2,32.8,32.8,32.0
+TW1B-002,NaCl,75.3,75.1,73.8
+TW1B-002,K2SO4,97.3,98.9,98.3
+TW1B-003,LiCl,11.3,10.8,10.4
+TW1B-003,MgCl2,32.8,33.3,31.7
+TW1B-003,NaCl,75.3,75.0,75.1
+TW1B-003,K2SO4,97.3,98.7,99.8
+TW1B-004,LiCl,11.3,11.4,11.2
+TW1B-004,MgCl2,32.8,32.0,32.5
+TW1B-004,NaCl,75.3,75.2,74.4
+TW1B-004,K2SO4,97.3,98.3,98.8
+TW1B-005,LiCl,11.3,10.8,11.0
+TW1B-005,MgCl2,32.8,32.7,32.5
+TW1B-005,NaCl,75.3,75.8,75.5
+TW1B-005,K2SO4,97.3,97.8,100.2

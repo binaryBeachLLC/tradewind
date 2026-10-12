@@ -1,0 +1,30 @@
+item,qty,description,material / finish,supplier-style part number (or equivalent),unit cost @100 (USD),unit cost @1k (USD),notes
+M1,1,Base (box) 122 x 98 x 45 mm,ASA white UV-stable (printed); PC/ASA molded at volume,printed in-house (out/stl/base.stl),3.10,1.35,"1k price = molded part, tooling amortised separately (~$9.5k two-cavity box+lid)"
+M2,1,Lid with label recess and light-pipe boss,ASA white,printed in-house (out/stl/lid.stl),2.20,0.95,
+M3,0.37,Gasket cord 2.5 mm round (m),silicone 40 Shore A,e.g. McMaster 9808K-series solid silicone cord 2.5 mm,0.95,0.40,cut 368 mm and join with silicone adhesive (Loctite 406 + 770 primer)
+M4,4,Heat-set insert M4 x 6.4 (lid columns),brass,e.g. Ruthex / McMaster 94180A-series M4,0.14,0.08,install at 245 C
+M5,4,Heat-set insert M3 x 4 (PCB bosses),brass,e.g. Ruthex RX-M3x4,0.10,0.06,
+M6,4,Heat-set insert M4 x 6.4 (back mounting bosses),brass,e.g. Ruthex / McMaster 94180A-series M4,0.14,0.08,
+M7,4,Lid screw ISO 4762 M4 x 12 socket head,A4 stainless,e.g. McMaster 92290A-series,0.18,0.09,captive with M8 below
+M8,4,Retaining washer M4 (captive screw),nylon 6/6,e.g. McMaster 95225A-series,0.05,0.02,
+M9,4,PCB screw ISO 7380 M3 x 6 button head,A2 stainless,e.g. McMaster 92095A-series,0.08,0.04,
+M10,4,Bracket screw ISO 4762 M4 x 8,A4 stainless,e.g. McMaster 92290A-series,0.15,0.08,
+M11,4,Cable gland PG7 / M12x1.5 (cable 3-6.5 mm) + locknut,PA66 black,Lapp SKINTOP ST-M 12x1.5 (53111000) + SKINDICHT SM-M 12x1.5,1.35,0.85,IP68 per Lapp; seal range 3.5-7 mm
+M12,1,Protective vent M12x1.5 screw-in,ePTFE / PA,Gore PolyVent PMF100318 (or equiv.),2.40,1.60,equalises pressure; stops condensation pumping
+M13,1,U.FL to SMA bulkhead pigtail 150 mm (1.13 mm coax),brass Ni/Au,e.g. Amphenol RF U.FL-SMA(f) bulkhead 150 mm,2.60,1.70,O-ring on bulkhead side
+M14,1,915 MHz hinged whip antenna 2 dBi SMA(m),TPE black,e.g. Taoglas TI.92 series (or equiv.),3.90,2.60,mounted pointing down
+M15,1,Light pipe Ø3 x 25 mm,PMMA clear,e.g. Bivar PLP2-series or cut acrylic rod,0.20,0.08,
+M16,1,Sun roof 150 x 125 tray (3 mm + 8 mm lip),ASA light grey,printed in-house (out/stl/roof.stl),2.60,1.10,
+M17,2,Roof gusset (bent 3 mm),5052-H32 aluminium,laser cut + bent,1.80,0.70,
+M18,1,Solar panel 5 V 2 W 136 x 110 x 3 mm,epoxy-encapsulated mono,generic 5 V/2 W epoxy panel,3.80,2.40,"glued to the roof with VHB 5952, 4 strips"
+M19,1,Pole bracket plate 64 x 195 x 3 mm,5052-H32 aluminium,laser cut,3.20,1.30,
+M20,2,Pole saddle block (V cradle),6061 aluminium,machined / printed ASA option,1.20,0.50,
+M21,2,U-bolt M6 for 42 mm pipe (fits 25-50 mm with saddles) + washers + nylon nuts,A2 stainless,e.g. McMaster 3042T-series,1.70,1.05,
+M22,1,Shield arm 25 x 4 mm flat bar 160 mm + clamp block,6063 aluminium,cut + drilled,1.40,0.60,
+M23,1,Radiation shield cap,ASA white,printed in-house (out/stl/shield_cap.stl),1.10,0.45,
+M24,5,Radiation shield louvre plate,ASA white,printed in-house (out/stl/shield_plate_x5.stl),0.70,0.30,
+M25,15,Shield spacer tube,ASA white,printed in-house (out/stl/shield_spacers_x15.stl),0.05,0.02,
+M26,3,Threaded rod M5 x 90 + 6 nuts,A2 stainless,e.g. McMaster 95412A-series,0.60,0.30,
+M27,1,Probe holder (hub + 3 spokes),ASA white,printed in-house (out/stl/probe_holder.stl),0.40,0.15,
+M28,1,SHT45 air probe Ø12 x 40 mm sintered tip on 1 m PUR cable,stainless / PUR,e.g. Sensirion SHT45 waterproof probe module,9.50,6.80,electronics-side item listed here for the assembly
+M29,1,Pole segment Ø42 (context only),galvanised steel,customer supplied,0.00,0.00,not part of the kit

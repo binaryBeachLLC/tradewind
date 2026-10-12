@@ -1,0 +1,16 @@
+id,requirement,target,measured,status,note
+R1,"Uplink interval 5 min default, 1 min rapid",5 min / 1 min,5-min cadence held for 30 days (25739 of 25920 uplinks received); 1-min rapid mode run 14 days (dark test),pass,
+R2,"Sleep current, whole board at 3.7 V",≤ 10 µA,"7.2 µA mean, 8.1 µA max (10 boards)",pass,19 % margin on the worst board
+R3,"Average current, 5-min interval, SF9",≤ 100 µA,"75.9 µA (PPK2, sim 78 µA)",pass,24 % margin
+R4,"Dark autonomy, 1-min rapid mode",≥ 60 days,"251 days to a 20 % reserve (projected from a 14-day dark test, 0.32 %/day)",pass,≈ 4× the requirement
+R5,Energy-positive every month incl. 7-day overcast,yes,"Sept field: cell held ≥ 94.6 % with the charger in top-off standby; clear day 2336 mAh in, cloudy day 862 mAh in vs ≈ 12 mAh/day used (1-min)",pass (1 month measured),full year and the overcast week are covered by simulation only (sim/energy_year.py)
+R6,Charging only inside 0–50 °C,0–50 °C,stops at 50.4 °C rising / resumes 47.8 °C; stops at -0.6 °C falling (cold),pass (marginal),"trip points sit 0.4–0.6 °C outside nominal, inside the BQ24074 TS threshold tolerance; field cell max 37.1 °C"
+R7,"Air temperature accuracy, external probe",±0.3 °C,"0.20 °C worst of 5 units, −10 to +60 °C (RMS 0.10 °C)",pass,
+R8,"Humidity accuracy, external probe, 10–90 %RH",±2 %RH,0.9 %RH worst below 90 %RH; 1.6 %RH at 97 %RH,pass,97 %RH point is outside the requirement range but also inside ±2
+R9,"Radio range, line of sight, SF10",≥ 5 km,decoded at 13.2 km (last stop on the test road); SF7 ≥ 50 % delivery to 8.8 km,pass,true SF10 limit not reached
+R10,Ingress protection,"IP66 (target), 1 m dunk stretch",30 min at 1 m: no ingress (dew-point drift -0.05 °C); IPX5-style hose test passed,open,IP66 100 L/min jet not performed: needs an accredited lab
+R11,Operating temperature,−10 to +60 °C,"uplinks, sensors and sleep current OK at every chamber step −10 to +60 °C; 50 thermal cycles passed",pass,
+R12,ESD on external connectors,±8 kV contact,±8 kV contact: criterion A on all ports; ±15 kV air: one self-recovering reset on J4 (criterion B),pass,
+R13,"Conducted TX power at U.FL, 902.3–914.9 MHz",+20 dBm ±1 dB,"19.46 to 20.46 dBm, mean 19.93 dBm (2 units × 64 channels)",pass,
+R14,"BOM cost, electronics, 1k units",≤ $25,"costed in the BOM, not a test item",n/a,see hardware/fab BOM
+R15,"Rain counting: no double counts, counts while asleep",exact,"1199 of 1200 bench tips counted (exact up to 5 tips/s, gauge max ≈ 2/s); field vs manual gauge slope 0.988",pass,"the one miss was at 10 tips/s, inside the 50 ms firmware lockout"

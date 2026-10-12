@@ -1,0 +1,13 @@
+# Borrowed ESD gun (IEC 61000-4-2 network 150 pF / 330 ohm), cable ends of the field leads, unit on a 0.5 mm
+# insulator over a ground plane, 1 s between discharges, both polarities. Criteria A: no effect; B: self-recovering.
+port,mode,level_kV,discharges,result,criterion,notes
+J1 solar,contact,8,20,pass,A,
+J2 rain,contact,8,20,pass,A,
+J3 soil,contact,8,20,pass,A,
+J4 air probe,contact,8,20,pass,A,
+SMA shell,contact,8,20,pass,A,
+J1 solar,air,15,20,pass,A,
+J2 rain,air,15,20,pass,A,
+J3 soil,air,15,20,pass,A,
+J4 air probe,air,15,20,pass,B,"1 soft reset (watchdog), rejoined automatically in 9 s, no data loss"
+Enclosure seams,air,15,20,pass,A,

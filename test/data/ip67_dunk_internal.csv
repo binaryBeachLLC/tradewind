@@ -1,0 +1,78 @@
+# Unit TW1B-006 fully assembled (glands with dummy cables, vent fitted), lid torqued 1.2 N*m.
+# Submerged 30 min with the top 1.0 m below the surface (200 L drum + extension tube). Internal SHT40 logged every minute.
+t_min,phase,int_T_C,int_RH_pct
+0,air,27.39,47.3
+1,air,27.43,47.2
+2,air,27.39,47.4
+3,air,27.42,47.4
+4,air,27.4,47.6
+5,air,27.43,47.2
+6,air,27.4,47.4
+7,air,27.4,47.4
+8,air,27.41,47.5
+9,air,27.39,47.5
+10,submerged 1 m,27.39,47.0
+11,submerged 1 m,27.19,48.1
+12,submerged 1 m,27.01,48.5
+13,submerged 1 m,26.78,49.1
+14,submerged 1 m,26.62,49.5
+15,submerged 1 m,26.45,49.7
+16,submerged 1 m,26.33,50.6
+17,submerged 1 m,26.18,51.0
+18,submerged 1 m,26.06,51.1
+19,submerged 1 m,25.93,51.9
+20,submerged 1 m,25.85,52.0
+21,submerged 1 m,25.73,52.3
+22,submerged 1 m,25.64,52.4
+23,submerged 1 m,25.54,52.8
+24,submerged 1 m,25.48,53.2
+25,submerged 1 m,25.34,53.1
+26,submerged 1 m,25.32,53.4
+27,submerged 1 m,25.22,54.1
+28,submerged 1 m,25.17,54.2
+29,submerged 1 m,25.08,54.1
+30,submerged 1 m,25.03,54.4
+31,submerged 1 m,25.01,54.9
+32,submerged 1 m,24.95,54.9
+33,submerged 1 m,24.9,55.1
+34,submerged 1 m,24.87,55.0
+35,submerged 1 m,24.79,55.0
+36,submerged 1 m,24.74,55.1
+37,submerged 1 m,24.75,55.6
+38,submerged 1 m,24.74,55.2
+39,submerged 1 m,24.7,55.2
+40,air,24.68,55.6
+41,air,24.76,55.7
+42,air,24.84,55.1
+43,air,24.96,54.2
+44,air,25.06,54.1
+45,air,25.11,54.2
+46,air,25.17,54.1
+47,air,25.19,53.9
+48,air,25.29,53.8
+49,air,25.34,53.5
+50,air,25.37,53.6
+51,air,25.41,53.6
+52,air,25.48,53.2
+53,air,25.51,53.1
+54,air,25.5,53.1
+55,air,25.58,52.9
+56,air,25.61,52.4
+57,air,25.61,52.7
+58,air,25.64,52.2
+59,air,25.66,52.0
+60,air,25.71,52.6
+61,air,25.68,52.5
+62,air,25.76,52.1
+63,air,25.77,52.2
+64,air,25.73,52.7
+65,air,25.79,52.0
+66,air,25.78,52.3
+67,air,25.79,51.9
+68,air,25.78,52.1
+69,air,25.8,51.7
+70,air,25.79,51.7
+71,air,25.88,52.1
+72,air,25.8,51.8
+73,air,25.83,51.8
+74,air,25.85,51.7

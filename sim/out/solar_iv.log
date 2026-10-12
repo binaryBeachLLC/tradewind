@@ -1,0 +1,9 @@
+{'G': 1000, 'Tcell': 25, 'Vmp': np.float64(4.97), 'Pmp': np.float64(2.001), 'I_dpm': 0.425, 'P_dpm': 1.912, 'capture': np.float64(95.572), 'capture_lo': np.float64(93.077), 'capture_hi': np.float64(97.441)}
+{'G': 600, 'Tcell': 25, 'Vmp': np.float64(4.78), 'Pmp': np.float64(1.142), 'I_dpm': 0.249, 'P_dpm': 1.12, 'capture': np.float64(98.142), 'capture_lo': np.float64(96.08), 'capture_hi': np.float64(99.413)}
+{'G': 300, 'Tcell': 25, 'Vmp': np.float64(4.51), 'Pmp': np.float64(0.526), 'I_dpm': 0.117, 'P_dpm': 0.526, 'capture': np.float64(99.996), 'capture_lo': np.float64(99.285), 'capture_hi': np.float64(99.494)}
+{'G': 100, 'Tcell': 25, 'Vmp': np.float64(4.05), 'Pmp': np.float64(0.146), 'I_dpm': 0.029, 'P_dpm': 0.13, 'capture': np.float64(89.574), 'capture_lo': np.float64(96.064), 'capture_hi': np.float64(79.902)}
+{'G': 1000, 'Tcell': 55, 'Vmp': np.float64(4.365), 'Pmp': np.float64(1.754), 'I_dpm': 0.387, 'P_dpm': 1.743, 'capture': np.float64(99.342), 'capture_lo': np.float64(99.994), 'capture_hi': np.float64(97.175)}
+{'G': 600, 'Tcell': 45, 'Vmp': np.float64(4.36), 'Pmp': np.float64(1.042), 'I_dpm': 0.23, 'P_dpm': 1.034, 'capture': np.float64(99.305), 'capture_lo': np.float64(99.996), 'capture_hi': np.float64(97.049)}
+{'G': 300, 'Tcell': 35, 'Vmp': np.float64(4.295), 'Pmp': np.float64(0.502), 'I_dpm': 0.11, 'P_dpm': 0.493, 'capture': np.float64(98.33), 'capture_lo': np.float64(99.895), 'capture_hi': np.float64(94.927)}
+{'G': 100, 'Tcell': 28, 'Vmp': np.float64(3.985), 'Pmp': np.float64(0.143), 'I_dpm': 0.027, 'P_dpm': 0.122, 'capture': np.float64(84.994), 'capture_lo': np.float64(93.588), 'capture_hi': np.float64(72.676)}
+fit {'iph': np.float64(0.44), 'i0': np.float64(9.57508905989442e-08), 'n': np.float64(1.5240190114946157), 'rs': np.float64(1.062675758737393e-15), 'rsh': 800.0}

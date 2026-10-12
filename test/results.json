@@ -1,0 +1,685 @@
+{
+  "bringup": {
+    "boards": 10,
+    "v3v3_V": {
+      "mean": 3.3025,
+      "min": 3.29,
+      "max": 3.315
+    },
+    "v3v3_ripple_mVpp_10mA": {
+      "mean": 17.8,
+      "max": 20.7
+    },
+    "vsys_V_sun": {
+      "mean": 4.4126,
+      "min": 4.394,
+      "max": 4.438
+    },
+    "vbat_reg_V": {
+      "mean": 4.2027,
+      "min": 4.194,
+      "max": 4.213
+    },
+    "sleep_uA_3V7": {
+      "mean": 7.21,
+      "min": 6.7,
+      "max": 8.1,
+      "std": 0.4175
+    },
+    "sleep_uA_4V2": {
+      "mean": 7.619,
+      "max": 8.68
+    },
+    "flash_s_mean": 11.73,
+    "otaa_join_s_median": 5.95,
+    "revA_sleep_uA_as_built": [
+      34.2,
+      36.8,
+      33.5
+    ],
+    "revA_sleep_uA_after_ECO1": [
+      7.4,
+      7.6
+    ],
+    "per_board": [
+      {
+        "serial": "TW1B-001",
+        "v3v3_V": 3.311,
+        "v3v3_ripple_mVpp_10mA": 18.7,
+        "vsys_V_sun": 4.394,
+        "vbat_reg_V": 4.194,
+        "sleep_uA_3V7": 6.8,
+        "sleep_uA_4V2": 7.23,
+        "flash_s": 11.5,
+        "otaa_join_s": 5.6,
+        "tx_dBm_915": 19.7
+      },
+      {
+        "serial": "TW1B-002",
+        "v3v3_V": 3.306,
+        "v3v3_ripple_mVpp_10mA": 19.0,
+        "vsys_V_sun": 4.414,
+        "vbat_reg_V": 4.202,
+        "sleep_uA_3V7": 7.1,
+        "sleep_uA_4V2": 7.4,
+        "flash_s": 12.2,
+        "otaa_join_s": 6.9,
+        "tx_dBm_915": 19.6
+      },
+      {
+        "serial": "TW1B-003",
+        "v3v3_V": 3.298,
+        "v3v3_ripple_mVpp_10mA": 17.3,
+        "vsys_V_sun": 4.421,
+        "vbat_reg_V": 4.213,
+        "sleep_uA_3V7": 7.4,
+        "sleep_uA_4V2": 7.81,
+        "flash_s": 11.4,
+        "otaa_join_s": 5.9,
+        "tx_dBm_915": 20.3
+      },
+      {
+        "serial": "TW1B-004",
+        "v3v3_V": 3.315,
+        "v3v3_ripple_mVpp_10mA": 16.5,
+        "vsys_V_sun": 4.395,
+        "vbat_reg_V": 4.202,
+        "sleep_uA_3V7": 6.9,
+        "sleep_uA_4V2": 7.2,
+        "flash_s": 11.3,
+        "otaa_join_s": 6.7,
+        "tx_dBm_915": 20.3
+      },
+      {
+        "serial": "TW1B-005",
+        "v3v3_V": 3.29,
+        "v3v3_ripple_mVpp_10mA": 14.7,
+        "vsys_V_sun": 4.43,
+        "vbat_reg_V": 4.198,
+        "sleep_uA_3V7": 7.6,
+        "sleep_uA_4V2": 8.02,
+        "flash_s": 12.0,
+        "otaa_join_s": 5.5,
+        "tx_dBm_915": 20.0
+      },
+      {
+        "serial": "TW1B-006",
+        "v3v3_V": 3.312,
+        "v3v3_ripple_mVpp_10mA": 17.3,
+        "vsys_V_sun": 4.407,
+        "vbat_reg_V": 4.205,
+        "sleep_uA_3V7": 7.2,
+        "sleep_uA_4V2": 7.65,
+        "flash_s": 10.9,
+        "otaa_join_s": 5.8,
+        "tx_dBm_915": 19.9
+      },
+      {
+        "serial": "TW1B-007",
+        "v3v3_V": 3.293,
+        "v3v3_ripple_mVpp_10mA": 19.6,
+        "vsys_V_sun": 4.404,
+        "vbat_reg_V": 4.202,
+        "sleep_uA_3V7": 8.1,
+        "sleep_uA_4V2": 8.68,
+        "flash_s": 11.1,
+        "otaa_join_s": 5.5,
+        "tx_dBm_915": 19.7
+      },
+      {
+        "serial": "TW1B-008",
+        "v3v3_V": 3.294,
+        "v3v3_ripple_mVpp_10mA": 16.2,
+        "vsys_V_sun": 4.438,
+        "vbat_reg_V": 4.2,
+        "sleep_uA_3V7": 7.0,
+        "sleep_uA_4V2": 7.38,
+        "flash_s": 12.0,
+        "otaa_join_s": 6.0,
+        "tx_dBm_915": 19.7
+      },
+      {
+        "serial": "TW1B-009",
+        "v3v3_V": 3.301,
+        "v3v3_ripple_mVpp_10mA": 20.7,
+        "vsys_V_sun": 4.396,
+        "vbat_reg_V": 4.209,
+        "sleep_uA_3V7": 7.3,
+        "sleep_uA_4V2": 7.71,
+        "flash_s": 11.6,
+        "otaa_join_s": 6.9,
+        "tx_dBm_915": 19.8
+      },
+      {
+        "serial": "TW1B-010",
+        "v3v3_V": 3.305,
+        "v3v3_ripple_mVpp_10mA": 18.0,
+        "vsys_V_sun": 4.427,
+        "vbat_reg_V": 4.202,
+        "sleep_uA_3V7": 6.7,
+        "sleep_uA_4V2": 7.11,
+        "flash_s": 13.3,
+        "otaa_join_s": 6.6,
+        "tx_dBm_915": 19.7
+      }
+    ]
+  },
+  "environmental": {
+    "dunk": {
+      "result": "pass",
+      "depth_m": 1.0,
+      "duration_min": 30,
+      "dewpoint_drift_C": -0.0457,
+      "internal_RH_max_pct": 55.7
+    },
+    "ip66_jet": {
+      "result": "not performed",
+      "note": "IPX5-style hose test (12.5 L/min, 3 min, all faces) passed; 100 L/min IP66 jet needs an accredited lab"
+    },
+    "thermal_cycling": [
+      {
+        "unit": "TW1B-006",
+        "cycles": 50,
+        "profile": "-10/+60 C, 30 min dwell, 3 C/min",
+        "functional_checks": "every 10 cycles: uplink, sensors, sleep current",
+        "result": "pass",
+        "notes": "sleep 7.3 -> 7.4 uA; gasket set 11 %"
+      },
+      {
+        "unit": "TW1B-009",
+        "cycles": 50,
+        "profile": "-10/+60 C, 30 min dwell, 3 C/min",
+        "functional_checks": "every 10 cycles",
+        "result": "pass",
+        "notes": "no cracks at bosses or inserts"
+      }
+    ],
+    "uv_deltaE_500h": {
+      "ASA white": 1.7,
+      "PETG white": 8.9
+    },
+    "drop": [
+      {
+        "unit": "TW1B-007",
+        "drops": 26,
+        "height_m": 1.0,
+        "surface": "concrete",
+        "result": "pass",
+        "notes": "26 drops, all faces/edges/corners (MIL-STD-810 transit-drop pattern)"
+      },
+      {
+        "unit": "TW1B-007",
+        "drops": 0,
+        "height_m": 0.0,
+        "surface": NaN,
+        "result": "note",
+        "notes": "drop 19 (lid corner): 2 mm cosmetic chip at the lid hinge-side corner; seal intact, dunk retest passed"
+      }
+    ],
+    "esd": {
+      "contact_8kV": "pass (criterion A, all ports)",
+      "air_15kV": "pass (criterion B on J4: one self-recovering reset; A elsewhere)",
+      "rows": [
+        {
+          "port": "J1 solar",
+          "mode": "contact",
+          "level_kV": 8,
+          "discharges": 20,
+          "result": "pass",
+          "criterion": "A",
+          "notes": NaN
+        },
+        {
+          "port": "J2 rain",
+          "mode": "contact",
+          "level_kV": 8,
+          "discharges": 20,
+          "result": "pass",
+          "criterion": "A",
+          "notes": NaN
+        },
+        {
+          "port": "J3 soil",
+          "mode": "contact",
+          "level_kV": 8,
+          "discharges": 20,
+          "result": "pass",
+          "criterion": "A",
+          "notes": NaN
+        },
+        {
+          "port": "J4 air probe",
+          "mode": "contact",
+          "level_kV": 8,
+          "discharges": 20,
+          "result": "pass",
+          "criterion": "A",
+          "notes": NaN
+        },
+        {
+          "port": "SMA shell",
+          "mode": "contact",
+          "level_kV": 8,
+          "discharges": 20,
+          "result": "pass",
+          "criterion": "A",
+          "notes": NaN
+        },
+        {
+          "port": "J1 solar",
+          "mode": "air",
+          "level_kV": 15,
+          "discharges": 20,
+          "result": "pass",
+          "criterion": "A",
+          "notes": NaN
+        },
+        {
+          "port": "J2 rain",
+          "mode": "air",
+          "level_kV": 15,
+          "discharges": 20,
+          "result": "pass",
+          "criterion": "A",
+          "notes": NaN
+        },
+        {
+          "port": "J3 soil",
+          "mode": "air",
+          "level_kV": 15,
+          "discharges": 20,
+          "result": "pass",
+          "criterion": "A",
+          "notes": NaN
+        },
+        {
+          "port": "J4 air probe",
+          "mode": "air",
+          "level_kV": 15,
+          "discharges": 20,
+          "result": "pass",
+          "criterion": "B",
+          "notes": "1 soft reset (watchdog), rejoined automatically in 9 s, no data loss"
+        },
+        {
+          "port": "Enclosure seams",
+          "mode": "air",
+          "level_kV": 15,
+          "discharges": 20,
+          "result": "pass",
+          "criterion": "A",
+          "notes": NaN
+        }
+      ]
+    },
+    "rain_bench": {
+      "tips_applied": 1200,
+      "tips_counted": 1199,
+      "exact_up_to_tips_per_s": 5.0,
+      "rows": [
+        {
+          "rate_tips_per_s": 0.5,
+          "tips_applied": 300,
+          "tips_counted": 300,
+          "mcu_state": "sleep (STOP2)"
+        },
+        {
+          "rate_tips_per_s": 1.0,
+          "tips_applied": 300,
+          "tips_counted": 300,
+          "mcu_state": "sleep (STOP2)"
+        },
+        {
+          "rate_tips_per_s": 2.0,
+          "tips_applied": 200,
+          "tips_counted": 200,
+          "mcu_state": "sleep (STOP2)"
+        },
+        {
+          "rate_tips_per_s": 3.0,
+          "tips_applied": 200,
+          "tips_counted": 200,
+          "mcu_state": "mixed (TX during burst)"
+        },
+        {
+          "rate_tips_per_s": 5.0,
+          "tips_applied": 100,
+          "tips_counted": 100,
+          "mcu_state": "sleep (STOP2)"
+        },
+        {
+          "rate_tips_per_s": 10.0,
+          "tips_applied": 100,
+          "tips_counted": 99,
+          "mcu_state": "sleep (STOP2)"
+        }
+      ]
+    },
+    "ts_window": [
+      {
+        "edge": "rising",
+        "cell_temp_C": 50.4,
+        "event": "charge suspended (~CHG stays low per datasheet; charge current 0)"
+      },
+      {
+        "edge": "falling",
+        "cell_temp_C": 47.8,
+        "event": "charge resumed"
+      },
+      {
+        "edge": "falling",
+        "cell_temp_C": -0.6,
+        "event": "charge suspended (cold)"
+      },
+      {
+        "edge": "rising",
+        "cell_temp_C": 2.1,
+        "event": "charge resumed"
+      }
+    ],
+    "salt_fog": "deferred (ASTM B117 at a test house before a coastal deployment)"
+  },
+  "field": {
+    "site": "Oʻahu farm site",
+    "start": "2026-09-01",
+    "end": "2026-09-30",
+    "interval_min": 5,
+    "units": [
+      "TW1B-004",
+      "TW1B-005",
+      "TW1B-008"
+    ],
+    "distance_km": {
+      "TW1B-004": 0.6,
+      "TW1B-005": 1.4,
+      "TW1B-008": 3.2
+    },
+    "uplinks_expected": 25920,
+    "uplinks_received": 25739,
+    "pdr_pct": {
+      "TW1B-004": 99.3287,
+      "TW1B-005": 99.6412,
+      "TW1B-008": 98.9352
+    },
+    "pdr_pct_all": 99.3017,
+    "rssi_median_dBm": {
+      "TW1B-004": -72.0,
+      "TW1B-005": -88.0,
+      "TW1B-008": -103.0
+    },
+    "soc_min_pct": {
+      "TW1B-004": 96.0909,
+      "TW1B-005": 94.6364,
+      "TW1B-008": 94.8182
+    },
+    "soc_min_pct_all": 94.6364,
+    "vbat_min_mV": 4121.0,
+    "internal_max_C": 37.1,
+    "air_max_C": 31.93,
+    "internal_minus_air_daily_max_C": {
+      "mean": 3.7882,
+      "max": 5.39
+    },
+    "rain_vs_reference": {
+      "slope": 0.9878,
+      "r2": 0.9995,
+      "days": 8,
+      "total_ref_mm": 62.1,
+      "total_tw_mm": 61.6
+    }
+  },
+  "headline": {
+    "sleep_uA_mean": 7.21,
+    "sleep_uA_max": 8.1,
+    "avg_current_uA_5min_SF9": 75.9083,
+    "charge_per_uplink_mC": 20.6254,
+    "efficiency_pct_10uA_10mA_100mA": [
+      88.2,
+      94.0694,
+      92.9347
+    ],
+    "loadstep_droop_mV": 40.2,
+    "dark_autonomy_days_1min": 250.5593,
+    "vin_dpm_V": 4.4959,
+    "solar_clear_day_mAh": 2336.3183,
+    "solar_cloudy_day_mAh": 862.17,
+    "tx_power_dBm_mean": 19.9306,
+    "tx_power_dBm_range": [
+      19.46,
+      20.46
+    ],
+    "s11_dB_915_in_case_matched": -32.6526,
+    "s11_dB_worst_in_band_matched": -19.0136,
+    "s11_dB_915_in_case_unmatched": -11.0662,
+    "range_km_last_decode": {
+      "SF7": 11.5,
+      "SF10": 13.2
+    },
+    "temp_err_max_C": 0.199,
+    "rh_err_max_pct": 1.6,
+    "ip": "1 m / 30 min dunk pass; IPX5 hose pass; IP66 jet pending",
+    "esd": "±8 kV contact A; ±15 kV air B (J4)",
+    "field_pdr_pct": 99.3017,
+    "field_min_soc_pct": 94.6364,
+    "field_max_internal_C": 37.1,
+    "field_max_air_C": 31.93,
+    "first_pass_yield_pct": 90.0,
+    "compliance": {
+      "R1": "pass",
+      "R2": "pass",
+      "R3": "pass",
+      "R4": "pass",
+      "R5": "pass (1 month measured)",
+      "R6": "pass (marginal)",
+      "R7": "pass",
+      "R8": "pass",
+      "R9": "pass",
+      "R10": "open",
+      "R11": "pass",
+      "R12": "pass",
+      "R13": "pass",
+      "R14": "n/a",
+      "R15": "pass"
+    }
+  },
+  "power": {
+    "ppk2_board": "TW1B-003",
+    "sleep_uA_in_capture": 7.2096,
+    "charge_per_uplink_mC_battery": {
+      "Wake + sense": 1.1607,
+      "TX (+20 dBm)": 17.4668,
+      "RX windows": 0.2575,
+      "Waits between windows": 1.7404
+    },
+    "charge_per_uplink_mC_total": 20.6254,
+    "sim_charge_per_uplink_mC_battery": {
+      "Wake + sense": 1.338,
+      "TX (+20 dBm)": 17.745,
+      "RX windows": 0.258,
+      "Waits between windows": 1.983
+    },
+    "sim_total_mC": 21.324,
+    "awake_time_s": 2.19,
+    "tx_time_ms": 205.7,
+    "avg_current_uA_5min_SF9": 75.9083,
+    "sim_avg_current_uA_5min_SF9": 78.0,
+    "avg_current_uA_1min_SF9_projected": 350.9665,
+    "efficiency_pct": {
+      "VIN3.7_10uA": 88.2,
+      "VIN3.7_1mA": 93.0796,
+      "VIN3.7_10mA": 94.0694,
+      "VIN3.7_100mA": 92.9347,
+      "VIN3.0_100mA": 90.551,
+      "VIN4.2_100mA": 92.2102,
+      "VIN3.7_300mA": 91.2
+    },
+    "loadstep_droop_mV": 40.2,
+    "loadstep_overshoot_mV": 34.7,
+    "sim_droop_mV": 32.6,
+    "dark_test_soc_drop_pct_per_day": 0.3193,
+    "dark_test_days": 14,
+    "dark_autonomy_days_to_20pct_projected": 250.5593
+  },
+  "production": {
+    "boards": 10,
+    "steps": [
+      "visual",
+      "power_on_mA",
+      "rails",
+      "flash",
+      "i2c_scan",
+      "sensors",
+      "sleep_lt_10uA",
+      "rf_power",
+      "join",
+      "led_hall"
+    ],
+    "first_pass_yield_pct": 90.0,
+    "final_yield_pct": 100.0,
+    "failures": [
+      {
+        "serial": "TW1B-006",
+        "step": "i2c_scan",
+        "note": "0x45 missing: solder bridge U5 pins 3-4; reworked"
+      }
+    ]
+  },
+  "rf": {
+    "tx_power_dBm": {
+      "mean": 19.9306,
+      "min": 19.46,
+      "max": 20.46,
+      "per_unit_mean": {
+        "TW1B-001": 20.1214,
+        "TW1B-002": 19.7398
+      }
+    },
+    "s11": {
+      "free_air": {
+        "at_915_dB": -10.0155,
+        "worst_in_band_dB": -8.0975,
+        "vswr_at_915": 1.9225
+      },
+      "case_unmatched": {
+        "at_915_dB": -11.0662,
+        "worst_in_band_dB": -9.9428,
+        "vswr_at_915": 1.7766
+      },
+      "case_matched_revB": {
+        "at_915_dB": -32.6526,
+        "worst_in_band_dB": -19.0136,
+        "vswr_at_915": 1.0477
+      }
+    },
+    "sim_s11_revB_at_915_dB": -42.6577,
+    "range": {
+      "SF7": {
+        "last_decode_km": 11.5,
+        "max_km_PDR50": 8.8,
+        "pdr_by_km": {
+          "0.3": 1.0,
+          "0.6": 1.0,
+          "1.0": 1.0,
+          "1.5": 1.0,
+          "2.1": 1.0,
+          "2.8": 1.0,
+          "3.5": 1.0,
+          "4.3": 1.0,
+          "5.2": 1.0,
+          "6.0": 0.8333,
+          "7.1": 1.0,
+          "7.9": 1.0,
+          "8.8": 1.0,
+          "9.7": 0.0,
+          "10.6": 0.0,
+          "11.5": 0.0833,
+          "12.4": 0.0,
+          "13.2": 0.0
+        }
+      },
+      "SF10": {
+        "last_decode_km": 13.2,
+        "max_km_PDR50": 13.2,
+        "pdr_by_km": {
+          "0.3": 1.0,
+          "0.6": 1.0,
+          "1.0": 1.0,
+          "1.5": 1.0,
+          "2.1": 1.0,
+          "2.8": 1.0,
+          "3.5": 1.0,
+          "4.3": 1.0,
+          "5.2": 1.0,
+          "6.0": 1.0,
+          "7.1": 1.0,
+          "7.9": 1.0,
+          "8.8": 1.0,
+          "9.7": 1.0,
+          "10.6": 0.5,
+          "11.5": 1.0,
+          "12.4": 0.1667,
+          "13.2": 1.0
+        }
+      }
+    },
+    "rssi_median_dBm_at_1km_SF7": -89.85,
+    "sim_rssi_dBm_at_1km": -84.1064
+  },
+  "sensors": {
+    "temp_ext_max_abs_err_C": 0.199,
+    "temp_ext_rms_err_C": 0.0995,
+    "temp_int_max_abs_err_C_idle": 0.236,
+    "temp_range_C": [
+      -10,
+      60
+    ],
+    "selfheat_C_per_W": 3.081,
+    "selfheat_at_400mA_C": 0.9367,
+    "rh_ext_max_abs_err": 1.6,
+    "rh_ext_rms_err": 0.7131,
+    "rh_ext_max_abs_err_below_90": 0.9,
+    "rh_int_max_abs_err": 2.9
+  },
+  "solar": {
+    "field_days": {
+      "Clear day": {
+        "date": "2026-09-03",
+        "mAh_in": 2336.3183,
+        "peak_charge_mA": 404.6,
+        "panel_V_median_while_charging": 4.501,
+        "vbat_start_V": 3.622,
+        "vbat_end_V": 4.192,
+        "hours_charging": 8.65,
+        "peak_panel_temp_C": 54.0
+      },
+      "Cloudy day": {
+        "date": "2026-09-09",
+        "mAh_in": 862.17,
+        "peak_charge_mA": 376.2,
+        "panel_V_median_while_charging": 4.5,
+        "vbat_start_V": 3.929,
+        "vbat_end_V": 4.193,
+        "hours_charging": 6.8167,
+        "peak_panel_temp_C": 52.5
+      }
+    },
+    "vin_dpm_V": {
+      "per_board": {
+        "TW1B-001": 4.4846,
+        "TW1B-004": 4.4975,
+        "TW1B-008": 4.5056
+      },
+      "mean": 4.4959,
+      "min": 4.4846,
+      "max": 4.5056
+    },
+    "input_limit_mA_measured": 474.3222,
+    "sim_charge_current_hot_mA": 387.0,
+    "ts_window_C": {
+      "hot_stop": 50.4,
+      "hot_resume": 47.8,
+      "cold_stop": -0.6,
+      "cold_resume": 2.1
+    }
+  }
+}

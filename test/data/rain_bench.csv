@@ -1,0 +1,9 @@
+# Motorised cam actuating the gauge's own reed (bounce intact), unit TW1B-001. Above ~10/s one tip landed in the
+# 50 ms firmware lockout. Real gauge maximum ~2 tips/s.
+rate_tips_per_s,tips_applied,tips_counted,mcu_state
+0.5,300,300,sleep (STOP2)
+1.0,300,300,sleep (STOP2)
+2.0,200,200,sleep (STOP2)
+3.0,200,200,mixed (TX during burst)
+5.0,100,100,sleep (STOP2)
+10.0,100,99,sleep (STOP2)

@@ -1,0 +1,9 @@
+# Rev A sleep-current investigation (PPK2). Root cause: low-side divider switch -> ADC clamp leakage.
+serial,condition,vbat_V,sleep_uA
+TW1A-001,as built,4.1,34.2
+TW1A-002,as built,4.1,36.8
+TW1A-003,as built,4.08,33.5
+TW1A-001,as built,3.7,8.6
+TW1A-001,Q3 source lifted (divider off),4.1,7.3
+TW1A-001,ECO-1 high-side switch bodge,4.1,7.4
+TW1A-002,ECO-1 high-side switch bodge,4.1,7.6

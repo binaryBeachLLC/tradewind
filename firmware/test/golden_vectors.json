@@ -1,0 +1,70 @@
+{
+  "_comment": "Shared by test/test_payload.cpp (C packer) and decoder/test_decoder.js (JS decoder + JS mirror encoder). Hex values were worked out by hand from PAYLOAD.md, not copied from either implementation.",
+  "measurement": [
+    {
+      "name": "typical sunny afternoon",
+      "in": {"flags": 118, "air_t_c": 24.37, "air_rh": 61.5, "soil_pct": 34.25, "rain_tips": 1234,
+             "vbat_mv": 3987, "int_t_c": 31.3, "int_rh": 48.2, "vsolar_mv": 4870},
+      "hex": "760985 7B 45 04D2 95 3F 60 C3",
+      "out": {"rapid": false, "charging": true, "power_good": true, "battery_low": false,
+              "air_temperature_c": 24.37, "air_humidity_pct": 61.5, "soil_moisture_pct": 34.5,
+              "rain_tips_total": 1234, "rain_mm_total": 246.8, "battery_v": 3.99,
+              "internal_temperature_c": 31.5, "internal_humidity_pct": 48.0, "solar_v": 4.875}
+    },
+    {
+      "name": "cold night, rapid mode, battery low, soil probe missing",
+      "in": {"flags": 89, "air_t_c": -7.83, "air_rh": 95.0, "soil_pct": 0, "rain_tips": 0,
+             "vbat_mv": 3240, "int_t_c": -5.2, "int_rh": 88.0, "vsolar_mv": 0},
+      "hex": "59 FCF1 BE FF 0000 4A F6 B0 00",
+      "out": {"rapid": true, "charging": false, "power_good": false, "battery_low": true,
+              "air_temperature_c": -7.83, "air_humidity_pct": 95.0, "soil_moisture_pct": null,
+              "rain_tips_total": 0, "rain_mm_total": 0, "battery_v": 3.24,
+              "internal_temperature_c": -5.0, "internal_humidity_pct": 88.0, "solar_v": 0}
+    },
+    {
+      "name": "clamps at the top of every range, air probe missing",
+      "in": {"flags": 96, "air_t_c": 0, "air_rh": 0, "soil_pct": 100, "rain_tips": 65535,
+             "vbat_mv": 5200, "int_t_c": 70.0, "int_rh": 100, "vsolar_mv": 7000},
+      "hex": "60 7FFF FF C8 FFFF FE 7E C8 FF",
+      "out": {"rapid": false, "charging": false, "power_good": false, "battery_low": false,
+              "air_temperature_c": null, "air_humidity_pct": null, "soil_moisture_pct": 100,
+              "rain_tips_total": 65535, "rain_mm_total": 13107, "battery_v": 5.04,
+              "internal_temperature_c": 63.0, "internal_humidity_pct": 100, "solar_v": 6.375}
+    },
+    {
+      "name": "nothing answered, battery under range",
+      "in": {"flags": 0, "air_t_c": 0, "air_rh": 0, "soil_pct": 0, "rain_tips": 7,
+             "vbat_mv": 2400, "int_t_c": 0, "int_rh": 0, "vsolar_mv": 2000},
+      "hex": "00 7FFF FF FF 0007 00 7F FF 50",
+      "out": {"rapid": false, "charging": false, "power_good": false, "battery_low": false,
+              "air_temperature_c": null, "air_humidity_pct": null, "soil_moisture_pct": null,
+              "rain_tips_total": 7, "rain_mm_total": 1.4, "battery_v": 2.5,
+              "internal_temperature_c": null, "internal_humidity_pct": null, "solar_v": 2.0}
+    }
+  ],
+  "health": [
+    {
+      "name": "day 412 after a commanded reboot",
+      "in": {"fw_major": 1, "fw_minor": 2, "uptime_days": 412, "uplinks": 50000, "rejoins": 3,
+             "last_rssi_dbm": -97, "last_snr_db": -7.25, "vbat_min_mv": 3712, "int_t_max_c": 47.5,
+             "charge_minutes": 312, "interval_min": 5, "reset_reason": 1},
+      "hex": "01 02 019C C350 03 9F E3 79 5F 1F 05 01",
+      "out": {"fw_version": "1.2", "uptime_days": 412, "uplinks": 50000, "rejoins": 3,
+              "last_rssi_dbm": -97, "last_snr_db": -7.25, "battery_min_v": 3.71,
+              "internal_temperature_max_c": 47.5, "charge_minutes": 310, "interval_min": 5,
+              "reset_reason": "downlink_reboot"}
+    }
+  ],
+  "downlink": [
+    {"hex": "0100B4", "valid": true,  "cmd": 1, "value": 180, "js": {"set_interval_s": 180}},
+    {"hex": "01003B", "valid": false},
+    {"hex": "010E11", "valid": false},
+    {"hex": "020F",   "valid": true,  "cmd": 2, "value": 15,  "js": {"rapid_minutes": 15}},
+    {"hex": "0200",   "valid": true,  "cmd": 2, "value": 0,   "js": {"rapid_minutes": 0}},
+    {"hex": "03",     "valid": true,  "cmd": 3, "value": 0,   "js": {"health_now": true}},
+    {"hex": "04B007", "valid": true,  "cmd": 4, "value": 0,   "js": {"reboot": true}},
+    {"hex": "04B006", "valid": false},
+    {"hex": "0101",   "valid": false},
+    {"hex": "",       "valid": false}
+  ]
+}

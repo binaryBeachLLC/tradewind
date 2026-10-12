@@ -1,0 +1,41 @@
+* vbat_sense — battery-sense divider: rev A (low-side switch, 10k/10k) vs rev B (high-side P-FET, 100k/100k)
+* Battery current of each revision is measured with its own 0 V ammeter (VMA, VMB).
+.include {SPICE_DIR}/models.lib
+VBAT bat 0 4.2
+VMA bat batA 0
+VMB bat batB 0
+VDD vdd 0 3.3
+* enable: low (sensor off) until 1 ms, then high for the measurement
+VEN en 0 PULSE(0 3.3 1m 2u 2u 30m 60m)
+
+* ---------- rev A: VBAT -> 10k -> ADC -> 10k -> low-side BSS138 -> GND
+RA11 batA adcA 10k
+RA12 adcA lowA 10k
+MA3 lowA en 0 0 NFET_BSS138 W=1 L=1
+RA3leak lowA 0 5G
+CA10 adcA 0 10n
+DA adcA vdd DCLAMP
+CAsh adcA 0 5p
+
+* ---------- rev B: VBAT -> AO3401 P-FET (gate pulled to VBAT by 1M, pulled low by BSS138) -> 100k/100k -> ADC
+MB2 vbsw gB batB batB PFET_AO3401 W=1 L=1
+RB2leak batB vbsw 2G
+RB9 batB gB 1Meg
+MB3 gB en 0 0 NFET_BSS138 W=1 L=1
+RB3leak gB 0 5G
+RB11 vbsw adcB 100k
+RB12 adcB 0 100k
+CB10 adcB 0 10n
+DB adcB vdd DCLAMP
+CBsh adcB 0 5p
+
+.control
+set wr_singlescale
+set wr_vecnames
+dc VBAT 3.0 4.2 0.01
+wrdata vbat_sense_dc.dat i(VMA) i(VMB)
+tran 2u 12m
+wrdata vbat_sense_tran.dat v(adcA) v(adcB) v(gB) v(vbsw) i(VMB)
+quit
+.endc
+.end

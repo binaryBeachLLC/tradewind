@@ -1,0 +1,10 @@
+# Borrowed UVA-340 cabinet, 0.89 W/m2 @340 nm, 60 C black panel, continuous (no condensation cycle). Colour: CR-10 type meter.
+material,hours,delta_E,notes
+ASA white,0,0.0,
+ASA white,100,0.6,
+ASA white,250,1.1,
+ASA white,500,1.7,no chalking
+PETG white,0,0.0,reference
+PETG white,100,2.4,
+PETG white,250,5.1,
+PETG white,500,8.9,"yellowed, surface crazing"

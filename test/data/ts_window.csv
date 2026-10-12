@@ -1,0 +1,6 @@
+# RT1 heated/cooled in the chamber with the cell in place; thermocouple on RT1; 400 mA charge source.
+edge,cell_temp_C,event
+rising,50.4,charge suspended (~CHG stays low per datasheet; charge current 0)
+falling,47.8,charge resumed
+falling,-0.6,charge suspended (cold)
+rising,2.1,charge resumed

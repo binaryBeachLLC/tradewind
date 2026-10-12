@@ -1,0 +1,20 @@
+{
+  "10": {
+    "components": 23.71,
+    "electronics_incl_pcb_pcba": 44.21,
+    "with_cell": 51.71
+  },
+  "100": {
+    "components": 17.98,
+    "electronics_incl_pcb_pcba": 23.28,
+    "with_cell": 29.48
+  },
+  "1000": {
+    "components": 13.83,
+    "electronics_incl_pcb_pcba": 16.43,
+    "with_cell": 21.23
+  },
+  "line_items": 47,
+  "placements": 69,
+  "unique_mpns": 46
+}

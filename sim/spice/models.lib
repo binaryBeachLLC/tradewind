@@ -1,0 +1,7 @@
+* Tradewind shared device models (simple, for design-level simulation, not vendor models)
+* AO3401A-like P-FET: Vth -0.9 V, ~50 mohm at Vgs -4 V, Ciss ~ 650 pF lumped into Cgs
+.model PFET_AO3401 PMOS (LEVEL=1 VTO=-0.9 KP=12 LAMBDA=0.01 CGSO=1.2e-6 CGDO=0.15e-6)
+* BSS138-like N-FET: Vth 1.1 V, ~1.5 ohm at Vgs 3.3 V
+.model NFET_BSS138 NMOS (LEVEL=1 VTO=1.1 KP=0.35 LAMBDA=0.01 CGSO=0.05e-6 CGDO=0.01e-6)
+* STM32 GPIO/ADC input clamp diode to VDD
+.model DCLAMP D (IS=5e-12 N=1.2 RS=50)

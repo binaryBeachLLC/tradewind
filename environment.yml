@@ -1,0 +1,17 @@
+# conda env for simulations, enclosure CAD, test analysis and doc figures
+# mamba env create -f environment.yml && conda activate hwdesign
+name: hwdesign
+channels: [conda-forge]
+dependencies:
+  - python=3.11
+  - cadquery=2
+  - ngspice
+  - ngspice-lib
+  - numpy
+  - scipy
+  - pandas
+  - matplotlib
+  - trimesh
+  - pygltflib
+  - shapely
+  - openpyxl
