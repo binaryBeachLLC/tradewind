@@ -54,7 +54,7 @@ ax.set_yticks(range(len(serials)), serials)
 ax.tick_params(labelsize=7.5)
 for sp in ax.spines.values():
     sp.set_visible(False)
-ax.set_title("Production tester, first pass (✓ pass, ✗ fail → reworked and retested)")
+ax.set_title("Production tester, first pass (✗ → ✓: reworked and retested)")
 save(fig, fig_path("production"))
 
 fp_yield = first.groupby("serial").result.apply(lambda s: (s == "pass").all()).mean() * 100

@@ -11,7 +11,7 @@ enclosure, firmware, bring-up, characterization and a 30-day field pilot.
 
 | | |
 |---|---|
-| 📘 [Engineering design & test report](docs/Tradewind_TW-1_Engineering_Report_revB.pdf) (35 pages) | requirements, simulation, schematic, electrical and layout considerations, EMI/EMC, enclosure, bring-up, test and field data |
+| 📘 [Engineering design & test report](docs/Tradewind_TW-1_Engineering_Report_revB.pdf) (46 pages) | requirements, simulation, schematic, electrical and layout considerations, EMI/EMC, enclosure, bring-up, test and field data |
 | 📗 [Product datasheet](docs/Tradewind_TW-1_Datasheet_revB.pdf) (14 pages) | specifications, typical characteristics, connector functions, drawings, ordering |
 | 🌐 [Interactive page](https://binarybeach.tech/hardware/tradewind/) | the product and the board in 3D, the schematic and the PCB layers in the browser |
 
@@ -77,7 +77,7 @@ tools/        generators: schematic, PCB, 3D models, BOM, fab export, layout aud
 - `fab/`: `tradewind_revB_gerbers.zip` (11 Gerber X2 layers plus drill), `assembly/tradewind_revB_cpl.csv`, `BOM_tradewind_revB.csv` (costed at 10/100/1k), `BOM_JLCPCB.csv`, the board as STEP and GLB, per-layer SVGs, `erc_report.txt` and `drc_report.txt`.
 - Board: 96 × 70 mm, 4 layers (JLC 7628 stackup), matte black ENIG, 85 footprints, 50 Ω CPWG RF line, SHT40 on a slotted thermal island.
 - `tools/layout_audit.py` measures the routed board (copper per net, current-path resistance, hot-loop areas, separations, RF geometry) into `fab/layout_audit.json`;
-  `tools/layout_figs.py` draws the annotated layout figures from it. The report's section 4 (electrical, BOM, layout, EMI/EMC) is built on those numbers.
+  `tools/layout_figs.py` draws the layout figures from it: each part outline comes from that part's pads, and numbered markers sit on computed features. The report's section 4 (electrical, BOM, layout, EMI/EMC) is built on those numbers.
 
 <p align="center"><img src="docs/report/img/layer_strip.png" width="820" alt="Copper layers L1 to L4"></p>
 
@@ -128,6 +128,8 @@ The payload format is in `firmware/PAYLOAD.md`. The decoder for The Things Stack
 ### `render/` and `docs/`
 - `render/scripts/render.py`: Blender Cycles shots from the CAD and board exports (studio, outdoor, exploded, lid off, board, turntable).
 - `tools/gen_report.py` and `tools/gen_datasheet.py` build `docs/report/` and `docs/datasheet/`. Every number comes from the result files, through `tools/docdata.py`.
+- `tools/paginate.py` lays the report out in headless Chrome: each chapter flows across Letter pages, a heading never ends a page,
+  and a full-width chart is never squeezed into half a column.
 - `tools/build_docs.py --pdf` collects the images and prints both PDFs. `tools/check_pages.py` fails a page if its content overflows the Letter sheet.
 
 ## Rebuilding everything

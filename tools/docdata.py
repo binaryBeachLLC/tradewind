@@ -12,6 +12,7 @@ def _j(p):
 
 SIM = _j("sim/results.json")
 LAYOUT = _j("hardware/fab/layout_audit.json")
+LAYOUT_KEYS = _j("docs/figures/layout_keys.json")   # numbered markers in the layout figures
 TEST = _j("test/results.json")
 MECH = _j("mechanical/results.json")
 BOM = _j("hardware/fab/bom_summary.json")

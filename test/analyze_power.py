@@ -40,8 +40,8 @@ ax.set_ylim(3e-3, 300)
 ax.set_xlim(t[0], t[-1])
 ax.set_xlabel("Time (s)")
 ax.set_ylabel("Battery current (mA)")
-ax.set_title("One 5-min wake cycle at SF9, measured at the battery (PPK2, 3.70 V)")
-ann = [("sense", t[lab == "Wake + sense"].mean(), 25), ("TX SF9\n206 ms", (tx_start + tx_end) / 2, 140),
+ax.set_title("One 5-min wake cycle at SF9, at the battery (PPK2, 3.70 V)")
+ann = [("sense", t[lab == "Wake + sense"].mean(), 25), ("TX SF9, 206 ms", (tx_start + tx_end) / 2 + 0.33, 140),
        ("RX1", tx_start + 1.013, 14), ("RX2", tx_start + 2.012, 14), ("wait", tx_start + 0.6, 2.4),
        ("wait", tx_start + 1.5, 2.4), ("sleep %.1f µA" % sleep_uA, 2.95, 0.016)]
 for txt, x, y in ann:
@@ -57,13 +57,13 @@ y = np.arange(len(phases))
 ax.barh(y - 0.19, [sim_mC[p] for p in phases], height=0.36, color=C.series[2], label="Simulated budget")
 ax.barh(y + 0.19, [q[p] for p in phases], height=0.36, color=C.series[0], label="Measured (PPK2)")
 for k, p in enumerate(phases):
-    ax.text(max(q[p], sim_mC[p]) + 0.25, k, "measured %.2f · sim %.2f mC" % (q[p], sim_mC[p]), va="center", fontsize=7.5)
+    ax.text(max(q[p], sim_mC[p]) + 0.25, k, "meas. %.2f · sim %.2f mC" % (q[p], sim_mC[p]), va="center")
 ax.set_yticks(y, phases)
 ax.invert_yaxis()
 ax.set_xlabel("Charge per uplink at the battery (mC)")
-ax.set_xlim(0, 26)
+ax.set_xlim(0, 29)
 ax.grid(axis="y", visible=False)
-ax.set_title("Where the charge goes: measured vs simulated (5-min, SF9)")
+ax.set_title("Where the charge goes per uplink (5-min, SF9)")
 ax.legend(loc="lower right")
 save(fig, fig_path("charge_budget"))
 
@@ -129,7 +129,7 @@ ax.set_xlabel("Days without sun (panel unplugged), 1-min rapid mode")
 ax.set_ylabel("State of charge (%)")
 limit_line(ax, x=60, text="")
 ax.text(59, 72, "R4: ≥ 60 days", ha="right", fontsize=7.5, color=C.mute)
-ax.text(20, 76, "projected to a 20 %% reserve: %.0f days" % proj_20, fontsize=8, color=C.ink)
+ax.text(20, 83.5, "projected to a 20 %% reserve: %.0f days" % proj_20, fontsize=8, color=C.ink)
 ax.set_title("Dark test: 14 days in 1-min rapid mode with no sun")
 ax.legend(loc="lower left")
 save(fig, fig_path("dark_test"))

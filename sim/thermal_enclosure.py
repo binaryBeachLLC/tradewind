@@ -168,20 +168,16 @@ def main():
                          hours_above_45C=round(float((tc > 45).sum() * hrs), 2),
                          charge_inhibit_hours=round(float((tc > 50).sum() * hrs), 2),
                          max_shell_C=round(float(ts.max()), 1))
-        ax.plot(h, tc, color=C.series[k], label=name, lw=1.8)
+        ax.plot(h, tc, color=C.series[k], label=f"{name.replace('White box under ventilated solar roof', 'White box, ventilated roof')} (peak {tc.max():.0f} °C)", lw=1.8)
         traces.append((h, tc, name, k))
         np.savetxt(os.path.join(OUT, f"thermal_case{k}.csv"), o, delimiter=",",
                    header="hour,ambient_C,shell_C,battery_C,ghi_Wm2", comments="", fmt="%.3f")
     ax.plot(h, ta, color=C.mute, lw=1.0, ls=":", label="Ambient air")
-    ax.set(xlim=(0, 24), ylim=(20, 70), xticks=range(0, 25, 3), xlabel="Time of day (HST) — 15 Aug, clear, calm Kona-wind day",
+    ax.set(xlim=(0, 24), ylim=(20, 74), xticks=range(0, 25, 3), xlabel="Time of day (HST) — 15 Aug, clear, calm Kona-wind day",
            ylabel="Battery temperature (°C)", title="Battery temperature in the enclosure on a hot, clear day")
     limit_line(ax, y=50, text="Charger stops (TS 50 °C)", where="left")
     limit_line(ax, y=45, text="Cell vendor limit 45 °C", where="left", va="top")
-    for h_, tc_, name, k in traces:
-        i = int(np.argmax(tc_))
-        ax.annotate(f"{tc_[i]:.0f} °C", (h_[i], tc_[i]), xytext=(4, 4), textcoords="offset points",
-                    fontsize=7.5, color=C.ink)
-    ax.legend(loc="upper left", ncol=2, columnspacing=1.2)
+    ax.legend(loc="upper left", ncol=2, columnspacing=1.2, fontsize=8.5)
     save(fig, fig_path("thermal_enclosure"))
     record("thermal_enclosure", {"design_day_kona_calm": res, "trade_wind_day": trades})
     print("trades", trades)

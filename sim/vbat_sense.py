@@ -41,19 +41,19 @@ def main():
     a1.set_yticks([1e-3, 1e-2, 1e-1, 1, 10, 100])
     a1.set_yticklabels(["0.001", "0.01", "0.1", "1", "10", "100"])
     k = np.argmin(np.abs(vb - 4.1))
-    a1.annotate(f"{ia[k]:.0f} µA at 4.1 V", (4.1, ia[k]), xytext=(-40, 4), textcoords="offset points",
-                ha="right", va="center", fontsize=7.5, color=C.ink,
+    a1.annotate(f"{ia[k]:.0f} µA at 4.1 V", (4.1, ia[k]), xytext=(4.18, 0.3), textcoords="data",
+                ha="right", va="center", color=C.ink,
                 arrowprops=dict(arrowstyle="-", color=C.mute, lw=0.6, shrinkB=3))
     a1.annotate(f"{ib[k] * 1000:.0f} nA", (4.1, ib[k]), xytext=(-10, 10), textcoords="offset points",
                 ha="right", fontsize=7.5, color=C.ink)
-    a1.legend(loc="center left", bbox_to_anchor=(0, 0.42))
+    a1.legend(loc="upper left")
 
     sel = (t >= 0.5) & (t <= 8)
     a2.plot(t[sel] - 1.0, va[sel] * 1000, color=C.series[0], lw=1.8, label="VBAT_ADC (rev B)")
     a2.set(xlim=(-0.5, 7.5), ylim=(0, 2400), xlabel="Time after VBAT_SENSE_EN (ms)", ylabel="ADC pin (mV)",
-           title="Settling after enable, VBAT 4.2 V")
+           title="Settling, VBAT 4.2 V")
     a2.axvline(settle_ms, color=C.mute, lw=0.9, ls=(0, (4, 3)))
-    a2.text(settle_ms + 0.2, 700, f"within ½ LSB\n(12-bit) after\n{settle_ms:.1f} ms;\nfirmware\nsamples at 5 ms",
+    a2.text(settle_ms + 0.2, 300, f"within ½ LSB\n(12-bit) after\n{settle_ms:.1f} ms;\nfirmware\nsamples at 5 ms",
             fontsize=7.5, color=C.ink, va="bottom", ha="left")
     save(fig, fig_path("vbat_sense"))
 

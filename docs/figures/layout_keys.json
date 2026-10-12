@@ -1,0 +1,14 @@
+{
+ "layout_power": [
+  "Buck-boost input loop C6 → U3 VIN → PGND: 1.1 mm² (keep this one smallest)",
+  "Buck-boost output loop U3 VOUT → C7 → PGND: 3.4 mm²",
+  "Switch node LX1/LX2: 7.1 mm² of copper, all on L1 over the solid L2 ground",
+  "VIN_SOLAR, 0.3 mm, 475 mA max: 53 mΩ, 25 mV drop, +2 °C",
+  "U2 thermal pad: 4 vias into the L2 ground plane"
+ ],
+ "layout_rf": [
+  "RAK3172 RF pad: 14.1 mm of line to the U.FL, 28° at 915 MHz, one bend",
+  "CPWG: 0.35 mm trace, 0.20 mm gap to the L1 pour, 0.21 mm over solid L2 (Z₀ ≈ 50 Ω)",
+  "GND via fence both sides, 1.8 mm pitch (λg/103 at 915 MHz)"
+ ]
+}

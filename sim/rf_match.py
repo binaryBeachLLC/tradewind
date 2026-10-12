@@ -89,7 +89,7 @@ def smith_axes(ax):
     for r in [0.2, 0.5, 1, 2, 5]:
         c, rad = r / (1 + r), 1 / (1 + r)
         ax.plot(c + rad * np.cos(th), rad * np.sin(th), color=C.grid, lw=0.6, zorder=0)
-        ax.text(c - rad + 0.01, 0.02, f"{r:g}", fontsize=6, color=C.mute, ha="left", va="bottom")
+        ax.text(c - rad + 0.01, 0.02, f"{r:g}", fontsize=8.5, color=C.mute, ha="left", va="bottom")
     for x in [0.2, 0.5, 1, 2, 5]:
         for s in (1, -1):
             z = np.array([complex(r, s * x) for r in np.concatenate([np.linspace(0, 5, 200), np.logspace(0.7, 3, 200)])])
@@ -171,11 +171,11 @@ def main():
     ax.axvline(0.35, color=C.mute, lw=0.9, ls=(0, (4, 3)))
     z35t, ee = cpwg_z0(0.35, 0.20)
     z35 = cpwg_z0(0.35, 0.20, t=1e-6)[0]
-    ax.text(0.355, 66, f"0.35 mm (spec):\n{z35t:.0f}–{z35:.0f} Ω", fontsize=7.5, color=C.ink, va="top")
-    limit_line(ax, y=50, text="50 Ω", where="left", va="bottom")
     ax.set(xlim=(0.15, 0.60), ylim=(30, 70), xlabel="Trace width W (mm), gap 0.20 mm to coplanar ground",
            ylabel="Z0 (Ω)", title="50 Ω grounded coplanar line on L1 (H 0.2104 mm, εr 4.4)")
-    ax.legend(loc="upper right", fontsize=7.5)
+    ax.text(0.345, 33, f"0.35 mm (spec):\n{z35t:.0f}–{z35:.0f} Ω", color=C.ink, va="bottom", ha="right")
+    limit_line(ax, y=50, text="50 Ω", where="right", va="bottom")
+    ax.legend(loc="upper right")
     save(fig, fig_path("cpwg"))
 
     w50t = float(w[np.argmin(np.abs(zt - 50))])

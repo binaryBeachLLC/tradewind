@@ -166,7 +166,7 @@ def main():
     a1.set(xlim=(0, 6), ylim=(0, 105), xlabel="Days after install (1 Jan)", ylabel="State of charge (%)",
            title="Charge-up from 30 % (shipping)")
     limit_line(a1, y=30, text="shipped at 30 %", where="right", va="bottom")
-    a1.legend(loc="center right")
+    a1.legend(loc="lower right", bbox_to_anchor=(1.0, 0.3))
 
     a2 = fig.add_subplot(gs[1, 1])
     for k, (m, l) in enumerate(LOADS.items()):
@@ -178,7 +178,7 @@ def main():
                     fontsize=7.5, color=C.ink, ha="right")
     a2.set(xlim=(0, 800), ylim=(0, 105), xlabel="Days with no sun at all", ylabel="State of charge (%)",
            title="Dark autonomy from full")
-    limit_line(a2, y=20, text="20 % reserve", where="right", va="bottom")
+    limit_line(a2, y=20, text="20 %\nreserve", where="right", va="bottom")
     a2.legend(loc="upper right")
     save(fig, fig_path("energy_year"), tight=False)
 

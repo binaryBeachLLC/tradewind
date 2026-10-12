@@ -71,14 +71,13 @@ def main():
     for sf in SFS:
         y = SENS[sf] + MARGIN
         a1.axhline(SENS[sf], color=C.mute, lw=0.8, ls=(0, (4, 3)))
-        a1.text(0.107, SENS[sf], f"SF{sf}  {SENS[sf]:.0f} dBm", fontsize=7, color=C.mute, va="center",
-                bbox=dict(boxstyle="square,pad=0.1", fc="white", ec="none"))
         a1.plot([rng[sf]], [y], "o", ms=4.5, color=C.series[0], mec="white", mew=1, zorder=5)
-    a1.annotate(f"SF10: {rng[10]:.1f} km\nwith 10 dB margin", (rng[10], SENS[10] + MARGIN), xytext=(-6, 26),
-                textcoords="offset points", ha="right", fontsize=7.5, color=C.ink,
+    a1.annotate(f"SF10: {rng[10]:.1f} km\nwith 10 dB margin", (rng[10], SENS[10] + MARGIN), xytext=(0.9, -95),
+                textcoords="data", ha="right", fontsize=7.5, color=C.ink,
                 arrowprops=dict(arrowstyle="-", color=C.mute, lw=0.6))
-    a1.text(0.107, -116.5, "Gateway sensitivity", fontsize=7, color=C.mute, va="center")
-    a1.text(0.6, -60, "Dots: range with a 10 dB fade margin\n(SF7 → SF10, left to right)", fontsize=7.5,
+    a1.text(0.107, -133.5, "Gateway sensitivity, dashed:\n" + ", ".join(f"SF{sf} {SENS[sf]:.0f}" for sf in SFS) + " dBm",
+            color=C.mute, va="top", fontsize=8.5)
+    a1.text(0.6, -60, "Dots: range with a 10 dB fade margin\n(SF7 → SF10, left to right)",
             color=C.ink, va="top")
 
     x = np.arange(len(SFS))
@@ -87,7 +86,7 @@ def main():
         a2.text(i, air[s] + 6, f"{air[s]:.0f}", ha="center", fontsize=7.5, color=C.ink)
     a2.set_xticks(x)
     a2.set_xticklabels([f"SF{s}" for s in SFS])
-    a2.set(ylim=(0, 420), ylabel="Time on air (ms)", title="Airtime, 24-byte frame")
+    a2.set(ylim=(0, 420), ylabel="Time on air (ms)", title="Airtime, 24 B frame")
     a2.grid(axis="x", visible=False)
     a2.set_axisbelow(True)
     save(fig, fig_path("link_budget"))

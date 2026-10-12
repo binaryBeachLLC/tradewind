@@ -3,7 +3,8 @@ on the Binary Beach letterhead. Every number comes from the result files via too
 """
 import os
 
-from docdata import (SIM, TEST, MECH, BOM, COMPLIANCE, BOM_ROWS, H, LAYOUT, DOC_REPORT, REV, DATE, REPO, f, status_pill)
+from paginate import paginate
+from docdata import (SIM, TEST, MECH, BOM, COMPLIANCE, BOM_ROWS, H, LAYOUT, LAYOUT_KEYS, DOC_REPORT, REV, DATE, REPO, f, status_pill)
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 OUT = os.path.join(ROOT, "docs", "report", "index.html")
@@ -94,13 +95,14 @@ The antenna match was tuned with the lid closed, which moved return loss at 915 
 <tr><td>6 · Rev B</td><td>10 boards; bench and chamber characterization; production test</td><td>test/</td><td class="n">3 wk</td></tr>
 <tr><td>7 · Qualification</td><td>Immersion, ESD, thermal cycling, UV, drop; 30-day field pilot</td><td>test/</td><td class="n">5 wk</td></tr>
 <tr><td>8 · Release</td><td>Fab package, BOM, datasheet, this report, renders</td><td>docs/, render/</td><td class="n">1 wk</td></tr></table>
+<div class="callout"><b>Open:</b> R10 needs the 100 L/min IP66 jet at an accredited lab (immersion and hose already pass).
+<b>Marginal:</b> R6 charge-window trip points sit 0.4–0.6 °C outside nominal, inside the charger IC's tolerance.</div>
 """)
 page(f"""
 <h2>Requirements compliance</h2>
-<p class="small">Every requirement from the design specification, measured on rev B. Methods and raw logs: sections 9–10 and <code>test/</code>.</p>
-<table class="small" style="font-size:7.9pt"><tr><th>ID</th><th>Requirement</th><th>Target</th><th>Measured (rev B)</th><th>Result</th></tr>{rows}</table>
-<div class="callout"><b>Open:</b> R10 needs the 100 L/min IP66 jet at an accredited lab (immersion and hose already pass).
-<b>Marginal:</b> R6 charge-window trip points sit 0.4–0.6 °C outside nominal, inside the charger IC's tolerance.</div>
+<p class="small">Every requirement in the design specification, measured on rev B (methods and logs: sections 9–10, <code>test/</code>).</p>
+<table class="small tight" style="margin-bottom:0"><tr><th>ID</th><th>Requirement</th><th>Target</th><th>Measured (rev B)</th><th>Result</th></tr>{rows}</table>
+
 """)
 
 # ======================================================================== 3 architecture
@@ -139,9 +141,9 @@ page(f"""
 <h2>3 · Design analysis and simulation</h2>
 <p class="small muted">Every model is a runnable script in <code>sim/</code> (Python + ngspice); <code>sim/run_all.sh</code> regenerates every figure in about 20 s.</p>
 <h3>3.1 Solar input: fixed-voltage tracking is enough</h3>
-{F('sim_solar_iv.png', f"Single-diode model of the 5 V / 2 W panel ({sv['cells_series']} cells) at four irradiance levels, with the BQ24074 VIN-DPM window (4.35–4.63 V). At 1000 W/m² the fixed 4.5 V point captures {f(sv['mpp_capture_stc_pct'],1)} % of maximum power at 25 °C and {f(sv['mpp_capture_hot_pct'],1)} % with the panel at 55 °C, its real operating temperature.")}
+{F('sim_solar_iv.png', cls='mid', cap=f"Single-diode model of the 5 V / 2 W panel ({sv['cells_series']} cells) at four irradiance levels, with the BQ24074 VIN-DPM window (4.35–4.63 V). At 1000 W/m² the fixed 4.5 V point captures {f(sv['mpp_capture_stc_pct'],1)} % of maximum power at 25 °C and {f(sv['mpp_capture_hot_pct'],1)} % with the panel at 55 °C, its real operating temperature.")}
 <h3>3.2 Thermal: the battery limits the design</h3>
-{F('sim_thermal_enclosure.png', f"Lumped thermal model of the enclosure on a calm, clear August day (worst case). The roof keeps the cell at {f(roof['max_battery_C'],1)} °C; a grey box reaches {f(grey['max_battery_C'],0)} °C and blocks charging {f(grey['charge_inhibit_hours'],1)} h; a panel glued to the lid reaches {f(glued['max_battery_C'],0)} °C and blocks charging {f(glued['charge_inhibit_hours'],1)} h a day.")}
+{F('sim_thermal_enclosure.png', cls='mid', cap=f"Lumped thermal model of the enclosure on a calm, clear August day (worst case). The roof keeps the cell at {f(roof['max_battery_C'],1)} °C; a grey box reaches {f(grey['max_battery_C'],0)} °C and blocks charging {f(grey['charge_inhibit_hours'],1)} h; a panel glued to the lid reaches {f(glued['max_battery_C'],0)} °C and blocks charging {f(glued['charge_inhibit_hours'],1)} h a day.")}
 """)
 
 # ======================================================================== 5 sim: energy + budget
@@ -204,7 +206,7 @@ page(f"""
 <p class="small">Tradewind has <b>one custom circuit board</b>. Everything else electrical in the product is a bought
 sub-assembly on a cable: the panel, two probes, the rain gauge, the antenna and the cell. This section is the complete
 package for the board: schematic and design notes (4.1), electrical considerations (4.2), BOM (4.3), layout (4.4),
-EMI/EMC and ESD (4.5) and manufacturing outputs (4.6). Section 5 covers each bought sub-assembly: how it connects and
+manufacturing outputs (4.5) and EMI/EMC and ESD (4.6). Section 5 covers each bought sub-assembly: how it connects and
 what that means electrically.</p>
 <table class="small"><tr><th>Electrical assembly</th><th>Made or bought</th><th>Connects at</th><th>Covered in</th></tr>
 <tr><td><b>TW1-MAIN main board</b>: charger, buck-boost, radio module, sensors, I/O</td><td>Designed here</td><td>–</td><td>Section 4</td></tr>
@@ -214,8 +216,6 @@ what that means electrically.</p>
 <tr><td>Tipping-bucket rain gauge (reed switch)</td><td>Bought</td><td>J2 (JST PH 2)</td><td>5</td></tr>
 <tr><td>Antenna feed: U.FL pigtail, SMA bulkhead, 915 MHz whip</td><td>Bought</td><td>J5 (U.FL)</td><td>5</td></tr>
 <tr><td>Protected 18650 cell (with its own protection PCB)</td><td>Bought</td><td>BT1 holder</td><td>5</td></tr></table>
-<div class="grid2">
-<div>
 <h3>Board at a glance</h3>
 <table class="small">
 <tr><td>Size, build</td><td class="n">96 × 70 × 1.6 mm, 4 layers, ENIG, matte black</td></tr>
@@ -225,8 +225,6 @@ what that means electrically.</p>
 <tr><td>Vias</td><td class="n">{lb_['vias']} ({lb_['gnd_vias']} GND, {lb_['p3v3_vias']} +3V3); 0.6/0.3 mm and 0.45/0.2 mm</td></tr>
 <tr><td>Checks</td><td class="n">ERC 0/0 · DRC 0 with schematic parity · netlist 233 pins, 0 mismatches</td></tr>
 </table>
-</div>
-<div>
 <h3>Net classes</h3>
 <table class="small"><tr><th>Class</th><th>Nets</th><th class="n">Track / clearance</th></tr>
 <tr><td>Power</td><td>SOLAR_RAW, VIN_SOLAR, VBAT, VSYS, LX1, LX2</td><td class="n">0.30 / 0.15 mm</td></tr>
@@ -235,7 +233,6 @@ what that means electrically.</p>
 </table>
 <p class="small muted">+3V3 and GND are planes (L3, L2), plus pours on L1 and L4. The power class sets the minimum;
 the switch-node and plane connections are drawn wider by hand.</p>
-</div></div>
 """)
 
 page(f"""
@@ -243,15 +240,8 @@ page(f"""
 <p class="small">KiCad 9, hierarchical: a root sheet and three function sheets, {BOM['placements']} placed parts. ERC: 0 errors, 0 warnings.
 The netlist is checked pin by pin against the design source (233 pins, 47 nets, 0 mismatches) in <code>tools/check_netlist.py</code>.</p>
 {F('sch_Power.png', 'Sheet 2, Power: solar input and protection, BQ24074 charger and power path, protected 18650 with NTC, TPS63900 buck-boost, switched battery and solar sense.', cls='tall')}
-""")
-page(f"""
-{F('sch_Radio_MCU.png', 'Sheet 3, Radio and MCU: RAK3172, π-match to U.FL, SWD (Tag-Connect) and UART pads, reset, LED and magnet wake.', cls='sch2')}
-{F('sch_Sensors_IO.png', 'Sheet 4, Sensors and field I/O: internal SHT40, J4 air probe, J3 soil probe on a load switch, J2 rain gauge with debounce, and 4-channel ESD.', cls='sch2')}
-""")
-
-page(f"""
 <h3>Schematic notes, block by block</h3>
-<table class="small" style="font-size:7.55pt"><tr><th style="width:17%">Block</th><th>Decision and the reason for it</th></tr>
+<table class="small"><tr><th style="width:17%">Block</th><th>Decision and the reason for it</th></tr>
 <tr><td><b>Solar input</b><br>J1, D1, Q1, C1, C2</td><td>D1 SMAJ12CA (bidirectional, 12 V standoff, 19.9 V clamp at 20 A) takes surges and ESD on the panel lead.
 Q1 DMP3099L is a P-FET in the high side with its gate pulled to GND (R1): a correct panel turns it on, a reversed panel leaves it off.
 It is rated −30 V with ±20 V on the gate, above both the clamp voltage and the panel's 6.0 V open circuit. A FET drops about 45 mV
@@ -260,14 +250,23 @@ C1 10 µF / 25 V keeps about half its value at 5 V of bias, inside the charger's
 <tr><td><b>Charger</b><br>U2 BQ24074</td><td>USB500 mode (EN1 = VSYS, EN2 = GND): the input is limited to 475 mA and <b>VIN-DPM</b> holds the panel at 4.5 V,
 which is the reason this part works without an MPPT chip. EN1 is tied to VSYS, not to the panel, because the EN pins are rated 7 V.
 ISET 1.78 kΩ sets 500 mA. TMR is grounded so the safety timers can't end a slow solar charge. The TS NTC limits charging to about 0–50 °C.
-ILIM is populated as the datasheet asks, though USB500 mode ignores it. CHG and PGOOD are open-drain with pull-ups to +3V3 (not VSYS),
-so the MCU pins never see more than VDD.</td></tr>
+ILIM is fitted as the datasheet asks (USB500 ignores it). CHG and PGOOD pull up to +3V3, not VSYS, so the MCU pins never exceed VDD.</td></tr>
+</table>
+""")
+page(f"""
+{F('sch_Radio_MCU.png', 'Sheet 3, Radio and MCU: RAK3172, π-match to U.FL, SWD (Tag-Connect) and UART pads, reset, LED and magnet wake.', cls='sch2')}
+{F('sch_Sensors_IO.png', 'Sheet 4, Sensors and field I/O: internal SHT40, J4 air probe, J3 soil probe on a load switch, J2 rain gauge with debounce, and 4-channel ESD.', cls='sch2')}
+""")
+
+page(f"""
+<h3>Schematic notes (continued)</h3>
+<table class="small"><tr><th style="width:17%">Block</th><th>Decision and the reason for it</th></tr>
 <tr><td><b>Charger heat</b></td><td>Worst-case linear-charger dissipation is (VIN − VBAT) × I ≈ (5.0 − 3.2 V) × 0.40 A ≈ 0.7 W, at a low cell with a strong panel.
 At 44.5 °C/W junction to air (datasheet, JEDEC board) that is a 31 °C rise, so about 91 °C in a 60 °C box. The charger's own
 thermal regulation (125 °C) cuts the current before it gets dangerous. U2 sits 76 mm from the internal humidity sensor, and the measured coupling is {f(sen['selfheat_C_per_W'],1)} °C per watt.</td></tr>
 <tr><td><b>Buck-boost</b><br>U3 TPS63900</td><td>The cell crosses 3.3 V during discharge, so the converter must both step up and step down. Its quiescent current is 75 nA.
-There is no feedback pin: the output is set by CFG resistors that are read once at power-up (R8 16.2 kΩ → 3.3 V).
-They are 1 %, 100 ppm parts on short traces, because a misread sets the wrong rail; the pins tolerate at most 10 pF and these traces add 0.2 pF.
+The output is set by CFG resistors read once at power-up (R8 16.2 kΩ → 3.3 V), so they are 1 %, 100 ppm parts on short traces:
+a misread sets the wrong rail. The pins tolerate 10 pF; these traces add 0.2 pF.
 With the input-current limit set to unlimited, the converter's peak switch current is 1.33–1.6 A and TI asks for an inductor with Isat ≥ 2 A. L1 is a 2.2 µH molded metal-alloy part
 rated 2.6 A. C7 and C8 are 22 µF / 10 V X5R and keep about 60 % at 3.3 V,
 and the transmit-droop simulation (3.4) uses that derated value.</td></tr>
@@ -276,17 +275,17 @@ After Q2 turns on, C10 charges through R11 ‖ R12 (50 kΩ), with τ = {f(vbs['t
 <b>Found in this review:</b> the firmware waited 3 ms, which reads {f(vbs['error_pct_at_3ms_pilot_fw'],2)} % low (≈ 10 mV at 4 V). It now waits 5 ms.</td></tr>
 <tr><td><b>Radio / MCU</b><br>U1 RAK3172</td><td>The module carries the FCC modular approval, the STM32WLE5 and its 32 MHz reference, all behind a shield can.
 VDD gets 10 µF + 100 nF at the pin. BOOT0 is pulled down, and NRST has 100 nF plus a reset switch inside the case.
-Debug uses a Tag-Connect footprint (no connector to buy) and UART pads for AT commands and the bootloader.</td></tr>
+Debug: a Tag-Connect footprint (no connector to buy) and UART pads for AT commands and the bootloader.</td></tr>
 <tr><td><b>RF match</b><br>C14, L2, C15</td><td>The π footprint carries a shunt C (C14 1.8 pF C0G ±0.1 pF), a series L (L2 7.5 nH, high-Q) and a spare shunt (C15, DNP).
 Values come from S11 measured in the closed case and the optimizer in <code>sim/rf_match.py</code>.
-Shunt-C plus series-L is a low-pass, so it also cuts the harmonics (4.5).</td></tr>
+Shunt-C plus series-L is a low-pass, so it also cuts the harmonics (4.6).</td></tr>
 <tr><td><b>Air probe</b><br>J4, F1, R19, R20</td><td>The probe stays powered (80 nA idle): an unpowered SHT45 would clamp the shared I²C bus through its ESD diodes.
-F1 (100 mA PTC) protects +3V3 from a crushed cable. R19 and R20 (100 Ω) limit ESD current into the MCU pins and damp
-ringing on the cable. The pull-ups (4.7 kΩ) sit on the board side.</td></tr>
+F1 (100 mA PTC) protects +3V3 from a crushed cable. R19/R20 (100 Ω) limit ESD current into the MCU and damp
+cable ringing; the 4.7 kΩ pull-ups sit on the board side.</td></tr>
 <tr><td><b>Soil probe</b><br>U7, R21, R22, C21</td><td>TPS22917 load switch: the probe is powered only for its 100 ms warm-up. CT 1 nF slows turn-on so the probe's input capacitance
 doesn't pull +3V3 down. R21 (1 MΩ) reads a missing probe as 0 V. R22 and C21 (1.6 kHz low-pass) remove the probe's own oscillator ripple.</td></tr>
 <tr><td><b>Rain / magnet</b><br>R23, R24, C22, U4</td><td>The 1 MΩ pull-up draws 3.3 µA only while the reed is closed. The 10 kΩ / 22 nF filter rejects bounce
-(τ<sub>fall</sub> 0.22 ms, τ<sub>rise</sub> 22 ms), and the 22 nF also bypasses RF picked up on the gauge lead.
+(τ<sub>fall</sub> 0.22 ms, τ<sub>rise</sub> 22 ms) and bypasses RF picked up on the gauge lead.
 The DRV5032FB is push-pull, so it needs no pull-up current.</td></tr>
 </table>
 """)
@@ -296,6 +295,10 @@ dc_rows = "".join(
     f"<tr><td>{p['label']}</td><td>{p['net']}</td><td class='n'>{f(p['width_mm'],2)}</td><td class='n'>{f(p['length_mm'],1)}</td>"
     f"<td class='n'>{f(p['r_mohm'],0)}</td><td class='n'>{f(p['current_A']*1e3,0)}</td><td class='n'>{f(p['drop_mV'],0)}</td>"
     f"<td class='n'>{f(p['drop_mV_60C'],0)}</td><td class='n'>+{f(p['dT_C'],1)}</td></tr>" for p in si["dc_paths"])
+adc_rows = "".join(
+    f"<tr><td>{r['net']}</td><td class='n'>{f(r['r_source_kohm'],0)} kΩ</td><td class='n'>{f(r['c_nF'],0)} nF</td><td class='n'>{f(r['tau_ms'],2)} ms</td>"
+    f"<td class='n'>{f(r['need_ms_half_lsb'],1)} ms</td><td class='n'>{('%g ms' % r['wait_ms']) if r['wait_ms'] else 'always on'}</td>"
+    f"<td class='n'>{f(r['kickback_pct'],3)} %</td></tr>" for r in si["adc_settling"])
 page(f"""
 <h3>4.2 Electrical design considerations</h3>
 <p class="small">The board is small and slow by most standards; the hard limits are microamps in sleep, a 0.5 A linear charger,
@@ -308,6 +311,19 @@ so heating is never the issue; <b>resistance is</b>. The drops that matter: the 
 makes the charger enter constant-voltage about {f(pth['Charger BAT → cell +']['drop_mV'],0)} mV early, which lengthens the charge slightly but costs no capacity
 (the drop falls to ~3 mV at the 50 mA termination current). VIN_SOLAR's {f(pth['Reverse FET → charger IN']['drop_mV'],0)} mV is harmless: VIN-DPM regulates at the IN pin, so the panel simply runs
 {f(pth['Reverse FET → charger IN']['drop_mV'],0)} mV higher on its curve. Rev C widens VBAT to 1 mm ({f(si['vbat_revC_1mm']['drop_mV'],0)} mV).</p>
+<h3>Plane pair and decoupling</h3>
+<p class="small">L2 (GND) and L3 (+3V3) are 1.07 mm apart, which gives only {f(si['plane_pair_pF'],0)} pF of plane capacitance. The design doesn't rely on it.
+Decoupling is by capacitors at each supply pin: 10 µF + 100 nF at the module, 100 nF at each sensor and the hall switch, and 22 µF × 2 at the converter.
+The module's TX step (5 → 87 mA in ~10 µs) is carried by C12 and the converter output. Simulated droop is
+{f(sim['tx_droop']['2 × 22 µF + 10 µF at module (rev B)']['droop_mV'],1)} mV; measured {f(pw['loadstep_droop_mV'],0)} mV.</p>
+<h3>ADC sources and settling</h3>
+<table class="small"><tr><th>Net</th><th class="n">Source R</th><th class="n">Filter C</th><th class="n">τ</th><th class="n">½ LSB at 12 bit</th><th class="n">Firmware wait</th><th class="n">Sample kick-back</th></tr>{adc_rows}</table>
+<p class="small">Each divider has a filter capacitor large enough that the ADC's ~5 pF sampling capacitor takes at most
+{f(max(r['kickback_pct'] for r in si['adc_settling']),2)} % of its charge, so the 50–250 kΩ dividers need no buffer amplifier. SOLAR_SENSE is never switched; its divider draws
+4.5 µA from the panel, never from the cell.</p>
+""")
+
+page(f"""
 <div class="grid2">
 <div>
 <h3>Fast and high-frequency nets</h3>
@@ -315,7 +331,7 @@ makes the charger enter constant-voltage about {f(pth['Charger BAT → cell +'][
 <tr><td>RF_MOD / RF_ANT</td><td>915 MHz, +20 dBm</td><td>50 Ω CPWG, {f(LA['rf']['length_mm'],1)} mm, via fence, nothing else on L1 nearby</td></tr>
 <tr><td>LX1 / LX2</td><td>Switch node, ns edges, pulsed amps</td><td>{f(LA['switch_node_copper_mm2'],1)} mm², L1 only, no vias, solid GND below</td></tr>
 <tr><td>VSYS / PGND at U3</td><td>Hot-loop di/dt</td><td>Loops {f(loops_['Buck-boost input (C6 → VIN → PGND)'],1)} and {f(loops_['Buck-boost output (VOUT → C7 → PGND)'],1)} mm²</td></tr>
-<tr><td>32 MHz reference</td><td>Inside the module can</td><td>Nothing to route; it shows in the scan (4.5)</td></tr>
+<tr><td>32 MHz reference</td><td>Inside the module can</td><td>Nothing to route; it shows in the scan (4.6)</td></tr>
 <tr><td>SWD, UART</td><td>≤ 4 MHz, bench only</td><td>Short, L1, near the module</td></tr>
 <tr><td>SDA / SCL</td><td>100 kHz, but 1 m of cable</td><td>Rise time checked (below)</td></tr>
 </table>
@@ -331,13 +347,6 @@ makes the charger enter constant-voltage about {f(pth['Charger BAT → cell +'][
 <tr><td>SOIL_ADC</td><td>Probe output, 1 m cable</td><td>1 kΩ + 100 nF at the MCU side</td></tr>
 </table>
 </div></div>
-""")
-
-adc_rows = "".join(
-    f"<tr><td>{r['net']}</td><td class='n'>{f(r['r_source_kohm'],0)} kΩ</td><td class='n'>{f(r['c_nF'],0)} nF</td><td class='n'>{f(r['tau_ms'],2)} ms</td>"
-    f"<td class='n'>{f(r['need_ms_half_lsb'],1)} ms</td><td class='n'>{('%g ms' % r['wait_ms']) if r['wait_ms'] else 'always on'}</td>"
-    f"<td class='n'>{f(r['kickback_pct'],3)} %</td></tr>" for r in si["adc_settling"])
-page(f"""
 <div class="grid2">
 <div>{F('sim_i2c_rise.png', f"External I²C rise time. Bus capacitance with the 1 m probe ≈ {f(i2c['c_total_1m_pF'],0)} pF gives {f(i2c['rise_ns_1m'],0)} ns with 4.7 kΩ: fine at 100 kHz (limit 1000 ns), too slow for 400 kHz. 100 kHz works to {f(i2c['max_cable_m_100k_4k7'],1)} m of cable.")}</div>
 <div>
@@ -349,16 +358,6 @@ because the bus moves 12 bytes per reading. SDA and SCL run side by side in the 
 4.7 kΩ pull-ups and 100 Ω series resistors.</p>
 <p class="small muted">Assumed: {i2c['assumptions']}. Measure the cable before raising the clock.</p>
 </div></div>
-<h3>ADC sources and settling</h3>
-<table class="small"><tr><th>Net</th><th class="n">Source R</th><th class="n">Filter C</th><th class="n">τ</th><th class="n">½ LSB at 12 bit</th><th class="n">Firmware wait</th><th class="n">Sample kick-back</th></tr>{adc_rows}</table>
-<p class="small">Each divider has a filter capacitor large enough that the ADC's ~5 pF sampling capacitor takes at most
-{f(max(r['kickback_pct'] for r in si['adc_settling']),2)} % of its charge, so the 50–250 kΩ dividers need no buffer amplifier. SOLAR_SENSE is never switched; its divider draws
-4.5 µA from the panel, never from the cell.</p>
-<h3>Plane pair and decoupling</h3>
-<p class="small">L2 (GND) and L3 (+3V3) are 1.07 mm apart, which gives only {f(si['plane_pair_pF'],0)} pF of plane capacitance. The design doesn't rely on it.
-Decoupling is by capacitors at each supply pin: 10 µF + 100 nF at the module, 100 nF at each sensor and the hall switch, and 22 µF × 2 at the converter.
-The module's TX step (5 → 87 mA in ~10 µs) is carried by C12 and the converter output. Simulated droop is
-{f(sim['tx_droop']['2 × 22 µF + 10 µF at module (rev B)']['droop_mV'],1)} mV; measured {f(pw['loadstep_droop_mV'],0)} mV.</p>
 """)
 
 # ---- 4.3 BOM
@@ -380,7 +379,7 @@ The radio module is 43 % of the parts cost at 1k; a chip-down STM32WL design wou
 """)
 page(f"""
 <h3>BOM considerations</h3>
-<table class="small" style="font-size:7.8pt"><tr><th>Part</th><th>Sourcing</th><th>Substitution rule</th></tr>
+<table class="small"><tr><th>Part</th><th>Sourcing</th><th>Substitution rule</th></tr>
 <tr><td>U1 RAK3172-8-SM-I</td><td>Single source</td><td><b>None.</b> The FCC modular grant and the RF match belong to this module. A different module means a new grant review and re-tuning.</td></tr>
 <tr><td>U2 BQ24074RGT</td><td>Single source (TI)</td><td>Not even within the family: the bq2407x variants differ in OVP and VO(REG), and this design depends on the 10.5 V OVP and VIN-DPM in USB500 mode.</td></tr>
 <tr><td>U3 TPS63900DSK</td><td>Single source (TI)</td><td>None at this quiescent current. The fallback is a buck-boost with a feedback divider, which costs about 1 µA of sleep current.</td></tr>
@@ -427,9 +426,18 @@ is the main reason for choosing 4 layers on a board this slow.</p>
 </div>
 <div>{fig('r_pcb_top.jpg', 'Rev B top side, KiCad raytrace.')}</div>
 </div>
-{F('layout_map.png', 'The routed board colored by electrical role (from the board file). Power runs bottom-left, field I/O bottom-middle, RF bottom-right; the cell occupies the top band and VBAT crosses under it to C5.', cls='map')}
+<h3>Layer usage and return paths</h3>
+<ul class="small">
+<li>L2 is unbroken GND under the whole board; only via barrels perforate it. Every L1 trace returns directly beneath itself.</li>
+<li>L4 traces reference the <b>+3V3</b> plane (L3), not ground. That return path closes through decoupling capacitors, so only slow nets
+are allowed on L4. The {len(LA['b_cu_nets'])} nets with copper there are DC or kHz signals: {', '.join(n for n in LA['b_cu_nets'])}. RF, the switch node and I²C stay on L1.</li>
+<li>Plane connections: every GND and +3V3 pad has its own via ({lb_['gnd_vias']} GND, {lb_['p3v3_vias']} +3V3), so no part shares a via with a neighbour's return current.
+U2's pad has {lb_['u2_thermal_vias']} thermal vias and U3's has {lb_['u3_thermal_vias']}, both to L2.</li>
+</ul>
+{F('layer_strip.png', 'Copper layers L1–L4 (left to right): top signals and GND pour, solid ground, +3.3 V plane, bottom signals and GND pour.')}
 """)
 page(f"""
+{F('layout_map.png', 'The routed board colored by electrical role (from the board file). Power runs bottom-left, field I/O bottom-middle, RF bottom-right; the cell occupies the top band and VBAT crosses under it to C5.', cls='full')}
 <h3>Placement and zoning</h3>
 <ul class="small">
 <li><b>One cable wall.</b> J1–J5 line the bottom edge, so every cable leaves through the box's bottom wall (four glands and the SMA bulkhead).
@@ -440,30 +448,17 @@ The switch node is {f(sep_['Switch node → RF line'],0)} mm from the RF line, {
 U5 also sits on a peninsula cut by an L-shaped milled slot, with no copper pour on any layer under it.</li>
 <li><b>Cell band.</b> The 18650 holder takes the top 33 mm. The NTC (RT1) sits against the cell body, so the charger sees the cell's temperature, not the board's.</li>
 </ul>
-<h3>Layer usage and return paths</h3>
-<ul class="small">
-<li>L2 is unbroken GND under the whole board; only via barrels perforate it. Every L1 trace returns directly beneath itself.</li>
-<li>L4 traces reference the <b>+3V3</b> plane (L3), not ground. That return path closes through decoupling capacitors, so only slow nets
-are allowed on L4. The {len(LA['b_cu_nets'])} nets with copper there are DC or kHz signals: {', '.join(n for n in LA['b_cu_nets'])}. RF, the switch node and I²C stay on L1.</li>
-<li>Plane connections: every GND and +3V3 pad has its own via ({lb_['gnd_vias']} GND, {lb_['p3v3_vias']} +3V3), so no part shares a via with a neighbour's return current.
-U2's pad has {lb_['u2_thermal_vias']} thermal vias and U3's has {lb_['u3_thermal_vias']}, both to L2.</li>
-</ul>
-{F('layer_strip.png', 'Copper layers L1–L4 (left to right): top signals and GND pour, solid ground, +3.3 V plane, bottom signals and GND pour.')}
-<div class="grid2">
-<div>{F('r_pcb_hero.jpg', 'Populated rev B board (Blender Cycles render from the KiCad 3D export).')}</div>
-<div>{F('r_pcb_detail_rf.jpg', 'RF corner: RAK3172, π-match on the CPWG line, via fence and U.FL.')}</div>
-</div>
 """)
 page(f"""
-{F('layout_power.png', 'Power stage as routed: charger U2 with its thermal vias, buck-boost U3 with the two hot loops marked, and the solar input path from Q1.', cls='tall')}
+{F('layout_power.png', 'Power stage as routed (from the board file). Part outlines are drawn from each part\'s pads; the numbered markers are explained below.', cls='wide')}
+<ol class="key">{''.join('<li>' + k + '</li>' for k in LAYOUT_KEYS['layout_power'])}</ol>
 <div class="grid2">
 <div>
 <h3>Buck-boost (hand-routed)</h3>
 <ul class="small">
 <li>Placed and routed per TI's layout guidance before autorouting, then locked.</li>
-<li>Input loop C6 → VIN → PGND: <b>{f(loops_['Buck-boost input (C6 → VIN → PGND)'],1)} mm²</b>. Output loop VOUT → C7 → PGND: <b>{f(loops_['Buck-boost output (VOUT → C7 → PGND)'],1)} mm²</b>.
-A buck-boost runs both loops hot (buck below 3.3 V, boost above), so both are kept small.</li>
-<li>Switch node: {f(LA['switch_node_copper_mm2'],1)} mm² of copper, enough to carry the current and no more, all on L1 over solid ground, with no vias.</li>
+<li>A buck-boost runs both loops hot (buck below 3.3 V, boost above), so both are kept small (markers 1, 2).</li>
+<li>The switch node (3) has just enough copper to carry the current, and no vias.</li>
 <li>CFG1–3 are under 2 mm long. CFG2's one hop to L4 sits away from LX.</li>
 </ul>
 </div>
@@ -480,29 +475,24 @@ It costs {f(pth['Reverse FET → charger IN']['drop_mV'],0)} mV, which VIN-DPM a
 """)
 rfd = LA["rf"]
 page(f"""
-{F('layout_rf.png', 'RF feed as routed: the module RF pad, the π-match pads on the line, the GND via fence and the U.FL at the board edge.', cls='sch2')}
-<div class="grid2">
-<div>
+{F('layout_rf.png', 'RF feed as routed (from the board file): the module RF pad, the π-match on the line, the GND via fence and the U.FL at the board edge.', cls='rf')}
+<ol class="key">{''.join('<li>' + k + '</li>' for k in LAYOUT_KEYS['layout_rf'])}</ol>
 <h3>RF layout</h3>
 <ul class="small">
-<li>CPWG on L1: 0.35 mm trace with a 0.20 mm gap to the pour, over solid L2 0.21 mm below. Field-solver range 47.8–52.1 Ω (3.5).</li>
-<li>{f(rfd['length_mm'],1)} mm from the module pad to the U.FL, {f(rfd['electrical_length_deg'],0)}° at 915 MHz, one bend. The match pads sit directly on the line, with no stubs.</li>
-<li>{rfd['fence_vias']} GND vias line it ({rfd['fence_left']} on one side, {rfd['fence_right']} on the other, including the C14/C15 ground vias), at a {f(rfd['fence_pitch_mm'],1)} mm pitch ({rfd['fence_pitch_vs_lambda_g']}).
-That is far tighter than the λ/20 rule even at the 3rd harmonic.</li>
+<li>Field-solver range for the CPWG (2): 47.8–52.1 Ω (3.5). The match pads sit directly on the line, with no stubs.</li>
+<li>{rfd['fence_vias']} fence vias (3), {rfd['fence_left']} on one side and {rfd['fence_right']} on the other, counting the C14/C15 ground vias: far tighter than λ/20 even at the 3rd harmonic.</li>
 <li>No other L1 copper runs near the line. One slow L4 trace crosses under the area, shielded by L2.</li>
 <li>J5 sits at the board edge in line with the SMA bulkhead, so the 150 mm pigtail runs straight with no tight bends.</li>
 </ul>
-</div>
-<div>
+
 <h3>Analog, sensing and debug</h3>
 <ul class="small">
 <li>Divider filter capacitors sit at the dividers, so the long ADC traces (VBAT_ADC {f(sum(LA['nets']['VBAT_ADC']['length_mm'].values()),0)} mm) are driven from a 10–100 nF source and pick up almost nothing.</li>
 <li>The ESD array U6 sits between J2–J4 and everything else. Its ground pins go straight to vias, so a strike's current returns to L2 before it can reach the MCU.</li>
-<li>SWD uses a Tag-Connect footprint next to the module; UART uses 1.27 mm pads.</li>
-<li>Test points: TP1 +3V3, TP2 VSYS, TP3 VBAT, TP4 GND, TP5 VIN_SOLAR, TP6 AUX_ADC. These are the bed-of-nails points for the production tester (section 8).</li>
+<li>Test points TP1–TP6 (+3V3, VSYS, VBAT, GND, VIN_SOLAR, AUX_ADC) are the production tester's bed-of-nails points (section 8). SWD is a Tag-Connect footprint by the module; UART is 1.27 mm pads.</li>
 <li>Three fiducials; 0402 is the smallest part; the battery holder is the one through-hole part (hand or selective solder).</li>
 </ul>
-</div></div>
+
 """)
 page(f"""
 <h3>Layout review findings (rev B as built)</h3>
@@ -516,7 +506,7 @@ All five are cheap to fix, and they are part of rev C.</p>
 <tr><td>C6 (U3 input) is 10 µF / 10 V 0603: about 4–5 µF left at 4.4 V of bias</td><td>At the 5 µF effective minimum in the TPS63900 datasheet. Bring-up ripple and droop were in spec.</td><td>22 µF / 10 V 0805</td></tr>
 <tr><td>Battery-sense settle time 3 ms in firmware (τ = {f(vbs['tau_ms'],1)} ms)</td><td>VBAT reads {f(vbs['error_pct_at_3ms_pilot_fw'],2)} % low</td><td>Done: firmware waits 5 ms</td></tr>
 </table>
-<h3>4.6 Manufacturing outputs</h3>
+<h3>4.5 Manufacturing outputs</h3>
 <table class="small"><tr><th>File</th><th>Contents</th></tr>
 <tr><td>tradewind_revB_gerbers.zip</td><td>11 Gerber X2 layers, Excellon PTH/NPTH, drill maps, job file</td></tr>
 <tr><td>tradewind_revB_cpl.csv</td><td>Pick-and-place, top side, DNP excluded</td></tr>
@@ -531,14 +521,14 @@ A design change is one edit and one command, and the schematic and board can't d
 
 """)
 
-# ---- 4.5 EMI / EMC
+# ---- 4.6 EMI / EMC
 rad = emc["radiated"]
 des = emc["desense"]
 page(f"""
-<h3>4.5 EMI, EMC and ESD</h3>
+<h3>4.6 EMI, EMC and ESD</h3>
 <p class="small">The enclosure is unshielded ASA, so the board and its cables have to be quiet on their own. The design was laid out by
 naming each noise source, each victim and the path between them, and then cutting the path.</p>
-<table class="small" style="font-size:7.8pt"><tr><th>Source</th><th>Victim</th><th>Path</th><th>What breaks the path</th></tr>
+<table class="small"><tr><th>Source</th><th>Victim</th><th>Path</th><th>What breaks the path</th></tr>
 <tr><td>Buck-boost switch node and hot loops</td><td>Radio receiver; cables as antennas</td><td>Near-field H-field; edges conducted onto VSYS and +3V3</td><td>Loops ≤ {f(loops_['Buck-boost output (VOUT → C7 → PGND)'],1)} mm², molded inductor, solid L2, {f(sep_['Switch node → RF line'],0)} mm to RF; converter in pulse mode at light load</td></tr>
 <tr><td>Radio TX, +20 dBm, and its harmonics</td><td>Restricted bands (3f₀–5f₀); sensor leads</td><td>Antenna; pickup on cables near the whip</td><td>π-match low-pass (Figure below); whip points down, away from the leads; 22 nF / 100 nF at the input pins</td></tr>
 <tr><td>32 MHz reference and MCU clocks</td><td>FCC 15.109 limits</td><td>Module can seams; ground currents into cables</td><td>Module can; solid L2 under the module; probe cable 100 Ω series</td></tr>
@@ -577,12 +567,12 @@ The one ESD reset (±15 kV air on J4) recovered by itself in 9 s.</p>
 <p class="small muted">Pre-compliance runs at a rented chamber and on the bench, not accredited tests; method and setup are in the log headers in <code>test/data/</code>.</p>
 """)
 
-# ======================================================================== 4.6 manufacturing outputs + 5 off-board
+# ======================================================================== 5 off-board
 page(f"""
 <h2>5 · Off-board electronics: cables and bought sub-assemblies</h2>
 <p class="small">These parts are bought complete, so there is no board of ours to lay out in them. What matters electrically is how each one meets
 the main board: the cable, the protection at the connector, and what it costs in sleep current.</p>
-<table class="small" style="font-size:7.7pt"><tr><th style="width:15%">Sub-assembly</th><th style="width:22%">Interface</th><th>Electrical considerations</th><th style="width:22%">Protection on TW1-MAIN</th></tr>
+<table class="small"><tr><th style="width:15%">Sub-assembly</th><th style="width:22%">Interface</th><th>Electrical considerations</th><th style="width:22%">Protection on TW1-MAIN</th></tr>
 <tr><td><b>Solar panel</b> 5 V / 2 W</td><td>J1, 2 wires, ≤ 0.44 A, Voc 6.0 V</td><td>Hot-plugged in the field, so the lead rings at connection. Reversal is possible on a field repair.
 The epoxy panel has no metal frame to ground.</td><td>D1 TVS, Q1 reverse-polarity FET, charger IN takes 26 V without damage</td></tr>
 <tr><td><b>SHT45 air probe</b></td><td>J4, 4 wires, I²C at 100 kHz, 1 m unshielded PUR</td><td>The longest digital run and the main antenna for noise. Always powered (80 nA) so the bus can't be clamped.
@@ -654,11 +644,11 @@ page(f"""
 </table>
 <p class="small">Fit checked in CAD against the board STEP: board-to-wall {f(mech['fit']['clear_board_edge_to_walls_and_columns_mm'],1)} mm, cell-to-lid {f(mech['fit']['clear_cell_to_lid_mm'],1)} mm, gland nuts {f(mech['fit']['clear_board_to_gland_nuts_mm'],1)} mm. No interference in 12 checked pairs.</p>
 </div></div>
-{F('mech_ga_enclosure.png', 'General arrangement of the enclosure: front, side and bottom views with overall dimensions and gland spacing.')}
+{F('mech_ga_enclosure.png', cls='draw', cap='General arrangement of the enclosure: front, side and bottom views with overall dimensions and gland spacing.')}
 """)
 page(f"""
 <div class="grid2">
-<div>{F('mech_section.png', 'Sections A–A and B–B: PCB on bosses, cell under the lid ribs, gasket tongue and groove, lid screw and insert.')}</div>
+<div>{F('mech_section.png', cls='draw', cap='Sections A–A and B–B: PCB on bosses, cell under the lid ribs, gasket tongue and groove, lid screw and insert.')}</div>
 <div>{F('r_product_open.jpg', 'Lid off: PCBA on four bosses, gasket, glands and the U.FL to SMA pigtail.')}</div>
 </div>
 <h3>Design for the field</h3>
@@ -696,6 +686,10 @@ The full step-by-step log is in <code>test/BRINGUP.md</code>.</p>
 </table>
 <p class="small muted">The one first-pass failure: TW1B-006, a solder bridge on U5 pins 3–4 (I²C 0x45 missing). Reworked; rev C opens the paste aperture on that footprint.</p>
 </div></div>
+<div class="grid2 sm">
+<div>{F('r_pcb_hero.jpg', 'Populated rev B board (Blender Cycles render from the KiCad 3D export).')}</div>
+<div>{F('r_pcb_detail_rf.jpg', 'RF corner: RAK3172, π-match on the CPWG line, via fence and U.FL.')}</div>
+</div>
 """)
 
 # ======================================================================== 17-19 characterization
@@ -713,7 +707,7 @@ page(f"""
 """)
 page(f"""
 <h3>9.2 Solar charging</h3>
-{F('test_solar_days.png', f"Field days on unit TW1B-004. Clear: {f(sol['field_days']['Clear day']['mAh_in'],0)} mAh in, panel held at {f(sol['field_days']['Clear day']['panel_V_median_while_charging'],2)} V while charging. Cloudy: {f(sol['field_days']['Cloudy day']['mAh_in'],0)} mAh. Daily use in 1-minute mode is about 9 mAh.")}
+{F('test_solar_days.png', cls='draw', cap=f"Field days on unit TW1B-004. Clear: {f(sol['field_days']['Clear day']['mAh_in'],0)} mAh in, panel held at {f(sol['field_days']['Clear day']['panel_V_median_while_charging'],2)} V while charging. Cloudy: {f(sol['field_days']['Cloudy day']['mAh_in'],0)} mAh. Daily use in 1-minute mode is about 9 mAh.")}
 <div class="grid2">
 <div>{F('test_vin_dpm.png', f"VIN-DPM sweep with an emulated panel: regulation at {f(sol['vin_dpm_V']['min'],3)}–{f(sol['vin_dpm_V']['max'],3)} V on 3 boards; input limit {f(sol['input_limit_mA_measured'],0)} mA.")}</div>
 <div>
@@ -766,14 +760,13 @@ page(f"""
 <tr><td>Operating range</td><td>−10 to +60 °C, chamber</td><td>{status_pill('pass')}</td></tr>
 <tr><td>Drop</td><td>26 × 1 m on concrete</td><td>{status_pill('pass')} 2 mm cosmetic chip</td></tr>
 <tr><td>UV</td><td>500 h UV-A, ASA coupons</td><td>{status_pill('pass')} ΔE {env['uv_deltaE_500h']['ASA white']}</td></tr>
-<tr><td>ESD contact</td><td>±8 kV, all ports</td><td>{status_pill('pass')} criterion A</td></tr>
-<tr><td>ESD air</td><td>±15 kV</td><td>{status_pill('pass')} B on J4 (1 reset, self-recovered)</td></tr>
+<tr><td>ESD</td><td>±8 kV contact, ±15 kV air, all ports</td><td>{status_pill('pass')} A; air on J4 B (1 reset, self-recovered)</td></tr>
 <tr><td>Salt fog</td><td>ASTM B117</td><td><span class="pill">deferred</span> before coastal sites</td></tr>
 </table>
 </div>
 <div>{F('test_ip67_dunk.png', 'Dunk test: the internal SHT40 shows no humidity or dew-point change through 30 minutes at 1 m.')}</div>
 </div>
-{F('test_production.png', f"Production test, 10 boards × 10 steps: first-pass yield {f(prod['first_pass_yield_pct'],0)} %, final {f(prod['final_yield_pct'],0)} % after one rework.")}
+{F('test_production.png', cls='mid', cap=f"Production test, 10 boards × 10 steps: first-pass yield {f(prod['first_pass_yield_pct'],0)} %, final {f(prod['final_yield_pct'],0)} % after one rework.")}
 """)
 page(f"""
 <h3>10.2 30-day field pilot, {fld['site']}, September 2026</h3>
@@ -830,17 +823,35 @@ HEAD = """<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name=
 .body h2:first-child{margin-top:0}
 figure img{border-radius:3px;max-height:3.0in;width:auto!important;max-width:100%}
 .grid2 figure img{max-height:2.25in}
-figure.tall img{max-height:4.6in}
-figure.sch2 img{max-height:3.82in}
-figure.hero img{max-height:4.25in}
+figure.tall img{max-height:3.85in}
+figure.sch2 img{max-height:3.62in}
+figure.hero img{max-height:3.9in}
+figure.mid img{max-height:2.8in}
+figure.full img{max-height:5.5in}
+figure.wide img{max-height:4.7in}
+figure.rf img{max-height:3.6in}
+figure.draw img{max-height:5.1in}
+.grid2.sm figure img{max-height:1.95in}
 figure.map img{max-height:3.85in}
-figcaption{font-size:8pt;line-height:1.35}
-table.small{font-size:8.2pt}
+.body{font-size:11pt;line-height:1.42}
+table{font-size:10pt;line-height:1.32}
+th{font-size:9pt}
+figcaption{font-size:9.5pt;line-height:1.4}
+table.small,.small{font-size:9.5pt}
+.kv{font-size:10.5pt}
+.callout{font-size:10.5pt}
+.stat span{font-size:9.5pt}
+.fine{font-size:9pt}
+table.small.tight td{padding:2px 6px}
+ol.key{list-style:none;padding:0;margin:2px 0 8px;font-size:9.5pt}
+ol.key li{counter-increment:k;position:relative;padding-left:25px;margin:3px 0}
+ol.key{counter-reset:k}
+ol.key li:before{content:counter(k);position:absolute;left:0;top:1px;width:17px;height:17px;border-radius:50%;background:#1f2328;color:#fff;font-size:8pt;font-weight:700;display:grid;place-items:center}
 .body{padding-top:.25in}
 @media print{.page{width:8.5in;max-width:none}.lh,.body,.ft{padding-left:.7in;padding-right:.7in}.lh .contact{display:block}
 .grid2{grid-template-columns:1fr 1fr}.stats{grid-template-columns:repeat(var(--n,3),1fr)}.kv{grid-template-columns:150px 1fr}}
 .grid2 figure{margin:4px 0 8px}
-code{font-size:8.5pt;background:#f3f5f6;padding:0 3px;border-radius:3px}
+code{font-size:9.5pt;background:#f3f5f6;padding:0 3px;border-radius:3px}
 table.small td,table.small th{padding:3px 6px}
 .page{height:auto}
 @media print{.page{min-height:11in;height:11in;overflow:hidden}}
@@ -857,9 +868,25 @@ b.querySelector('button').addEventListener('click',function(){print()});document
 LH = """<div class="lh"><img src="img/logo.png" alt=""><div><div class="wm">BINARY <span>BEACH</span></div>
 <div class="tag">Engineering &amp; Software · Honolulu, Hawai‘i</div></div>
 <div class="contact">Binary Beach LLC<br>Honolulu, Hawai‘i<br>maxwell.pauly@binarybeach.tech · (808) 372-6757<br>binarybeach.tech</div></div><div class="stripe"></div>"""
+
+
+def render(bodies):
+    n = len(bodies)
+    return HEAD + "".join(
+        f'<div class="page">{LH}<div class="body">{b}</div><div class="ft"><span>Binary Beach LLC · Tradewind TW-1 rev {REV} · {DOC_REPORT}</span>'
+        f'<span>Page {i + 1} of {n}</span></div></div>\n' for i, b in enumerate(bodies)) + "</body></html>"
+
+
+def is_chart(name):
+    """A chart drawn full width (6.8 in at 200 dpi) must print full width, or its text prints at half size."""
+    path = os.path.join(ROOT, "docs", "figures", name)
+    if not name.startswith(("sim_", "test_", "mech_")) or not os.path.exists(path):
+        return False
+    from PIL import Image
+    return Image.open(path).width / 200 > 5
+
+
+pages = paginate(pages, render, is_chart, os.path.dirname(OUT))
 n = len(pages)
-html = HEAD + "".join(
-    f'<div class="page">{LH}<div class="body">{b}</div><div class="ft"><span>Binary Beach LLC · Tradewind TW-1 rev {REV} · {DOC_REPORT}</span>'
-    f'<span>Page {i + 1} of {n}</span></div></div>\n' for i, b in enumerate(pages)) + "</body></html>"
-open(OUT, "w").write(html)
+open(OUT, "w").write(render(pages))
 print("report:", OUT, n, "pages,", FN["n"], "figures")

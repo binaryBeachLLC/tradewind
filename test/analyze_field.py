@@ -24,9 +24,10 @@ for k, u in enumerate(units):
 ax.set_ylim(85, 101)
 ax.set_ylabel("State of charge (%, from VBAT)")
 ax.set_title("Battery over 30 days in the field: the cell stays near full")
-ax.legend(loc="lower left", fontsize=7.5)
-ax.text(rx.t.max(), 86.2, "Charger tops off only below 4.08 V (VRCH); never reached", ha="right", fontsize=7.5, color=C.mute)
-fig.autofmt_xdate()
+ax.legend(loc="lower left")
+ax.text(rx.t.max(), 89.5, "Charger tops off only below 4.08 V (VRCH); never reached", ha="right", fontsize=7.5, color=C.mute)
+ax.xaxis.set_major_locator(plt.matplotlib.dates.DayLocator(bymonthday=[1, 7, 13, 19, 25]))
+ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter("%d %b"))
 save(fig, fig_path("field_battery"))
 
 # ---------------------------------------------------------------- enclosure temperature
@@ -65,12 +66,13 @@ ax = axes[0]
 ax.plot(u4.index, u4.soil_pct, color=C.series[0], lw=1.0)
 ax.set_ylabel("Soil moisture (%)")
 ax.set_ylim(15, 50)
-ax.set_title("Soil moisture and rain, unit TW1B-004 (drip irrigation 06:00 every second day)", fontsize=9)
+ax.set_title("Soil moisture and rain, unit TW1B-004 (drip-irrigated every 2nd day)")
 ax = axes[1]
 daily_tips = u4.rain_tips_cum.resample("1D").max().diff().fillna(u4.rain_tips_cum.resample("1D").max().iloc[0])
 ax.bar(daily_tips.index + pd.Timedelta(hours=12), daily_tips.values * 0.2, width=0.7, color=C.series[2])
 ax.set_ylabel("Rain (mm/day)")
-fig.autofmt_xdate()
+ax.xaxis.set_major_locator(plt.matplotlib.dates.DayLocator(bymonthday=[1, 7, 13, 19, 25]))
+ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter("%d %b"))
 save(fig, fig_path("field_soil_rain"))
 
 # ---------------------------------------------------------------- rain vs reference gauge

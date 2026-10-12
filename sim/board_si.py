@@ -92,8 +92,10 @@ for k, rp in enumerate([4700, 2200]):
     label_end(ax, m[-1], rise(rp, m)[-1], "%.1f kΩ" % (rp / 1e3), color=C.series[k])
 ax.set_xlim(0, 5)
 ax.set_ylim(0, 2200)
-limit_line(ax, y=1000, text="100 kHz limit 1000 ns", where="left")
-limit_line(ax, y=300, text="400 kHz limit 300 ns", where="left")
+limit_line(ax, y=1000)
+limit_line(ax, y=300)
+ax.text(2.45, 1000 - 30, "100 kHz limit 1000 ns", color=C.mute, va="top")
+ax.text(1.6, 300 - 30, "400 kHz limit 300 ns", color=C.mute, va="top")
 ax.axvline(1.0, color=C.mute, lw=0.8, ls=":")
 ax.text(1.03, 2100, "TW-1 probe cable 1 m", fontsize=7.5, color=C.mute, va="top")
 ax.set_xlabel("Air-probe cable length (m)")
@@ -132,13 +134,13 @@ ax.plot(f / 1e6, s_b, color=C.series[0], lw=1.6, label="Rev B π-match (C14 1.8 
 for name, fx in (("f0", 915), ("2f0", 1830), ("3f0", 2745)):
     v = float(s21_db(np.array([fx * 1e6]), 1.8e-12, 7.5e-9)[0])
     ax.plot([fx], [v], "o", ms=4, color=C.series[0], zorder=5)
-    ax.annotate(("%s  %.1f dB" % (name.replace("f0", "f₀"), v)).replace("-", "−"), (fx, v), xytext=(-6, -12), textcoords="offset points", fontsize=7.5,
-                ha="right" if name == "3f0" else "left", color=C.ink)
+    ax.annotate(("%s  %.1f dB" % (name.replace("f0", "f₀"), v)).replace("-", "−"), (fx, v), xytext=(-8, -4), textcoords="offset points", va="top",
+                ha="right", color=C.ink)
 ax.set_xlim(500, 3200)
 ax.set_ylim(-14, 0.5)
 ax.set_xlabel("Frequency (MHz)")
 ax.set_ylabel("|S21| between 50 Ω ports (dB)")
-ax.set_title("The antenna match is also a low-pass: attenuation at the radio's harmonics")
+ax.set_title("The antenna match is also a low-pass at the radio's harmonics")
 ax.legend(loc="lower left")
 save(fig, fig_path("rf_harmonics"))
 

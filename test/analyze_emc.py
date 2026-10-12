@@ -25,7 +25,7 @@ ax.plot(s.freq_MHz, s.peak_dBuV_m_H, lw=0.8, color=C.series[0], label="Peak, hor
 ax.plot(s.freq_MHz, s.peak_dBuV_m_V, lw=0.8, color=C.series[1], label="Peak, vertical")
 ff = np.geomspace(30, 1000, 400)
 ax.plot(ff, limit(ff), color=C.mute, lw=1.0, ls=(0, (4, 3)), drawstyle="steps-post")
-ax.text(32, 41, "FCC 15.109 class B (QP), 3 m", fontsize=7.5, color=C.mute)
+ax.text(32, 38.6, "FCC 15.109 class B (QP), 3 m", color=C.mute, va="top")
 ax.plot(q.freq_MHz, q.qp_dBuV_m, "D", ms=4.5, color=C.ink, label="Quasi-peak re-measure", zorder=5)
 w = q.loc[q.margin_dB.idxmin()]
 ax.annotate("%.0f MHz: %.1f dB margin" % (w.freq_MHz, w.margin_dB), (w.freq_MHz, w.qp_dBuV_m), xytext=(14, 10),
@@ -38,7 +38,7 @@ ax.xaxis.set_minor_formatter(plt.NullFormatter())
 ax.set_xlabel("Frequency (MHz)")
 ax.set_ylabel("Field strength at 3 m (dBµV/m)")
 ax.set_title("Radiated emissions pre-scan, radio idle, charger running")
-ax.legend(loc="upper right", ncol=3, fontsize=7.5)
+ax.legend(loc="upper left", ncol=3, bbox_to_anchor=(0.0, 1.0))
 save(fig, fig_path("emi_radiated"))
 res["radiated"] = dict(min_margin_dB=float(q.margin_dB.min()), at_MHz=float(w.freq_MHz), source=w.attributed_to,
                        qp=q.to_dict("records"))
@@ -68,12 +68,13 @@ for k, rev in enumerate(("A", "B")):
     ax.bar(x, [r["worst_dBm"] + 80 for r in d], bottom=-80, width=0.2, color=C.series[k * 2],
            label="Rev A (no match)" if rev == "A" else "Rev B (π-match)")
     for xx, r in zip(x, d):
-        ax.text(xx, r["worst_dBm"] + 1.0, ("%.0f" % r["worst_dBm"]).replace("-", "−"), ha="center", fontsize=7, color=C.ink)
+        ax.text(xx, r["worst_dBm"] + 1.0, ("%.0f" % r["worst_dBm"]).replace("-", "−"), ha="center", color=C.ink,
+                bbox=dict(boxstyle="square,pad=0.05", fc="white", ec="none"), zorder=4)
 # limits at the antenna port: restricted bands (3f0–5f0 here) → 54 dBµV/m average at 3 m, i.e. EIRP −41.2 dBm
 # with 0 dBi; 2f0 is outside them → −20 dBc (15.247(d))
 lim_r = 54 - 95.2 - G_HARM_DBI
 ax.plot([2.55, 5.45], [lim_r] * 2, color=C.mute, lw=1.0, ls=(0, (4, 3)))
-ax.text(5.45, lim_r + 1.5, "restricted bands: 54 dBµV/m at 3 m", fontsize=7, color=C.mute, ha="right", va="bottom")
+ax.text(5.45, lim_r - 1.5, "restricted bands: 54 dBµV/m at 3 m", color=C.mute, ha="right", va="top")
 ax.plot([1.6, 2.4], [0, 0], color=C.mute, lw=1.0, ls=(0, (4, 3)))
 ax.text(2.4, 1.5, "−20 dBc", fontsize=7, color=C.mute, ha="right")
 ax.set_xticks([2, 3, 4, 5], ["2f₀\n1805–1830", "3f₀\n2707–2745", "4f₀\n3609–3660", "5f₀\n4512–4575"])

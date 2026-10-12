@@ -30,21 +30,22 @@ C = SimpleNamespace(
 FIG_W = (6.8, 3.4)       # full report width
 FIG_HALF = (3.3, 2.6)    # half width
 FIG_TALL = (6.8, 4.6)
+MIN_PT = 8.5             # smallest text in any figure (the report prints them at about 1:1)
 
 
 def apply():
     mpl.rcParams.update({
         "font.family": ["Inter", "DejaVu Sans", "Arial", "sans-serif"],
-        "font.size": 9, "axes.titlesize": 10, "axes.labelsize": 9,
+        "font.size": 10, "axes.titlesize": 11, "axes.labelsize": 10,
         "axes.titleweight": "semibold", "axes.titlelocation": "left", "axes.titlepad": 8,
         "axes.edgecolor": C.line, "axes.labelcolor": C.ink, "axes.linewidth": 0.8,
         "axes.spines.top": False, "axes.spines.right": False,
         "axes.grid": True, "grid.color": C.grid, "grid.linewidth": 0.6,
         "axes.prop_cycle": mpl.cycler(color=C.series),
-        "xtick.color": C.mute, "ytick.color": C.mute, "xtick.labelsize": 8, "ytick.labelsize": 8,
+        "xtick.color": C.mute, "ytick.color": C.mute, "xtick.labelsize": 9, "ytick.labelsize": 9,
         "xtick.major.size": 0, "ytick.major.size": 0,
         "lines.linewidth": 1.6, "lines.markersize": 4,
-        "legend.frameon": False, "legend.fontsize": 8, "legend.labelcolor": C.ink,
+        "legend.frameon": False, "legend.fontsize": 9, "legend.labelcolor": C.ink,
         "text.color": C.ink, "figure.facecolor": "white", "axes.facecolor": "white",
         "savefig.facecolor": "white", "figure.dpi": 110,
         "svg.fonttype": "none",
@@ -59,13 +60,13 @@ def limit_line(ax, y=None, x=None, text="", where="right", va="bottom"):
         if text:
             xr = ax.get_xlim()
             xt = xr[1] if where == "right" else xr[0]
-            ax.text(xt, y, " " + text + " ", ha="right" if where == "right" else "left",
-                    va=va, fontsize=7.5, color=C.mute)
+            ax.annotate(" " + text + " ", (xt, y), xytext=(0, 2 if va == "bottom" else -2), textcoords="offset points",
+                        ha="right" if where == "right" else "left", va=va, fontsize=MIN_PT, color=C.mute)
     if x is not None:
         ax.axvline(x, **kw)
         if text:
             yr = ax.get_ylim()
-            ax.text(x, yr[1], " " + text, ha="left", va="top", fontsize=7.5, color=C.mute, rotation=0)
+            ax.text(x, yr[1], " " + text, ha="left", va="top", fontsize=MIN_PT, color=C.mute, rotation=0)
 
 
 def label_end(ax, x, y, text, dy=0, color=None):
@@ -73,10 +74,13 @@ def label_end(ax, x, y, text, dy=0, color=None):
     if color:
         ax.plot([x], [y], "o", ms=3.5, color=color, zorder=5, clip_on=False)
     ax.annotate(text, (x, y), xytext=(5, dy), textcoords="offset points",
-                va="center", fontsize=7.5, color=C.ink, annotation_clip=False)
+                va="center", fontsize=MIN_PT, color=C.ink, annotation_clip=False)
 
 
 def save(fig, path_no_ext, tight=True):
+    for t in fig.findobj(mpl.text.Text):        # floor for annotations that set their own size
+        if t.get_text() and t.get_fontsize() < MIN_PT:
+            t.set_fontsize(MIN_PT)
     if tight:
         fig.tight_layout()
     fig.savefig(path_no_ext + ".svg")

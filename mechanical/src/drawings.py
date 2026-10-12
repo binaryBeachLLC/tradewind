@@ -129,7 +129,7 @@ def sheet_enclosure(parts):
     ax.annotate("magnet-tap target\n(hall switch U4 below)", (hx, hy), (hx - 40, hy + 22), fontsize=6.5, color=INK,
                 arrowprops=dict(arrowstyle="-", color=MUTE, lw=0.5))
     lx, ly = b2l(52.0, 34.4)
-    ax.annotate("Ø3 light pipe (LED D3)", (lx, ly), (lx + 26, ly + 19), fontsize=6.5, color=INK,
+    ax.annotate("Ø3 light pipe (LED D3)", (lx, ly), (lx - 2, ly - 12), fontsize=6.5, color=INK,
                 arrowprops=dict(arrowstyle="-", color=MUTE, lw=0.5))
     # right-view dims: screen x = -z
     zmin, zmax = -FLOOR - MOUNT_BOSS_H, LID_Z1
@@ -147,7 +147,7 @@ def sheet_enclosure(parts):
     for a, b in zip(xs, xs[1:]):
         dim(ax, (a, yb), (b, yb), -24, "%.0f" % (b - a) if b != SMA_X else "%.1f" % (b - a), fs=6.5)
     dim(ax, (-61, yb), (GLAND_X[0], yb), -24, "%.1f" % (GLAND_X[0] + 61), fs=6.5)
-    for x, s in zip(xs, ["J1 SOLAR", "J2 RAIN", "J3 SOIL", "J4 AIR", "ANT"]):
+    for x, s in zip(xs, ["J1\nSOLAR", "J2\nRAIN", "J3\nSOIL", "J4\nAIR", "ANT"]):
         ax.text(x, BY + LID_Z1 + 4, s, fontsize=6, ha="center", color=INK)
     dim(ax, (66, BY + 0), (66, yb), 4, "%.1f" % GLAND_Z, orient="v", fs=6.5)
     ax.text(70, BY - 2, "4 × PG7 (M12×1.5) glands, Ø12.5\nSMA bulkhead Ø6.4", fontsize=6.5, color=INK, va="top")
@@ -180,7 +180,7 @@ def sheet_installed(parts):
     dim(ax, (0, -200), (SHIELD_X, -200), -10, "%.0f" % SHIELD_X, fs=6.5)
     ax.annotate("Ø%.0f pole (25–50 mm fits)" % POLE_D, (0, -230), (40, -245), fontsize=6.5, color=INK,
                 arrowprops=dict(arrowstyle="-", color=MUTE, lw=0.5))
-    ax.annotate("915 MHz whip\n(points down)", (SMA_X, -200), (60, -175), fontsize=6.5, color=INK,
+    ax.annotate("915 MHz whip, points down", (SMA_X, -200), (SMA_X + 12, -192), fontsize=6.5, color=INK,
                 arrowprops=dict(arrowstyle="-", color=MUTE, lw=0.5))
     ax.annotate("radiation shield\n(SHT45 probe inside)", (SHIELD_X + 40, -170), (SHIELD_X + 20, -215), fontsize=6.5,
                 color=INK, arrowprops=dict(arrowstyle="-", color=MUTE, lw=0.5))
@@ -189,7 +189,7 @@ def sheet_installed(parts):
     yfront = roof_underside_y(LID_Z1)
     dim(ax, (RX - LID_Z1, EXT_H / 2), (RX - LID_Z1, yfront), -4, "", orient="v", fs=6.5)
     ax.annotate("%.0f mm ventilated air gap" % (yfront - EXT_H / 2), (RX - LID_Z1 - 4, (EXT_H / 2 + yfront) / 2),
-                (RX - LID_Z1 - 75, EXT_H / 2 - 4), fontsize=6.5, color=INK,
+                (RX - LID_Z1 - 118, EXT_H / 2 - 4), fontsize=6.5, color=INK,
                 arrowprops=dict(arrowstyle="-", color=MUTE, lw=0.5))
     p0 = R.local_to_L(0, ROOF_T + PANEL_T, ROOF_L / 2)
     p1 = R.local_to_L(0, ROOF_T + PANEL_T, -ROOF_L / 2)
@@ -283,7 +283,7 @@ def sheet_section(parts):
              "screw sits outside the seal: no leak path",
              "tongue 1.6 × 0.75 → cord squeezed 26 %, groove fill 78 %"]
     for i, s in enumerate(notes):
-        a2.text(0.0, -0.06 - i * 0.07, "• " + s, fontsize=6.5, color=INK, transform=a2.transAxes)
+        a2.text(0.0, -0.10 - i * 0.07, "• " + s, fontsize=6.5, color=INK, transform=a2.transAxes)
     titleblock(fig, "Sections", "Cut faces hatched; PCB green, cell teal, steel grey, brass gold, silicone dark")
     save(fig, os.path.join(FIG, "mech_section"), tight=False)
 

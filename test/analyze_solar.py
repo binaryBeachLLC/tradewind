@@ -60,7 +60,7 @@ ax.set_ylim(4.2, 6.2)
 ax.set_xlim(40, 590)
 ax.set_xlabel("Source current limit, panel stand-in (mA)")
 ax.set_ylabel("VIN at C2 (V)")
-ax.set_title("VIN-DPM holds the input at 4.5 V whenever the source is current-limited")
+ax.set_title("VIN-DPM holds the input at 4.5 V when the source is current-limited")
 ax.legend(loc="center left")
 save(fig, fig_path("vin_dpm"))
 reg = s[s.source_limit_mA < 460]

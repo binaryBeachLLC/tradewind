@@ -58,8 +58,8 @@ def main():
     a2.axhline(VIL, color=C.mute, lw=0.9, ls=(0, (4, 3)))
     a2.axhline(VIH, color=C.mute, lw=0.9, ls=(0, (4, 3)))
     tr = 1.01e6 * 22e-9 * np.log(VDD / (VDD - VIH)) * 1e3
-    a2.annotate(f"slow release: back above\nVIH {tr:.0f} ms after it opens",
-                (60 + tr, VIH), xytext=(20, 1.55), textcoords="data", ha="left", fontsize=7.5,
+    a2.annotate(f"slow release: back\nabove VIH {tr:.0f} ms\nafter it opens",
+                (60 + tr, VIH), xytext=(15, 1.2), textcoords="data", ha="left", fontsize=7.5,
                 color=C.ink, arrowprops=dict(arrowstyle="-", color=C.mute, lw=0.6))
     a2.set(xlim=(0, 100), ylim=(-0.2, 3.9), xlabel="Time (ms)", title="One full tip (closed 10–60 ms)")
     a2.legend(loc="lower right", fontsize=7.5)

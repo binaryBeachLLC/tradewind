@@ -14,7 +14,7 @@ matplotlib.use("Agg")
 logging.getLogger("matplotlib.font_manager").setLevel(logging.ERROR)
 import matplotlib.pyplot as plt  # noqa: E402
 from matplotlib.collections import LineCollection, PatchCollection  # noqa: E402
-from matplotlib.patches import Circle, Polygon, Patch  # noqa: E402
+from matplotlib.patches import Circle, Polygon, Patch, Rectangle  # noqa: E402
 import matplotlib.patheffects as pe  # noqa: E402
 
 sys.path.insert(0, os.path.dirname(__file__))
@@ -27,11 +27,11 @@ FIG = os.path.join(ROOT, "docs", "figures")
 apply()
 
 ROLE = [  # (name, color, nets) — fixed categorical order
-    ("RF (50 Ω CPWG)", C.series[0], {"RF_MOD", "RF_ANT"}),
-    ("Power / high current", C.series[1], {"SOLAR_RAW", "VIN_SOLAR", "VBAT", "VSYS"}),
-    ("Sensitive analog / config", C.series[2], {"VBAT_ADC", "SOIL_ADC", "SOLAR_SENSE", "AUX_ADC", "TS", "ISET", "ILIM",
+    ("RF, 50 Ω", C.series[0], {"RF_MOD", "RF_ANT"}),
+    ("Power, high current", C.series[1], {"SOLAR_RAW", "VIN_SOLAR", "VBAT", "VSYS"}),
+    ("Analog, config", C.series[2], {"VBAT_ADC", "SOIL_ADC", "SOLAR_SENSE", "AUX_ADC", "TS", "ISET", "ILIM",
                                                "CFG1", "CFG2", "CFG3", "VBAT_SW", "VBAT_GATE"}),
-    ("Leaves the box (ESD-protected)", C.series[3], {"SDA_EXT", "SCL_EXT", "SOIL_EXT", "RAIN_EXT", "+3V3_EXT", "+3V3_SW"}),
+    ("Off-board, ESD", C.series[3], {"SDA_EXT", "SCL_EXT", "SOIL_EXT", "RAIN_EXT", "+3V3_EXT", "+3V3_SW"}),
     ("Switch node", C.series[4], {"LX1", "LX2"}),
 ]
 P3V3, GND_C, DIG, POUR, EDGE = "#4f5a64", "#c3c9ce", "#9aa3ab", "#e9eef0", "#1f2328"
@@ -44,7 +44,7 @@ def color(net):
     return {"+3V3": P3V3, "GND": GND_C}.get(net, DIG)
 
 
-def draw(ax, x0, x1, y0, y1, pour=True, refs=(), ref_size=7, bottom=True):
+def draw(ax, x0, x1, y0, y1, pour=True, bottom=True):
     ax.set_xlim(x0, x1)
     ax.set_ylim(y1, y0)
     ax.set_aspect("equal")
@@ -72,73 +72,137 @@ def draw(ax, x0, x1, y0, y1, pour=True, refs=(), ref_size=7, bottom=True):
                                       edgecolor="none", zorder=4))
     ax.add_collection(PatchCollection([Circle(v["p"], v["d"] / 2) for v in G["vias"]],
                                       facecolor=[color(v["net"]) for v in G["vias"]], edgecolor="white", linewidth=0.3, zorder=5))
-    at = {f["ref"]: f["p"] for f in G["footprints"]}
-    for ref, dx, dy in refs:
-        x, y = at[ref]
-        ax.text(x + dx, y + dy, ref, fontsize=ref_size, color=C.ink, ha="center", va="center", zorder=8, weight="semibold",
-                path_effects=[pe.withStroke(linewidth=2.2, foreground="white")])
     return ppm
 
 
 def legend(ax, **kw):
     h = [Patch(color=c, label=n) for n, c, _ in ROLE] + [Patch(color=P3V3, label="+3V3"), Patch(color=GND_C, label="GND"),
-                                                          Patch(color=DIG, label="Digital / slow")]
-    ax.legend(handles=h, fontsize=7, frameon=False, **kw)
+                                                          Patch(color=DIG, label="Digital, slow")]
+    ax.figure.legend(handles=h, fontsize=9, frameon=False, ncol=4, handlelength=1.4, columnspacing=1.2, **kw)
 
 
-def note(ax, xy, text, xytext, ha="left"):
-    ax.annotate(text, xy, xytext=xytext, textcoords="data", fontsize=7, color=C.ink, ha=ha, va="center", zorder=9,
-                arrowprops=dict(arrowstyle="-", color=C.mute, lw=0.6, shrinkA=1, shrinkB=1),
-                bbox=dict(boxstyle="round,pad=0.25", fc="white", ec=C.line, lw=0.5))
+# Part outlines come from the pad extents in the board file, so a label always sits on the part it names.
+BB = {}
+for _p in G["pads"]:
+    _b = BB.setdefault(_p["ref"], [1e9, 1e9, -1e9, -1e9])
+    for _x, _y in _p["poly"]:
+        _b[:] = [min(_b[0], _x), min(_b[1], _y), max(_b[2], _x), max(_b[3], _y)]
+HALO = [pe.withStroke(linewidth=2.6, foreground="white")]
+
+
+def tag(ax, ref, side="n", off=0.5, size=9, grow=0.35):
+    """Outline the part (its pads + `grow` mm) and put its designator against the outline, `off` mm out on `side`."""
+    x0, y0, x1, y1 = BB[ref]
+    x0, y0, x1, y1 = x0 - grow, y0 - grow, x1 + grow, y1 + grow
+    ax.add_patch(Rectangle((x0, y0), x1 - x0, y1 - y0, fill=False, ec=C.ink, lw=1.0, zorder=7))
+    cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
+    xy, ha, va, edge = {"n": ((cx, y0 - off), "center", "bottom", (cx, y0)), "s": ((cx, y1 + off), "center", "top", (cx, y1)),
+                        "e": ((x1 + off, cy), "left", "center", (x1, cy)), "w": ((x0 - off, cy), "right", "center", (x0, cy))}[side]
+    if off > 0.9:
+        ax.plot(*zip(edge, xy), color=C.ink, lw=0.7, zorder=7)
+    ax.text(*xy, ref, fontsize=size, color=C.ink, ha=ha, va=va, zorder=8, weight="semibold", path_effects=HALO)
+
+
+def mid(net, longest=True, within=None):
+    """Midpoint of the longest top-layer segment of `net` (inside `within` = (x0, x1, y0, y1) if given)."""
+    seg = [t for t in G["tracks"] if t["net"] == net and t["layer"] == "F.Cu"]
+    if within:
+        x0, x1, y0, y1 = within
+        seg = [t for t in seg if all(x0 <= p[0] <= x1 and y0 <= p[1] <= y1 for p in (t["a"], t["b"]))]
+    t = max(seg, key=lambda t: (t["a"][0] - t["b"][0]) ** 2 + (t["a"][1] - t["b"][1]) ** 2)
+    return ((t["a"][0] + t["b"][0]) / 2, (t["a"][1] + t["b"][1]) / 2)
+
+
+MARK = dict(boxstyle="circle,pad=0.22", fc=C.ink, ec="white", lw=1.0)
+
+
+def mark(ax, xy, n, at=None):
+    """Numbered marker on a feature; `at` moves the marker off the feature with a short leader to a dot on it."""
+    if at:
+        ax.plot(*zip(xy, at), color=C.ink, lw=0.8, zorder=9)
+        ax.plot([xy[0]], [xy[1]], "o", ms=3.4, color=C.ink, mec="white", mew=0.8, zorder=10)
+    ax.text(*(at or xy), str(n), fontsize=8.5, color="white", weight="bold", ha="center", va="center", bbox=MARK, zorder=11)
+
+
+KEYS = {}
+
+
+def key(name, items):
+    """The numbered key is set as text in the report (docs/figures/layout_keys.json), at body size."""
+    KEYS[name] = items
+
+
+def board_axes(fig, rect, title=None):
+    """Board view; close-ups carry no title (the report caption names them)."""
+    ax = fig.add_axes(rect)
+    ax.set_anchor("N")
+    if title:
+        fig.text(0.02, 0.985, title, fontsize=11, weight="semibold", color=C.ink, va="top")
+    return ax
 
 
 # ---------------------------------------------------------------- whole board
-fig, ax = plt.subplots(figsize=(6.8, 5.15))
-draw(ax, -1, 97, -1, 71, refs=[("U1", 0, 0), ("U2", 0, -2.6), ("U3", 0, -2.6), ("L1", 1.6, 0), ("Q1", 0, -1.8), ("D1", -1.9, 0),
-                               ("U5", 0, -2.2), ("U6", 0, 1.8), ("U7", 0, -2.2), ("J1", 0, 0), ("J2", 0, 0), ("J3", 0, 0),
-                               ("J4", 0, 0), ("J5", 2.4, 0), ("C5", 0, -1.6), ("U4", 0, -1.8), ("Q2", -2, 0)])
-ax.text(48, 12.5, "BT1: 18650 cell holder (through-hole), top band", ha="center", fontsize=7.5, color=C.mute, zorder=8)
-ax.set_title("TW-1 rev B copper by electrical role (top layer solid, bottom layer faint)")
-legend(ax, loc="upper center", bbox_to_anchor=(0.5, -0.0), ncol=4)
-save(fig, os.path.join(FIG, "layout_map"))
+fig = plt.figure(figsize=(6.8, 5.6))
+ax = board_axes(fig, [0.01, 0.12, 0.98, 0.81], "TW-1 rev B copper by electrical role (top layer solid, bottom layer faint)")
+draw(ax, -1, 97, -1.5, 71)
+for ref, side in [("U1", "s"), ("U2", "n"), ("U3", "n"), ("L1", "e"), ("Q1", "n"), ("D1", "w"), ("Q2", "w"), ("U4", "n"),
+                  ("U5", "w"), ("U6", "e"), ("U7", "n"), ("C5", "n"), ("J1", "n"), ("J2", "n"), ("J3", "n"), ("J4", "n"),
+                  ("J5", "e"), ("J6", "e")]:
+    tag(ax, ref, side)
+ax.text(48, 20.5, "BT1: 18650 cell holder (through-hole) across the top band", ha="center", fontsize=9, color=C.mute, zorder=8)
+legend(ax, loc="lower center", bbox_to_anchor=(0.5, 0.0))
+save(fig, os.path.join(FIG, "layout_map"), tight=False)
 
 # ---------------------------------------------------------------- power close-up
-fig, ax = plt.subplots(figsize=(6.8, 4.1))
-draw(ax, 3, 41, 41.5, 62.5, refs=[("U2", 0, -2.6), ("U3", -0.2, -2.2), ("L1", 2.0, 0), ("C6", 0, -1.3), ("C7", 1.9, 0),
-                                  ("C8", 1.9, 0), ("C4", 1.5, 0), ("Q1", 0, -1.8), ("D1", -2.3, 0), ("C1", 0, 1.9),
-                                  ("C2", 0, 1.9), ("R4", -1.6, 0), ("R5", -1.6, 0), ("U7", 0, -2.2)], ref_size=7.5)
+fig = plt.figure(figsize=(6.8, 3.95))
+ax = board_axes(fig, [0.01, 0.165, 0.98, 0.83])
+draw(ax, 4, 42, 41.6, 60.2)
+for ref, side in [("U2", "n"), ("U3", "w"), ("L1", "e"), ("C6", "n"), ("C7", "e"), ("C8", "e"), ("C4", "w"), ("Q1", "s"),
+                  ("D1", "w"), ("C1", "s"), ("C2", "s"), ("R4", "w"), ("R5", "w"), ("U7", "n")]:
+    tag(ax, ref, side, 0.4)
 pad = {(p["ref"], p["num"]): p["c"] for p in G["pads"]}
 padn = {}
 for p in G["pads"]:
     padn.setdefault((p["ref"], p["net"]), p["c"])
-loops = [("input loop", [padn[("C6", "VSYS")], pad[("U3", "10")], pad[("U3", "8")], padn[("C6", "GND")]], C.series[4]),
-         ("output loop", [pad[("U3", "6")], padn[("C7", "+3V3")], padn[("C7", "GND")], pad[("U3", "8")]], C.series[4])]
-for name, pts, c in loops:
-    ax.add_patch(Polygon(pts, closed=True, fc=c, alpha=0.18, ec=c, lw=1.0, ls="--", zorder=7))
+loops = [[padn[("C6", "VSYS")], pad[("U3", "10")], pad[("U3", "8")], padn[("C6", "GND")]],
+         [pad[("U3", "6")], padn[("C7", "+3V3")], padn[("C7", "GND")], pad[("U3", "8")]]]
+for pts in loops:
+    ax.add_patch(Polygon(pts, closed=True, fc=C.series[4], alpha=0.30, ec=C.series[4], lw=1.4, ls="--", zorder=7))
+cen = [tuple(sum(c) / len(pts) for c in zip(*pts)) for pts in loops]
+lx = [p["c"] for p in G["pads"] if p["net"] in ("LX1", "LX2") and p["ref"] == "L1"]
+u2c = ((BB["U2"][0] + BB["U2"][2]) / 2, (BB["U2"][1] + BB["U2"][3]) / 2)
 lm = A["loops_mm2"]
-note(ax, (27.4, 45.6), "Buck-boost input loop C6 → VIN → PGND\n%.1f mm²" % lm["Buck-boost input (C6 → VIN → PGND)"], (33.6, 42.6))
-note(ax, (29.4, 50.0), "Output loop VOUT → C7/C8 → PGND\n%.1f mm²" % lm["Buck-boost output (VOUT → C7 → PGND)"], (33.4, 56.6))
-note(ax, (30.6, 47.4), "Switch node LX1/LX2: %.1f mm² of copper,\nall on L1 over the solid L2 ground" % A["switch_node_copper_mm2"],
-     (35.2, 49.6))
 pp = {p["net"]: p for p in A["paths"] if p["current_A"]}
-note(ax, (17.0, 53.0), "VIN_SOLAR 0.3 mm, %.0f mA max\n%.0f mΩ, %.0f mV, +%.0f °C" % (
-    pp["VIN_SOLAR"]["current_A"] * 1e3, pp["VIN_SOLAR"]["r_mohm"], pp["VIN_SOLAR"]["drop_mV"], pp["VIN_SOLAR"]["dT_C"]), (4.6, 60.6))
-note(ax, (16.0, 47.6), "U2 pad: 4 thermal vias to L2", (4.4, 43.6))
-ax.set_title("Power stage: charger U2, buck-boost U3 and the solar input")
-legend(ax, loc="upper center", bbox_to_anchor=(0.5, 0.0), ncol=4)
-save(fig, os.path.join(FIG, "layout_power"))
+mark(ax, cen[0], 1, at=(33.6, 43.0))
+mark(ax, cen[1], 2)
+mark(ax, tuple(sum(c) / len(lx) for c in zip(*lx)), 3, at=(34.6, 46.0))
+mark(ax, mid("VIN_SOLAR", within=(10, 20, 52, 54)), 4)
+mark(ax, u2c, 5, at=(12.4, 44.0))
+key("layout_power", ["Buck-boost input loop C6 → U3 VIN → PGND: %.1f mm² (keep this one smallest)" % lm["Buck-boost input (C6 → VIN → PGND)"],
+          "Buck-boost output loop U3 VOUT → C7 → PGND: %.1f mm²" % lm["Buck-boost output (VOUT → C7 → PGND)"],
+          "Switch node LX1/LX2: %.1f mm² of copper, all on L1 over the solid L2 ground" % A["switch_node_copper_mm2"],
+          "VIN_SOLAR, 0.3 mm, %.0f mA max: %.0f mΩ, %.0f mV drop, +%.0f °C" % (
+              pp["VIN_SOLAR"]["current_A"] * 1e3, pp["VIN_SOLAR"]["r_mohm"], pp["VIN_SOLAR"]["drop_mV"], pp["VIN_SOLAR"]["dT_C"]),
+          "U2 thermal pad: %d vias into the L2 ground plane" % A["board"]["u2_thermal_vias"]])
+legend(ax, loc="lower center", bbox_to_anchor=(0.5, 0.0))
+save(fig, os.path.join(FIG, "layout_power"), tight=False)
 
 # ---------------------------------------------------------------- RF close-up
-fig, ax = plt.subplots(figsize=(6.8, 4.9))
-draw(ax, 51, 83, 46.4, 67.4, refs=[("C14", 2.0, 0), ("L2", 2.0, 0), ("C15", 2.6, 0), ("J5", 3.4, 0)], ref_size=7.5)
+fig = plt.figure(figsize=(6.8, 4.15))
+ax = board_axes(fig, [0.01, 0.01, 0.98, 0.98])
+draw(ax, 53, 83, 48.6, 67.3)
+for ref, label in [("C14", "C14  1.8 pF shunt to GND"), ("L2", "L2  7.5 nH series"),
+                   ("C15", "C15  not fitted (tuning spare)"), ("J5", "J5  U.FL → 150 mm pigtail → SMA")]:
+    tag(ax, ref, "e", 0.4, size=9.5, grow=0.25)
+    ax.texts[-1].set_text(label)
 rf = A["rf"]
-note(ax, (68.6, 51.7), "From the RAK3172 RF pad: %.1f mm in all,\n%.0f° of line at 915 MHz, one bend" % (rf["length_mm"], rf["electrical_length_deg"]), (51.6, 48.0))
-note(ax, (67.4, 52.6), "CPWG: %.2f mm trace, 0.20 mm gap to the\nL1 pour, 0.21 mm over solid L2 (Z₀ ≈ 50 Ω)" % rf["width_mm"][0], (51.6, 52.4))
-note(ax, (65.6, 57.6), "GND via fence, %.1f mm pitch\n(%s at 915 MHz)" % (rf["fence_pitch_mm"], rf["fence_pitch_vs_lambda_g"]), (51.6, 57.6))
-note(ax, (67.4, 54.0), "C14 1.8 pF shunt (module side)", (72.0, 52.4))
-note(ax, (66.9, 57.0), "L2 7.5 nH series", (72.0, 56.4))
-note(ax, (67.4, 60.0), "C15 not fitted (tuning spare)", (72.0, 60.4))
-note(ax, (67.9, 64.2), "U.FL → 150 mm pigtail → SMA bulkhead", (72.0, 65.2))
-ax.set_title("RF feed: module to U.FL")
-save(fig, os.path.join(FIG, "layout_rf"))
+fv = sorted((v["p"] for v in G["vias"] if v["net"] == "GND" and 65 < v["p"][0] < 66.5 and 51 < v["p"][1] < 62), key=lambda p: p[1])
+mark(ax, pad[("U1", "12")], 1, at=(71.2, 49.6))
+mark(ax, mid("RF_ANT"), 2, at=(63.4, 61.6))
+mark(ax, fv[len(fv) // 2], 3, at=(62.0, 57.0))
+key("layout_rf", ["RAK3172 RF pad: %.1f mm of line to the U.FL, %.0f° at 915 MHz, one bend" % (rf["length_mm"], rf["electrical_length_deg"]),
+          "CPWG: %.2f mm trace, 0.20 mm gap to the L1 pour, 0.21 mm over solid L2 (Z₀ ≈ 50 Ω)" % rf["width_mm"][0],
+          "GND via fence both sides, %.1f mm pitch (%s at 915 MHz)" % (rf["fence_pitch_mm"], rf["fence_pitch_vs_lambda_g"])])
+save(fig, os.path.join(FIG, "layout_rf"), tight=False)
+json.dump(KEYS, open(os.path.join(FIG, "layout_keys.json"), "w"), indent=1, ensure_ascii=False)
 print("layout figures written")
