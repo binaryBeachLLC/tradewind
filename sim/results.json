@@ -1,4 +1,130 @@
 {
+  "board_si": {
+    "adc_settling": [
+      {
+        "c_nF": 10.0,
+        "error_pct_at_3ms_pilot_fw": 0.248,
+        "error_pct_at_wait": 0.0045,
+        "kickback_pct": 0.05,
+        "need_ms_half_lsb": 4.51,
+        "net": "VBAT_ADC",
+        "note": "R11 \u2016 R12 into C10, after Q2 turns on",
+        "ok": true,
+        "r_source_kohm": 50.0,
+        "tau_ms": 0.5,
+        "wait_ms": 5.0
+      },
+      {
+        "c_nF": 100.0,
+        "error_pct_at_wait": 0.0,
+        "kickback_pct": 0.005,
+        "need_ms_half_lsb": 0.9,
+        "net": "SOIL_ADC",
+        "note": "R22 into C21; probe output settles first (100 ms warm-up)",
+        "ok": true,
+        "r_source_kohm": 1.0,
+        "tau_ms": 0.1,
+        "wait_ms": 100.0
+      },
+      {
+        "c_nF": 100.0,
+        "kickback_pct": 0.005,
+        "need_ms_half_lsb": 223.58,
+        "net": "SOLAR_SENSE",
+        "note": "always connected, no switch to settle",
+        "r_source_kohm": 248.1,
+        "tau_ms": 24.81,
+        "wait_ms": null
+      }
+    ],
+    "c5_from_U2_mm": 96.2,
+    "c5_loop_nH_est": 96.0,
+    "dc_paths": [
+      {
+        "ampacity_10C_A": 1.0,
+        "current_A": 0.44,
+        "dT_C": 1.55,
+        "drop_mV": 9.1,
+        "drop_mV_60C": 10.5,
+        "label": "Panel in \u2192 reverse FET",
+        "length_mm": 12.6,
+        "net": "SOLAR_RAW",
+        "r_mohm": 20.6,
+        "width_mm": 0.3
+      },
+      {
+        "ampacity_10C_A": 1.0,
+        "current_A": 0.475,
+        "dT_C": 1.85,
+        "drop_mV": 25.4,
+        "drop_mV_60C": 29.4,
+        "label": "Reverse FET \u2192 charger IN",
+        "length_mm": 32.6,
+        "net": "VIN_SOLAR",
+        "r_mohm": 53.4,
+        "width_mm": 0.3
+      },
+      {
+        "ampacity_10C_A": 1.0,
+        "current_A": 0.5,
+        "dT_C": 2.07,
+        "drop_mV": 30.6,
+        "drop_mV_60C": 35.4,
+        "label": "Charger BAT \u2192 cell +",
+        "length_mm": 35.9,
+        "net": "VBAT",
+        "r_mohm": 61.1,
+        "width_mm": 0.3
+      },
+      {
+        "ampacity_10C_A": 1.0,
+        "current_A": 0.12,
+        "dT_C": 0.08,
+        "drop_mV": 2.7,
+        "drop_mV_60C": 3.1,
+        "label": "Charger OUT \u2192 buck-boost VIN",
+        "length_mm": 13.9,
+        "net": "VSYS",
+        "r_mohm": 22.7,
+        "width_mm": 0.3
+      }
+    ],
+    "harmonics": {
+      "note": "50 \u03a9-terminated estimate with ideal parts (L Q = 30, 0.1 pF pads)",
+      "rel_attenuation_dB": {
+        "2f0": -3.0,
+        "3f0": -7.5,
+        "f0": -0.4
+      },
+      "restricted_band_MHz": [
+        2690,
+        2900
+      ],
+      "third_harmonic_MHz": [
+        2706.9,
+        2744.7
+      ]
+    },
+    "i2c": {
+      "assumptions": "5 pF/MCU pin, 10 pF/SHT4x, 0.25 pF ESD, cable 100 pF/m",
+      "c_internal_pF": 22.8,
+      "c_total_1m_pF": 134.7,
+      "clock_hz_firmware": 100000,
+      "max_cable_m_100k_4k7": 2.15,
+      "max_cable_m_400k_2k2": 1.25,
+      "max_cable_m_400k_4k7": 0.4,
+      "rise_ns_1m": 536.0,
+      "rise_ns_no_probe": 91.0,
+      "sink_mA_4k7": 0.7,
+      "trace_pF_per_mm": 0.089,
+      "trace_z0_ohm": 66.7
+    },
+    "plane_pair_pF": 242.0,
+    "vbat_revC_1mm": {
+      "drop_mV": 9.2,
+      "r_mohm": 18.3
+    }
+  },
   "energy_year": {
     "charge_inhibit_hours_year": {
       "lid_glued": 161,

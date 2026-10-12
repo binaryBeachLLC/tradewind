@@ -1,0 +1,8 @@
+# Quasi-peak re-measurement of the six highest pre-scan peaks (CISPR 16 QP, 120 kHz), worst-case height and angle.
+freq_MHz,polarisation,qp_dBuV_m,limit_dBuV_m,margin_dB,attributed_to
+96.0,H,31.9,43.5,11.6,"RAK3172 32 MHz reference, 3rd harmonic"
+128.0,H,29.1,43.5,14.4,"32 MHz reference, 4th harmonic"
+864.0,H,26.4,46.0,19.6,"32 MHz reference, 27th harmonic"
+41.6,V,24.8,40.0,15.2,"TPS63900 switch-node ringing, via the probe cable"
+160.0,H,26.5,43.5,17.0,"32 MHz reference, 5th harmonic"
+480.0,H,24.2,46.0,21.8,"32 MHz reference, 15th harmonic"

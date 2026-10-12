@@ -47,4 +47,8 @@ mkdir -p render/out/kicad
 $K pcb render --quality high -w 2400 -h 1750 --side top -o render/out/kicad/pcb_top.png "$PCB" >/dev/null
 $K pcb render --quality high -w 2400 -h 1750 --side bottom -o render/out/kicad/pcb_bottom.png "$PCB" >/dev/null
 $K pcb render --quality high --perspective --floor --rotate "320,0,335" -w 2400 -h 1600 -o render/out/kicad/pcb_iso.png "$PCB" >/dev/null
+echo "== layout audit"
+snap run --shell kicad.kicad-cli -c "python3 tools/layout_audit.py" >/dev/null 2>&1
+${PY:-$HOME/miniforge3/envs/hwdesign/bin/python} tools/layout_figs.py >/dev/null
+
 echo "done: $(ls $F | tr '\n' ' ')"

@@ -1,0 +1,719 @@
+{
+ "board": {
+  "size_mm": [
+   96,
+   70
+  ],
+  "layers": 4,
+  "footprints": 85,
+  "pads": 268,
+  "tracks": 497,
+  "vias": 119,
+  "via_sizes": {
+   "0.45/0.20": 6,
+   "0.60/0.30": 113
+  },
+  "track_length_mm": {
+   "F.Cu": 1261.0,
+   "B.Cu": 174.0
+  },
+  "gnd_vias": 72,
+  "p3v3_vias": 21,
+  "u2_thermal_vias": 4,
+  "u3_thermal_vias": 6
+ },
+ "netclasses": {
+  "+3V3": "Default",
+  "/Power/CFG1": "Default",
+  "/Power/CFG2": "Default",
+  "/Power/CFG3": "Default",
+  "/Power/ILIM": "Default",
+  "/Power/ISET": "Default",
+  "/Power/LX1": "Power",
+  "/Power/LX2": "Power",
+  "/Power/Q1_G": "Default",
+  "/Power/SOLAR_RAW": "Power",
+  "/Power/TS": "Default",
+  "/Power/VBAT": "Power",
+  "/Power/VBAT_GATE": "Default",
+  "/Power/VBAT_SW": "Default",
+  "/Power/VIN_SOLAR": "Power",
+  "/Power/VSYS": "Power",
+  "/Radio_MCU/AUX_ADC": "Default",
+  "/Radio_MCU/BOOT0": "Default",
+  "/Radio_MCU/HALL_N": "Default",
+  "/Radio_MCU/LED": "Default",
+  "/Radio_MCU/LED_A": "Default",
+  "/Radio_MCU/NRST": "Default",
+  "/Radio_MCU/RF_ANT": "RF",
+  "/Radio_MCU/RF_MOD": "RF",
+  "/Radio_MCU/SWCLK": "Default",
+  "/Radio_MCU/SWDIO": "Default",
+  "/Radio_MCU/UART2_RX": "Default",
+  "/Radio_MCU/UART2_TX": "Default",
+  "/Sensors_IO/+3V3_EXT": "Default",
+  "/Sensors_IO/+3V3_SW": "Default",
+  "/Sensors_IO/CT": "Default",
+  "/Sensors_IO/QOD": "Default",
+  "/Sensors_IO/RAIN_EXT": "Default",
+  "/Sensors_IO/SCL_EXT": "Default",
+  "/Sensors_IO/SDA_EXT": "Default",
+  "/Sensors_IO/SOIL_EXT": "Default",
+  "CHG_N": "Default",
+  "GND": "Default",
+  "PGOOD_N": "Default",
+  "RAIN_IN": "Default",
+  "SCL": "Default",
+  "SDA": "Default",
+  "SENSOR_EN": "Default",
+  "SOIL_ADC": "Default",
+  "SOLAR_SENSE": "Default",
+  "VBAT_ADC": "Default",
+  "VBAT_SENSE_EN": "Default",
+  "unconnected-(J6-SWO-Pad6)": "Default",
+  "unconnected-(U1-PA15{slash}PIN_A4-Pad3)": "Default",
+  "unconnected-(U1-PA5{slash}SPI1_CLK-Pad15)": "Default",
+  "unconnected-(U1-PA6{slash}SPI1_MISO-Pad14)": "Default",
+  "unconnected-(U1-PA7{slash}SPI1_MOSI-Pad13)": "Default",
+  "unconnected-(U1-PB6{slash}UART1_TX-Pad4)": "Default",
+  "unconnected-(U1-PB7{slash}UART1_RX-Pad5)": "Default",
+  "unconnected-(U2-ITERM-Pad15)": "Default",
+  "unconnected-(U6-NC-Pad10)": "Default",
+  "unconnected-(U6-NC-Pad6)": "Default",
+  "unconnected-(U6-NC-Pad7)": "Default",
+  "unconnected-(U6-NC-Pad9)": "Default"
+ },
+ "nets": {
+  "+3V3": {
+   "length_mm": {
+    "F.Cu": 26.5
+   },
+   "widths_mm": [
+    0.2,
+    0.3
+   ],
+   "vias": 21
+  },
+  "CFG1": {
+   "length_mm": {
+    "F.Cu": 1.7
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 0
+  },
+  "CFG2": {
+   "length_mm": {
+    "F.Cu": 1.4,
+    "B.Cu": 1.9
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 2
+  },
+  "CFG3": {
+   "length_mm": {
+    "F.Cu": 1.8
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 0
+  },
+  "ILIM": {
+   "length_mm": {
+    "F.Cu": 12.0,
+    "B.Cu": 4.1
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 2
+  },
+  "ISET": {
+   "length_mm": {
+    "F.Cu": 6.0
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 0
+  },
+  "LX1": {
+   "length_mm": {
+    "F.Cu": 2.4
+   },
+   "widths_mm": [
+    0.25,
+    0.3
+   ],
+   "vias": 0
+  },
+  "LX2": {
+   "length_mm": {
+    "F.Cu": 2.6
+   },
+   "widths_mm": [
+    0.25,
+    0.2502,
+    0.3
+   ],
+   "vias": 0
+  },
+  "Q1_G": {
+   "length_mm": {
+    "F.Cu": 4.5
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 0
+  },
+  "SOLAR_RAW": {
+   "length_mm": {
+    "F.Cu": 12.6
+   },
+   "widths_mm": [
+    0.3
+   ],
+   "vias": 0
+  },
+  "TS": {
+   "length_mm": {
+    "F.Cu": 17.3,
+    "B.Cu": 17.7
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 2
+  },
+  "VBAT": {
+   "length_mm": {
+    "F.Cu": 103.5,
+    "B.Cu": 10.1
+   },
+   "widths_mm": [
+    0.3
+   ],
+   "vias": 2
+  },
+  "VBAT_GATE": {
+   "length_mm": {
+    "F.Cu": 11.8
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 0
+  },
+  "VBAT_SW": {
+   "length_mm": {
+    "F.Cu": 5.5
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 0
+  },
+  "VIN_SOLAR": {
+   "length_mm": {
+    "F.Cu": 41.2
+   },
+   "widths_mm": [
+    0.3
+   ],
+   "vias": 0
+  },
+  "VSYS": {
+   "length_mm": {
+    "F.Cu": 30.4
+   },
+   "widths_mm": [
+    0.3
+   ],
+   "vias": 0
+  },
+  "AUX_ADC": {
+   "length_mm": {
+    "F.Cu": 11.0,
+    "B.Cu": 16.7
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 2
+  },
+  "BOOT0": {
+   "length_mm": {
+    "F.Cu": 3.7
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 0
+  },
+  "HALL_N": {
+   "length_mm": {
+    "F.Cu": 23.2,
+    "B.Cu": 8.4
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 2
+  },
+  "LED": {
+   "length_mm": {
+    "F.Cu": 24.7
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 0
+  },
+  "LED_A": {
+   "length_mm": {
+    "F.Cu": 2.7
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 0
+  },
+  "NRST": {
+   "length_mm": {
+    "F.Cu": 52.7
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 0
+  },
+  "RF_ANT": {
+   "length_mm": {
+    "F.Cu": 6.7
+   },
+   "widths_mm": [
+    0.35
+   ],
+   "vias": 0
+  },
+  "RF_MOD": {
+   "length_mm": {
+    "F.Cu": 7.4
+   },
+   "widths_mm": [
+    0.35
+   ],
+   "vias": 0
+  },
+  "SWCLK": {
+   "length_mm": {
+    "F.Cu": 12.3
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 0
+  },
+  "SWDIO": {
+   "length_mm": {
+    "F.Cu": 10.5
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 0
+  },
+  "UART2_RX": {
+   "length_mm": {
+    "F.Cu": 4.3,
+    "B.Cu": 5.4
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 1
+  },
+  "UART2_TX": {
+   "length_mm": {
+    "F.Cu": 2.8,
+    "B.Cu": 6.2
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 1
+  },
+  "+3V3_EXT": {
+   "length_mm": {
+    "F.Cu": 2.0,
+    "B.Cu": 9.2
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 2
+  },
+  "+3V3_SW": {
+   "length_mm": {
+    "F.Cu": 23.0
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 0
+  },
+  "CT": {
+   "length_mm": {
+    "F.Cu": 4.8
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 0
+  },
+  "QOD": {
+   "length_mm": {
+    "F.Cu": 3.0
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 0
+  },
+  "RAIN_EXT": {
+   "length_mm": {
+    "F.Cu": 32.1
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 0
+  },
+  "SCL_EXT": {
+   "length_mm": {
+    "F.Cu": 18.5
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 0
+  },
+  "SDA_EXT": {
+   "length_mm": {
+    "F.Cu": 14.6
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 0
+  },
+  "SOIL_EXT": {
+   "length_mm": {
+    "F.Cu": 16.0
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 0
+  },
+  "CHG_N": {
+   "length_mm": {
+    "F.Cu": 64.7,
+    "B.Cu": 15.6
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 2
+  },
+  "GND": {
+   "length_mm": {
+    "F.Cu": 69.9,
+    "B.Cu": 0.3
+   },
+   "widths_mm": [
+    0.2,
+    0.25,
+    0.3
+   ],
+   "vias": 72
+  },
+  "PGOOD_N": {
+   "length_mm": {
+    "F.Cu": 79.7,
+    "B.Cu": 7.7
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 2
+  },
+  "RAIN_IN": {
+   "length_mm": {
+    "F.Cu": 26.3,
+    "B.Cu": 33.1
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 2
+  },
+  "SCL": {
+   "length_mm": {
+    "F.Cu": 73.8
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 0
+  },
+  "SDA": {
+   "length_mm": {
+    "F.Cu": 87.0
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 0
+  },
+  "SENSOR_EN": {
+   "length_mm": {
+    "F.Cu": 61.9
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 0
+  },
+  "SOIL_ADC": {
+   "length_mm": {
+    "F.Cu": 21.0,
+    "B.Cu": 24.6
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 2
+  },
+  "SOLAR_SENSE": {
+   "length_mm": {
+    "F.Cu": 72.1,
+    "B.Cu": 13.4
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 2
+  },
+  "VBAT_ADC": {
+   "length_mm": {
+    "F.Cu": 65.1
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 0
+  },
+  "VBAT_SENSE_EN": {
+   "length_mm": {
+    "F.Cu": 82.8
+   },
+   "widths_mm": [
+    0.2
+   ],
+   "vias": 0
+  }
+ },
+ "b_cu_nets": [
+  "+3V3_EXT",
+  "AUX_ADC",
+  "CFG2",
+  "CHG_N",
+  "HALL_N",
+  "ILIM",
+  "PGOOD_N",
+  "RAIN_IN",
+  "SOIL_ADC",
+  "SOLAR_SENSE",
+  "TS",
+  "UART2_RX",
+  "UART2_TX",
+  "VBAT"
+ ],
+ "paths": [
+  {
+   "length_mm": 12.6,
+   "r_mohm": 20.6,
+   "vias": 0,
+   "min_width_mm": 0.3,
+   "label": "Panel in \u2192 reverse FET",
+   "net": "SOLAR_RAW",
+   "from_": "J1.1",
+   "to": "Q1.3",
+   "current_A": 0.44,
+   "basis": "panel Isc at STC",
+   "drop_mV": 9.1,
+   "dT_C": 1.55,
+   "ampacity_10C_A": 1.0
+  },
+  {
+   "length_mm": 32.6,
+   "r_mohm": 53.4,
+   "vias": 0,
+   "min_width_mm": 0.3,
+   "label": "Reverse FET \u2192 charger IN",
+   "net": "VIN_SOLAR",
+   "from_": "Q1.2",
+   "to": "U2.13",
+   "current_A": 0.475,
+   "basis": "USB500 input limit",
+   "drop_mV": 25.4,
+   "dT_C": 1.85,
+   "ampacity_10C_A": 1.0
+  },
+  {
+   "length_mm": 35.9,
+   "r_mohm": 61.1,
+   "vias": 2,
+   "min_width_mm": 0.3,
+   "label": "Charger BAT \u2192 cell +",
+   "net": "VBAT",
+   "from_": "U2.2",
+   "to": "BT1.1",
+   "current_A": 0.5,
+   "basis": "ISET charge current",
+   "drop_mV": 30.6,
+   "dT_C": 2.07,
+   "ampacity_10C_A": 1.0
+  },
+  {
+   "length_mm": 28.7,
+   "r_mohm": 47.1,
+   "vias": 0,
+   "min_width_mm": 0.3,
+   "label": "Charger IN \u2192 input cap C2",
+   "net": "VIN_SOLAR",
+   "from_": "U2.13",
+   "to": "C2.1",
+   "current_A": 0.0,
+   "basis": "local decoupling",
+   "drop_mV": 0.0,
+   "dT_C": 0.0,
+   "ampacity_10C_A": 1.0
+  },
+  {
+   "length_mm": 96.2,
+   "r_mohm": 160.0,
+   "vias": 2,
+   "min_width_mm": 0.3,
+   "label": "Charger BAT \u2192 BAT cap C5",
+   "net": "VBAT",
+   "from_": "U2.2",
+   "to": "C5.1",
+   "current_A": 0.0,
+   "basis": "local decoupling",
+   "drop_mV": 0.0,
+   "dT_C": 0.0,
+   "ampacity_10C_A": 1.0
+  },
+  {
+   "length_mm": 13.9,
+   "r_mohm": 22.7,
+   "vias": 0,
+   "min_width_mm": 0.3,
+   "label": "Charger OUT \u2192 buck-boost VIN",
+   "net": "VSYS",
+   "from_": "U2.10",
+   "to": "U3.10",
+   "current_A": 0.12,
+   "basis": "TX burst at 3.0 V in",
+   "drop_mV": 2.7,
+   "dT_C": 0.08,
+   "ampacity_10C_A": 1.0
+  },
+  {
+   "length_mm": 6.2,
+   "r_mohm": 10.2,
+   "vias": 0,
+   "min_width_mm": 0.3,
+   "label": "Charger OUT \u2192 OUT cap C4",
+   "net": "VSYS",
+   "from_": "U2.10",
+   "to": "C4.1",
+   "current_A": 0.0,
+   "basis": "local decoupling",
+   "drop_mV": 0.0,
+   "dT_C": 0.0,
+   "ampacity_10C_A": 1.0
+  },
+  {
+   "length_mm": 3.8,
+   "r_mohm": 6.3,
+   "vias": 0,
+   "min_width_mm": 0.3,
+   "label": "Buck-boost VIN \u2192 input cap C6",
+   "net": "VSYS",
+   "from_": "U3.10",
+   "to": "C6.1",
+   "current_A": 0.0,
+   "basis": "hot-loop decoupling",
+   "drop_mV": 0.0,
+   "dT_C": 0.0,
+   "ampacity_10C_A": 1.0
+  },
+  {
+   "length_mm": 20.7,
+   "r_mohm": 33.9,
+   "vias": 0,
+   "min_width_mm": 0.3,
+   "label": "Cell + \u2192 sense switch Q2",
+   "net": "VBAT",
+   "from_": "BT1.1",
+   "to": "Q2.2",
+   "current_A": 0.0,
+   "basis": "sense only (3 nA)",
+   "drop_mV": 0.0,
+   "dT_C": 0.0,
+   "ampacity_10C_A": 1.0
+  }
+ ],
+ "loops_mm2": {
+  "Buck-boost input (C6 \u2192 VIN \u2192 PGND)": 1.1,
+  "Buck-boost output (VOUT \u2192 C7 \u2192 PGND)": 3.42,
+  "Charger output (OUT \u2192 C4 \u2192 GND)": 2.03,
+  "Module supply (C12 \u2192 VDD \u2192 GND)": 0.61
+ },
+ "separations_mm": {
+  "Switch node \u2192 RF line": 36.1,
+  "Switch node \u2192 U.FL (J5)": 40.2,
+  "Switch node \u2192 SHT40 (U5)": 61.5,
+  "Switch node \u2192 soil ADC net": 9.8,
+  "Switch node \u2192 battery ADC net": 7.2,
+  "Switch node \u2192 solar sense net": 12.1,
+  "Switch node \u2192 external I\u00b2C": 14.8,
+  "Charger U2 \u2192 SHT40 U5": 76.4,
+  "Module U1 \u2192 SHT40 U5": 18.4
+ },
+ "switch_node_copper_mm2": 7.12,
+ "rf": {
+  "fence_left": 6,
+  "fence_right": 5,
+  "length_mm": 14.1,
+  "width_mm": [
+   0.35
+  ],
+  "layer": [
+   "F.Cu"
+  ],
+  "fence_vias": 11,
+  "fence_pitch_mm": 1.8,
+  "bends": 1,
+  "electrical_length_deg": 27.5,
+  "fence_pitch_vs_lambda_g": "\u03bbg/103"
+ }
+}

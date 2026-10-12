@@ -6,7 +6,7 @@ cd "$(dirname "$0")"
 PY=${PY:-$HOME/miniforge3/envs/hwdesign/bin/python}
 export NGSPICE=${NGSPICE:-$HOME/miniforge3/envs/hwdesign/bin/ngspice}
 rm -f results.json
-for s in solar_iv thermal_enclosure link_budget power_budget energy_year vbat_sense tx_droop rain_debounce rf_match; do
+for s in solar_iv thermal_enclosure link_budget power_budget energy_year vbat_sense tx_droop rain_debounce rf_match board_si; do
   echo "== $s"
   "$PY" "$s.py" > "out/$s.log"
 done

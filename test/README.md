@@ -20,6 +20,7 @@ predictions from [`sim/`](../sim/) wherever both exist.
 | `analyze_rf.py` | conducted TX power (64 channels), NanoVNA S11 vs sim, range drive test vs link budget |
 | `analyze_environmental.py` | dunk, thermal cycling, UV, drop, ESD, rain-gauge bench |
 | `analyze_field.py` | 30-day, 3-unit pilot at an Oʻahu farm site |
+| `analyze_emc.py` | radiated pre-scan vs FCC 15.109 class B, TX harmonics at J5 (rev A vs rev B match), receiver desense |
 | `analyze_compliance.py` | R1–R15 → [`compliance.csv`](compliance.csv), headline block of [`results.json`](results.json) |
 
 Bring-up of rev A and rev B, the two rev A bugs and the RF tuning are written up in [`BRINGUP.md`](BRINGUP.md).
@@ -39,6 +40,8 @@ Bring-up of rev A and rev B, the two rev A bugs and the RF tuning are written up
 | Saturated-salt jars (LiCl, MgCl₂, NaCl, K₂SO₄) | humidity reference points | made in house |
 | UVA-340 cabinet | UV ageing coupons | rented time |
 | IEC 61000-4-2 ESD gun | ESD | borrowed |
+| 3 m semi-anechoic chamber, EMI receiver, biconical + log-periodic | radiated pre-scan | rented day |
+| 1.2 GHz high-pass filter + tinySA Ultra | TX harmonics at J5 | low-cost tool |
 | INA219 breakout + logger | charge current in the field | in house |
 | LoRaWAN gateway + ChirpStack | field and range logs | in house |
 | Bambu Lab printer, ASA | enclosures, coupons, fixtures | owner's |

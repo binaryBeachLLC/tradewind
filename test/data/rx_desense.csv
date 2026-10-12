@@ -1,0 +1,19 @@
+# Conducted sensitivity, SF10 BW125, 20-byte packets from a second RAK3172 through 2 x 30 dB attenuators and a
+# step attenuator (0.5 dB steps), 200 packets per step, threshold = 10 % packet error. Unit TW1B-002 in its enclosure.
+# condition bench_ldo: Linear bench supply into TP1, U3 disabled (reference)
+# condition buckboost_battery: TPS63900 from the cell (normal, dark)
+# condition buckboost_sun: TPS63900 + charger at 400 mA (solar simulator)
+# condition soil_probe_on: As above, soil probe powered (SENSOR_EN high)
+condition,channel,freq_MHz,sens_dBm_10pct_per
+bench_ldo,8,903.9,-132.2
+buckboost_battery,8,903.9,-131.7
+buckboost_sun,8,903.9,-131.8
+soil_probe_on,8,903.9,-131.6
+bench_ldo,40,910.3,-132.0
+buckboost_battery,40,910.3,-131.9
+buckboost_sun,40,910.3,-131.7
+soil_probe_on,40,910.3,-131.5
+bench_ldo,63,914.9,-132.2
+buckboost_battery,63,914.9,-132.1
+buckboost_sun,63,914.9,-131.9
+soil_probe_on,63,914.9,-131.7

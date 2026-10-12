@@ -24,8 +24,9 @@
 #define VBAT_DIVIDER       2.0f        // 100 k / 100 k
 #define SOLAR_DIVIDER      (1.0f / 0.2481f)
 
-// Timings (from the sims in sim/: divider settles in 5 tau = 2.5 ms; probe warm-up per vendor)
-#define VBAT_SETTLE_MS     3
+// Timings. VBAT divider: tau = 0.5 ms, 12-bit settling (½ LSB) needs 4.5 ms (sim/board_si.py; was 3 ms in the
+// pilot firmware, 0.25 % low). Probe warm-up per vendor.
+#define VBAT_SETTLE_MS     5
 #define SOIL_WARMUP_MS     100
 
 // I2C addresses

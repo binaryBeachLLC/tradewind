@@ -1,0 +1,126 @@
+{
+ "dc_paths": [
+  {
+   "label": "Panel in → reverse FET",
+   "net": "SOLAR_RAW",
+   "length_mm": 12.6,
+   "width_mm": 0.3,
+   "r_mohm": 20.6,
+   "current_A": 0.44,
+   "drop_mV": 9.1,
+   "dT_C": 1.55,
+   "ampacity_10C_A": 1.0,
+   "drop_mV_60C": 10.5
+  },
+  {
+   "label": "Reverse FET → charger IN",
+   "net": "VIN_SOLAR",
+   "length_mm": 32.6,
+   "width_mm": 0.3,
+   "r_mohm": 53.4,
+   "current_A": 0.475,
+   "drop_mV": 25.4,
+   "dT_C": 1.85,
+   "ampacity_10C_A": 1.0,
+   "drop_mV_60C": 29.4
+  },
+  {
+   "label": "Charger BAT → cell +",
+   "net": "VBAT",
+   "length_mm": 35.9,
+   "width_mm": 0.3,
+   "r_mohm": 61.1,
+   "current_A": 0.5,
+   "drop_mV": 30.6,
+   "dT_C": 2.07,
+   "ampacity_10C_A": 1.0,
+   "drop_mV_60C": 35.4
+  },
+  {
+   "label": "Charger OUT → buck-boost VIN",
+   "net": "VSYS",
+   "length_mm": 13.9,
+   "width_mm": 0.3,
+   "r_mohm": 22.7,
+   "current_A": 0.12,
+   "drop_mV": 2.7,
+   "dT_C": 0.08,
+   "ampacity_10C_A": 1.0,
+   "drop_mV_60C": 3.1
+  }
+ ],
+ "vbat_revC_1mm": {
+  "r_mohm": 18.3,
+  "drop_mV": 9.2
+ },
+ "c5_from_U2_mm": 96.2,
+ "c5_loop_nH_est": 96.0,
+ "i2c": {
+  "trace_pF_per_mm": 0.089,
+  "trace_z0_ohm": 66.7,
+  "c_internal_pF": 22.8,
+  "c_total_1m_pF": 134.7,
+  "rise_ns_no_probe": 91.0,
+  "rise_ns_1m": 536.0,
+  "max_cable_m_100k_4k7": 2.15,
+  "max_cable_m_400k_2k2": 1.25,
+  "max_cable_m_400k_4k7": 0.4,
+  "sink_mA_4k7": 0.7,
+  "clock_hz_firmware": 100000,
+  "assumptions": "5 pF/MCU pin, 10 pF/SHT4x, 0.25 pF ESD, cable 100 pF/m"
+ },
+ "harmonics": {
+  "rel_attenuation_dB": {
+   "f0": -0.4,
+   "2f0": -3.0,
+   "3f0": -7.5
+  },
+  "restricted_band_MHz": [
+   2690,
+   2900
+  ],
+  "third_harmonic_MHz": [
+   2706.9,
+   2744.7
+  ],
+  "note": "50 Ω-terminated estimate with ideal parts (L Q = 30, 0.1 pF pads)"
+ },
+ "adc_settling": [
+  {
+   "net": "VBAT_ADC",
+   "r_source_kohm": 50.0,
+   "c_nF": 10.0,
+   "tau_ms": 0.5,
+   "need_ms_half_lsb": 4.51,
+   "wait_ms": 5.0,
+   "note": "R11 ‖ R12 into C10, after Q2 turns on",
+   "error_pct_at_wait": 0.0045,
+   "ok": true,
+   "error_pct_at_3ms_pilot_fw": 0.248,
+   "kickback_pct": 0.05
+  },
+  {
+   "net": "SOIL_ADC",
+   "r_source_kohm": 1.0,
+   "c_nF": 100.0,
+   "tau_ms": 0.1,
+   "need_ms_half_lsb": 0.9,
+   "wait_ms": 100.0,
+   "note": "R22 into C21; probe output settles first (100 ms warm-up)",
+   "error_pct_at_wait": 0.0,
+   "ok": true,
+   "kickback_pct": 0.005
+  },
+  {
+   "net": "SOLAR_SENSE",
+   "r_source_kohm": 248.1,
+   "c_nF": 100.0,
+   "tau_ms": 24.81,
+   "need_ms_half_lsb": 223.58,
+   "wait_ms": null,
+   "note": "always connected, no switch to settle",
+   "kickback_pct": 0.005
+  }
+ ],
+ "plane_pair_pF": 242.0
+}

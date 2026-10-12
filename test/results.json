@@ -164,6 +164,180 @@
       }
     ]
   },
+  "emc": {
+    "radiated": {
+      "min_margin_dB": 11.6,
+      "at_MHz": 96.0,
+      "source": "RAK3172 32 MHz reference, 3rd harmonic",
+      "qp": [
+        {
+          "freq_MHz": 96.0,
+          "polarisation": "H",
+          "qp_dBuV_m": 31.9,
+          "limit_dBuV_m": 43.5,
+          "margin_dB": 11.6,
+          "attributed_to": "RAK3172 32 MHz reference, 3rd harmonic"
+        },
+        {
+          "freq_MHz": 128.0,
+          "polarisation": "H",
+          "qp_dBuV_m": 29.1,
+          "limit_dBuV_m": 43.5,
+          "margin_dB": 14.4,
+          "attributed_to": "32 MHz reference, 4th harmonic"
+        },
+        {
+          "freq_MHz": 864.0,
+          "polarisation": "H",
+          "qp_dBuV_m": 26.4,
+          "limit_dBuV_m": 46.0,
+          "margin_dB": 19.6,
+          "attributed_to": "32 MHz reference, 27th harmonic"
+        },
+        {
+          "freq_MHz": 41.6,
+          "polarisation": "V",
+          "qp_dBuV_m": 24.8,
+          "limit_dBuV_m": 40.0,
+          "margin_dB": 15.2,
+          "attributed_to": "TPS63900 switch-node ringing, via the probe cable"
+        },
+        {
+          "freq_MHz": 160.0,
+          "polarisation": "H",
+          "qp_dBuV_m": 26.5,
+          "limit_dBuV_m": 43.5,
+          "margin_dB": 17.0,
+          "attributed_to": "32 MHz reference, 5th harmonic"
+        },
+        {
+          "freq_MHz": 480.0,
+          "polarisation": "H",
+          "qp_dBuV_m": 24.2,
+          "limit_dBuV_m": 46.0,
+          "margin_dB": 21.8,
+          "attributed_to": "32 MHz reference, 15th harmonic"
+        }
+      ]
+    },
+    "harmonics": [
+      {
+        "rev": "A",
+        "n": 1,
+        "f_lo": 902.3,
+        "f_hi": 914.9,
+        "worst_dBm": 20.2,
+        "dBc": 0.3,
+        "restricted": false,
+        "field_dBuV_m": 115.4
+      },
+      {
+        "rev": "A",
+        "n": 2,
+        "f_lo": 1804.6,
+        "f_hi": 1829.8,
+        "worst_dBm": -38.3,
+        "dBc": -58.2,
+        "restricted": false,
+        "field_dBuV_m": 56.9
+      },
+      {
+        "rev": "A",
+        "n": 3,
+        "f_lo": 2706.9,
+        "f_hi": 2744.7,
+        "worst_dBm": -42.2,
+        "dBc": -62.1,
+        "restricted": true,
+        "field_dBuV_m": 53.0
+      },
+      {
+        "rev": "A",
+        "n": 4,
+        "f_lo": 3609.2,
+        "f_hi": 3659.6,
+        "worst_dBm": -56.6,
+        "dBc": -76.5,
+        "restricted": true,
+        "field_dBuV_m": 38.6
+      },
+      {
+        "rev": "A",
+        "n": 5,
+        "f_lo": 4511.5,
+        "f_hi": 4574.5,
+        "worst_dBm": -59.8,
+        "dBc": -79.7,
+        "restricted": true,
+        "field_dBuV_m": 35.4
+      },
+      {
+        "rev": "B",
+        "n": 1,
+        "f_lo": 902.3,
+        "f_hi": 914.9,
+        "worst_dBm": 20.5,
+        "dBc": 0.3,
+        "restricted": false,
+        "field_dBuV_m": 115.7
+      },
+      {
+        "rev": "B",
+        "n": 2,
+        "f_lo": 1804.6,
+        "f_hi": 1829.8,
+        "worst_dBm": -41.2,
+        "dBc": -61.4,
+        "restricted": false,
+        "field_dBuV_m": 54.0
+      },
+      {
+        "rev": "B",
+        "n": 3,
+        "f_lo": 2706.9,
+        "f_hi": 2744.7,
+        "worst_dBm": -50.0,
+        "dBc": -70.2,
+        "restricted": true,
+        "field_dBuV_m": 45.2
+      },
+      {
+        "rev": "B",
+        "n": 4,
+        "f_lo": 3609.2,
+        "f_hi": 3659.6,
+        "worst_dBm": -67.6,
+        "dBc": -87.8,
+        "restricted": true,
+        "field_dBuV_m": 27.6
+      },
+      {
+        "rev": "B",
+        "n": 5,
+        "f_lo": 4511.5,
+        "f_hi": 4574.5,
+        "worst_dBm": -72.7,
+        "dBc": -92.9,
+        "restricted": true,
+        "field_dBuV_m": 22.5
+      }
+    ],
+    "third_margin_dB": {
+      "A": 1.0,
+      "B": 8.8
+    },
+    "third_improvement_dB": 7.8,
+    "third_improvement_sim_dB": 7.5,
+    "desense": {
+      "reference_dBm": -132.1,
+      "worst_dB": {
+        "buckboost_battery": 0.5,
+        "buckboost_sun": 0.4,
+        "soil_probe_on": 0.6
+      },
+      "worst_overall_dB": 0.6
+    }
+  },
   "environmental": {
     "dunk": {
       "result": "pass",

@@ -11,7 +11,7 @@ enclosure, firmware, bring-up, characterization and a 30-day field pilot.
 
 | | |
 |---|---|
-| 📘 [Engineering design & test report](docs/Tradewind_TW-1_Engineering_Report_revB.pdf) (24 pages) | requirements, simulation, schematic, layout, enclosure, bring-up, test and field data |
+| 📘 [Engineering design & test report](docs/Tradewind_TW-1_Engineering_Report_revB.pdf) (35 pages) | requirements, simulation, schematic, electrical and layout considerations, EMI/EMC, enclosure, bring-up, test and field data |
 | 📗 [Product datasheet](docs/Tradewind_TW-1_Datasheet_revB.pdf) (14 pages) | specifications, typical characteristics, connector functions, drawings, ordering |
 | 🌐 [Interactive page](https://binarybeach.tech/hardware/tradewind/) | the product and the board in 3D, the schematic and the PCB layers in the browser |
 
@@ -65,10 +65,10 @@ docs/         design spec, report + datasheet (HTML sources and PDFs), figures, 
 hardware/     KiCad 9 project (tradewind/) and fabrication outputs (fab/)
 mechanical/   CadQuery enclosure system: sources, STEP/STL/GLB, drawings, mechanical BOM
 firmware/     RAK3172 / RUI3 firmware, payload codec, network-server decoder, host tests
-sim/          9 simulations (ngspice decks + Python models) and their results
+sim/          10 simulations (ngspice decks + Python models) and their results
 test/         test logs (CSV), analysis scripts, compliance table, bring-up log
 render/       Blender render script and the renders
-tools/        generators: schematic, PCB, 3D models, BOM, fab export, docs, plot style
+tools/        generators: schematic, PCB, 3D models, BOM, fab export, layout audit, docs, plot style
 ```
 
 ### `hardware/`: schematic and board
@@ -76,6 +76,8 @@ tools/        generators: schematic, PCB, 3D models, BOM, fab export, docs, plot
 - `tradewind/tradewind.kicad_sym`: project symbol (DRV5032 hall switch). `tradewind/3d/` holds the 3D models we made because the library has none (RAK3172, JST PH side-entry, VQFN-16, SHT4x, 18650 cell).
 - `fab/`: `tradewind_revB_gerbers.zip` (11 Gerber X2 layers plus drill), `assembly/tradewind_revB_cpl.csv`, `BOM_tradewind_revB.csv` (costed at 10/100/1k), `BOM_JLCPCB.csv`, the board as STEP and GLB, per-layer SVGs, `erc_report.txt` and `drc_report.txt`.
 - Board: 96 × 70 mm, 4 layers (JLC 7628 stackup), matte black ENIG, 85 footprints, 50 Ω CPWG RF line, SHT40 on a slotted thermal island.
+- `tools/layout_audit.py` measures the routed board (copper per net, current-path resistance, hot-loop areas, separations, RF geometry) into `fab/layout_audit.json`;
+  `tools/layout_figs.py` draws the annotated layout figures from it. The report's section 4 (electrical, BOM, layout, EMI/EMC) is built on those numbers.
 
 <p align="center"><img src="docs/report/img/layer_strip.png" width="820" alt="Copper layers L1 to L4"></p>
 
@@ -93,6 +95,7 @@ Run `sim/run_all.sh` (about 20 s). It regenerates every `docs/figures/sim_*` fig
 | `rain_debounce.py` | Why did rev A double-count rain? (reed bounce) |
 | `rf_match.py` | Antenna match in the closed case; 50 Ω trace geometry |
 | `link_budget.py` | Range per spreading factor, and airtime |
+| `board_si.py` | On the routed board: power-path drop, I²C over the probe cable, harmonic filtering, ADC settling |
 
 <p align="center">
 <img src="docs/figures/sim_thermal_enclosure.png" width="49%" alt="Battery temperature by enclosure design">
@@ -117,6 +120,10 @@ The payload format is in `firmware/PAYLOAD.md`. The decoder for The Things Stack
 <img src="docs/figures/test_ppk2_cycle.png" width="49%" alt="Current through one uplink">
 <img src="docs/figures/test_field_battery.png" width="49%" alt="Battery over the 30-day pilot">
 </p>
+<p align="center">
+<img src="docs/figures/layout_power.png" width="49%" alt="Power stage layout with hot loops">
+<img src="docs/figures/test_emi_radiated.png" width="49%" alt="Radiated emissions pre-scan">
+</p>
 
 ### `render/` and `docs/`
 - `render/scripts/render.py`: Blender Cycles shots from the CAD and board exports (studio, outdoor, exploded, lid off, board, turntable).
@@ -138,7 +145,7 @@ python3 tools/gen_schematic.py                                   # schematic fro
 snap run --shell kicad.kicad-cli -c "python3 tools/gen_pcb.py place && python3 tools/gen_pcb.py dsn"
 (cd hardware/tradewind && xvfb-run -a java -jar freerouting-1.9.0.jar -de tradewind.dsn -do tradewind.ses -mp 40)
 snap run --shell kicad.kicad-cli -c "python3 tools/gen_pcb.py ses"   # import routes, pour ground, clean up
-tools/export_fab.sh                                              # ERC, DRC, Gerbers, BOM, CPL, STEP, GLB, renders
+tools/export_fab.sh                                              # ERC, DRC, Gerbers, BOM, CPL, STEP, GLB, renders, layout audit
 sim/run_all.sh && test/run_all.sh                                # simulations and test analysis
 python mechanical/src/assembly.py                                # enclosure (conda env)
 blender -b --python render/scripts/render.py                     # renders

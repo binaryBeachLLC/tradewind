@@ -24,6 +24,7 @@ written to `out/`. Plot style: `tools/plotstyle.py`.
 | `tx_droop.py` (ngspice) | Does +3V3 hold ±3 % when the radio keys up? Which COUT? | `sim_tx_droop` |
 | `rain_debounce.py` (ngspice) | One bucket tip = exactly one count? | `sim_rain_debounce` |
 | `rf_match.py` | Antenna match in the enclosure; 50 Ω coplanar trace width | `sim_rf_match`, `sim_cpwg` |
+| `board_si.py` | On the routed board: DC drop on power paths, I²C rise time over the probe cable, π-match harmonic attenuation, ADC settling | `sim_i2c_rise`, `sim_rf_harmonics` |
 
 ## Results
 
@@ -78,8 +79,11 @@ real maximum is ~2 tips/s (200 mm/h, 0.2 mm bucket). If a reed sticks closed the
 closed box). Unmatched: −10.4 dB at 915, −8.9 dB worst in band (0.4 dB mismatch loss). An optimiser over
 standard 0402 values (with parasitics) picks **C14 = 1.8 pF (shunt, module side) + L2 = 7.5 nH (series),
 C15 DNP: −42.7 dB at 915, ≤ −21 dB across 902–928 MHz.** CPWG: 0.35 mm trace with 0.20 mm gaps is
-**48–52 Ω** (thick/thin conformal-mapping models; 50 Ω at 0.32–0.38 mm). The RF trace is ~6 mm, λ/50 at
-915 MHz: even a 45 Ω section would only add −41 dB of reflection.
+**48–52 Ω** (thick/thin conformal-mapping models; 50 Ω at 0.32–0.38 mm). The routed line is 14.1 mm in two
+sections (7.4 mm module → match, 6.7 mm match → U.FL; `tools/layout_audit.py`): even a 6 mm section at 45 Ω
+would only add −41 dB of reflection.
+
+**board_si.** Reads `hardware/fab/layout_audit.json`, so lengths and widths are the routed ones. Power paths: 0.3 mm tracks carry 1.0 A for +10 °C, so heat is never the issue; the largest drop is 31 mV on VBAT at 500 mA (rev C: 1 mm, 9 mV). External I²C with the 1 m probe: ≈ 135 pF, **536 ns** rise with 4.7 kΩ, fine at 100 kHz (works to 2.1 m), too slow for 400 kHz. π-match between 50 Ω ports: **3.0 dB at 2f₀, 7.5 dB at 3f₀** (the 3rd harmonic is in the 2690–2900 MHz restricted band). VBAT divider τ = 0.5 ms needs 4.5 ms for 12-bit settling; the firmware waited 3 ms (0.25 % low) and now waits 5 ms.
 
 ## Findings for the designer
 
